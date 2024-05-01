@@ -38,3 +38,15 @@ func NewDateFormat(dateString string) *DateFormat {
 func (df *DateFormat) String() string {
 	return fmt.Sprintf(`%s de %s de %s Hora: %s`, df.Day, df.Month, df.Year, df.Hour)
 }
+
+type Result interface {
+	GetResult()
+}
+
+// func GenerateAsyncFunction(c chan result, fn func() ) {
+// 	go func() {
+// 		var r result
+// 		r.value, r.err = fn()
+// 		c <- r
+// 	}()
+// }

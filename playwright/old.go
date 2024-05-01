@@ -7,7 +7,6 @@ import (
 	"os"
 
 	"github.com/MarcosIgnacioo/classroomapi"
-	"github.com/MarcosIgnacioo/types"
 	"github.com/playwright-community/playwright-go"
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/classroom/v1"
@@ -39,7 +38,7 @@ func ClassroomAPIAuth(browser *playwright.Browser, authURL string, username stri
 	return &APIcode, nil
 }
 
-func StartScrapping(user types.User) {
+func StartScrapping(user User) {
 	// TODO: Crear un package con variables globales (Expect)
 	pw, err := playwright.Run()
 	if err != nil {

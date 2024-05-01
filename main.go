@@ -1,23 +1,19 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/MarcosIgnacioo/controllers"
 	pw "github.com/MarcosIgnacioo/playwright"
-	"github.com/MarcosIgnacioo/types"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	server()
+	scraptest()
 }
 
 func scraptest() {
-	user := types.User{Username: "", Password: ""}
-	pw.ScrapMoodleAndClassroom("", "")
-	fmt.Println(user)
+	pw.Testing("marcosignc_21", "sopitasprecio")
 }
 
 func server() {

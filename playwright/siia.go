@@ -1,24 +1,22 @@
 package pw
 
 import (
-	"fmt"
-	"github.com/playwright-community/playwright-go"
 	"log"
+
+	"github.com/playwright-community/playwright-go"
 )
 
 // La version asincrona
-func SiiaScrapAsync(browser *playwright.Browser, username string, password string) {
-	classroom, err := (*browser).NewPage()
+func SiiaScrapAsync(browser *playwright.Browser, username string, password string) *playwright.Page {
+	siia, err := (*browser).NewPage()
 	if err != nil {
 		log.Fatalf("could not create page: %v", err)
 	}
-	classroom.Goto("https://accounts.google.com/ServiceLogin?continue=https%3A%2F%2Fclassroom.google.com&passive=true")
-	expect.Locator(classroom.Locator("#identifierId")).ToBeVisible()
-	classroom.Locator("#identifierId").Fill(fmt.Sprintf("%v@alu.uabcs.mx", username))
-	classroom.GetByText("Next").Click()
-	classroom.Locator("#ctl00_placeHolder_txtLogin").Fill(username)
-	classroom.Locator("#ctl00_placeHolder_txtPassword").Fill(password)
-	classroom.Locator("#ctl00_placeHolder_btnIniciarSesion").Click()
+	siia.Goto("https://siia.uabcs.mx/")
+	siia.Locator("#ctl00_placeHolder_txtLogin").Fill(username)
+	siia.Locator("#ctl00_placeHolder_txtPassword").Fill(password)
+	siia.Locator("#ctl00_placeHolder_btnIniciarSesion").Click()
+	return &siia
 }
 
 // La version sincrona
