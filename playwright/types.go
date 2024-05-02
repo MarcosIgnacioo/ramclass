@@ -125,4 +125,78 @@ type StudentInfo struct {
 
 // https://siia.uabcs.mx/siia2019/alumnos/kardex.aspx?gr=alumno&op=kardex
 
-type Kardex struct{}
+// Kardex types
+type Kardex struct {
+	Kardex []interface{} `json:"kardex"`
+}
+
+func (k *Kardex) GetResult() []interface{} {
+	return k.Kardex
+}
+
+func NewKardex(k []interface{}) *Kardex {
+	return &Kardex{Kardex: k}
+}
+
+type Subject struct {
+	Semester int    `json:"semester"`
+	Subject  string `json:"subject_name"`
+	Group    string `json:"group"`
+	Turn     string `json:"turn"`
+	Period   string `json:"period"`
+	Grade    int    `json:"grade"`
+	State    string `json:"state"`
+	Type     string `json:"type"`
+	Teacher  string `json:"teacher"`
+}
+
+func NewSubject(s int, su string, g string, t string, p string, gr int, st string, ty string, te string) *Subject {
+	return &Subject{Semester: s, Subject: su, Group: g, Turn: t, Period: p, Grade: gr, State: st, Type: ty, Teacher: te}
+}
+
+// Curricular map type
+
+type CurricularSubject struct {
+	Semester int    `json:"semester"`
+	Subject  string `json:"subject_name"`
+	Period   string `json:"period"`
+	Grade    int    `json:"grade"`
+	State    string `json:"state"`
+	Credits  int    `json:"credits"`
+	Type     string `json:"type"`
+	Teacher  string `json:"teacher"`
+}
+
+func (cs CurricularSubject) String() string {
+	return fmt.Sprintf(`Semester: %v
+		Subject: %v
+		Period: %v
+		Grade: %v
+		State: %v
+		Credits: %v
+		Type: %v
+		Teacher: %v
+		`, cs.Semester, cs.Subject, cs.Period, cs.Grade, cs.State, cs.Credits, cs.Type, cs.Teacher)
+}
+
+func NewCurricularSubject(s int, su string, p string, g int, st string, c int, ty string, te string) *CurricularSubject {
+	return &CurricularSubject{Semester: s, Subject: su, Period: p, Grade: g, State: st, Credits: c, Type: ty, Teacher: te}
+}
+
+type CurricularMap struct {
+	CurricularMap []interface{}
+}
+
+func (c *CurricularMap) GetResult() []interface{} {
+	return c.CurricularMap
+}
+
+func (c *CurricularMap) Print() {
+	for _, v := range c.CurricularMap {
+		fmt.Println(v.(CurricularSubject).String())
+	}
+}
+
+func NewCurricularMap(c []interface{}) *CurricularMap {
+	return &CurricularMap{CurricularMap: c}
+}

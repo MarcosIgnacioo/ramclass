@@ -21,7 +21,7 @@ func ScrapMoodleAndClassroom(username string, password string) (*ScrappedInfo, *
 
 	cs := make(chan []interface{})
 
-	go SiiaScrapAsync(&browser, username, password)
+	go SiiaLogin(&browser, username, password)
 	go ClassroomScrapAsync(&browser, username, password, cs)
 	ms, logErr := MoodleScrap(&browser, username, password)
 
@@ -52,6 +52,9 @@ func ScrapMoodleAndClassroom(username string, password string) (*ScrappedInfo, *
 	return NewScrappedInfo(mArr, classroomArray), nil
 }
 
+// false -> abre el navegador con gui
+//
+// true -> no abre el navegador lo hace por websockets(oalgoasi)
 func GenerateBrowser(headless bool) (*playwright.Browser, *playwright.Playwright, error) {
 	//
 	pw, err := playwright.Run()
