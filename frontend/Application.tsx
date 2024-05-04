@@ -7,6 +7,9 @@ import SignIn from './views/SignIn';
 import Prueba from './views/Prueba';
 import Class from './views/Class';
 import Mood from './views/Mood';
+import Kardex from './views/Kardex';
+import Curricular from './views/Curricular';
+import Credentials from './views/Credentials';
 function Application() {
   return (
     <div>
@@ -16,6 +19,9 @@ function Application() {
           <Route path='/' element={<SignIn />} />
           <Route path='/classroom-form' element={<Class />} />
           <Route path='/moodle-form' element={<Mood />} />
+          <Route path='/kardex-form' element={<Kardex />} />
+          <Route path='/curricular-form' element={<Curricular />} />
+          <Route path='/credentials-form' element={<Credentials />} />
           <Route path='/test' element={<Prueba />} />
         </Routes>
       </BrowserRouter>

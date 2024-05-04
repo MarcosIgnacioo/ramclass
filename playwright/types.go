@@ -94,13 +94,20 @@ func NewScrappedInfo(md []interface{}, cr []interface{}) *ScrappedInfo {
 }
 
 type LoginError struct {
-	ErrorMessage string `json:"error_message"`
+	ErrorMessage interface{} `json:"error_message"`
 }
 
 func (le *LoginError) GetResult() {}
 
 func NewLoginError(m string) *LoginError {
 	return &LoginError{ErrorMessage: m}
+}
+
+func NewError(m error) *LoginError {
+	if m != nil {
+		return &LoginError{ErrorMessage: m.Error()}
+	}
+	return &LoginError{ErrorMessage: nil}
 }
 
 // User Types
@@ -121,6 +128,16 @@ type StudentInfo struct {
 	Semester           int    `json:"semester"`
 	Group              string `json:"group"`
 	Turn               string `json:"turn"`
+	State              string `json:"state"`
+}
+
+func (s *StudentInfo) GetResult() []interface{} {
+	return []interface{}{s.ControlNumber, s.Name, s.InstitutionalEmail, s.InstitutionalEmail, s.Campus, s.Career, s.Period, s.Semester, s.Semester, s.Group, s.Turn, s.State}
+}
+
+// Control number, name, email, campus, period, semester, group, turn
+func NewStudentInfo(cn int, n string, ie string, c string, ca string, p string, s int, g string, t string, st string) *StudentInfo {
+	return &StudentInfo{ControlNumber: cn, Name: n, InstitutionalEmail: ie, Campus: c, Career: ca, Period: p, Semester: s, Group: g, Turn: t, State: st}
 }
 
 // https://siia.uabcs.mx/siia2019/alumnos/kardex.aspx?gr=alumno&op=kardex
@@ -157,14 +174,14 @@ func NewSubject(s int, su string, g string, t string, p string, gr int, st strin
 // Curricular map type
 
 type CurricularSubject struct {
-	Semester int    `json:"semester"`
-	Subject  string `json:"subject_name"`
-	Period   string `json:"period"`
-	Grade    int    `json:"grade"`
-	State    string `json:"state"`
-	Credits  int    `json:"credits"`
-	Type     string `json:"type"`
-	Teacher  string `json:"teacher"`
+	Semester int         `json:"semester"`
+	Subject  string      `json:"subject_name"`
+	Period   interface{} `json:"period"`
+	Grade    interface{} `json:"grade"`
+	State    interface{} `json:"state"`
+	Credits  interface{} `json:"credits"`
+	Type     interface{} `json:"type"`
+	Teacher  interface{} `json:"teacher"`
 }
 
 func (cs CurricularSubject) String() string {
@@ -179,7 +196,7 @@ func (cs CurricularSubject) String() string {
 		`, cs.Semester, cs.Subject, cs.Period, cs.Grade, cs.State, cs.Credits, cs.Type, cs.Teacher)
 }
 
-func NewCurricularSubject(s int, su string, p string, g int, st string, c int, ty string, te string) *CurricularSubject {
+func NewCurricularSubject(s int, su string, p interface{}, g interface{}, st interface{}, c interface{}, ty interface{}, te interface{}) *CurricularSubject {
 	return &CurricularSubject{Semester: s, Subject: su, Period: p, Grade: g, State: st, Credits: c, Type: ty, Teacher: te}
 }
 

@@ -1,31 +1,57 @@
 package pw
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/MarcosIgnacioo/arraylist"
 	"github.com/playwright-community/playwright-go"
 )
 
+const (
+	APPROVED = "sce-student-course-approved"
+	CURRENT  = "sce-student-course-current"
+	NONE     = "sce-tipo-regular"
+)
+
 // TOdo agregar en parametros el nombre de usuario y contra
-func SiiaInit(action string, username string, password string) {
-	browser, _, err := GenerateBrowser(false)
+func SiiaInit(action string, username string, password string) (Result, *LoginError) {
+	browser, _, err := GenerateBrowser(true)
 	if err != nil {
 		log.Fatalf("error opening the browser")
 	}
-	siia := SiiaLogin(browser, username, password)
+	siia, err := SiiaLogin(browser, username, password)
+	if err != nil {
+		return nil, NewLoginError(err.Error())
+	}
 	switch action {
 	case "kardex":
-		KardexScrap(siia)
+		kardex, err := KardexScrap(siia)
+		if err != nil {
+			return nil, NewError(err)
+		}
+		return kardex, nil
 	case "map":
-		CurricularMapScrap(siia)
+		curricular, err := CurricularMapScrap(siia)
+		if err != nil {
+			return nil, NewError(err)
+		}
+		return curricular, nil
+	case "credentials":
+		curricular, err := CredentialsScrap(siia)
+		if err != nil {
+			return nil, NewError(err)
+		}
+		return curricular, nil
 	}
+	return nil, NewLoginError("Error desconocido, la obtención de su información no se pudo completar, inténtelo más tarde")
 }
 
 // La version sincrona
-func SiiaLogin(browser *playwright.Browser, username string, password string) *playwright.Page {
+func SiiaLogin(browser *playwright.Browser, username string, password string) (*playwright.Page, error) {
 	siia, err := (*browser).NewPage()
 	if err != nil {
 		log.Fatalf("could not create page: %v", err)
@@ -34,7 +60,10 @@ func SiiaLogin(browser *playwright.Browser, username string, password string) *p
 	siia.Locator("#ctl00_placeHolder_txtLogin").Fill(username)
 	siia.Locator("#ctl00_placeHolder_txtPassword").Fill(password)
 	siia.Locator("#ctl00_placeHolder_btnIniciarSesion").Click()
-	return &siia
+	if siia.URL() == "https://siia.uabcs.mx/" {
+		return nil, errors.New("Credenciales incorrectas")
+	}
+	return &siia, nil
 }
 
 func KardexScrap(siia *playwright.Page) (Result, error) {
@@ -82,41 +111,89 @@ func CurricularMapScrap(siia *playwright.Page) (Result, error) {
 		log.Fatalf("rows not loaded %v", err)
 		return nil, err
 	}
-	fmt.Println(len(semesters))
-	// de un for no se esta saliendo quien sabe por q
+	//
 	for i, semester := range semesters {
 		semesterNo := i + 1
 		fmt.Println(semesterNo)
 		subjects, _ := semester.Locator(".sce-materia").All()
+		//
 		for _, subject := range subjects {
-			// por alguna razon se corta en la parte de ingenieria de software 2
 			subjectName, _ := subject.Locator(".materia-name span").InnerText()
-			period, _ := subject.Locator(".sce-period").InnerText()
-			// Manejar el caso de que no haya calificacion (Es decir que aun no se cursa esa materia)
-			// ya 8)
-			// por alguna razon no esta agarrando el resto de materias que deberian de aparecer con el 255 y los valores default
-			grade := 255
-			state := ""
-			subjectType := ""
-			teacher := ""
-			credits := 255
-			if period != "" {
-				gradeString, _ := subject.Locator(".sce-calification").InnerText()
-				grade, _ = strconv.Atoi(gradeString)
-				creditsString, _ := subject.Locator(".sce-creditos").InnerText()
-				credits, _ = strconv.Atoi(creditsString)
+			classList, _ := subject.GetAttribute("class")
+			classListArray := strings.Split(classList, " ")
+			subjectState := classListArray[len(classListArray)-1]
+
+			var grade interface{}
+			var credits interface{}
+			var state interface{}
+			var subjectType interface{}
+			var teacher interface{}
+			var period interface{}
+
+			creditsString, _ := subject.Locator(".sce-creditos").InnerText()
+			credits, _ = strconv.Atoi(creditsString)
+
+			// Era mas facil y entendible hacer un simple switch case en el que redeclaraba 432 veces la misma variable? si
+			// Pero ahora es clean?
+			// Tiene menos lineas que antes
+			// Bueno no
+			// Pero no hace tanto memory allocation
+
+			skip := false
+
+			switch subjectState {
+			case NONE:
+				grade = nil
+				teacher = nil
+				state = nil
+				period = nil
+			default:
+				grade = nil
+				period, _ = subject.Locator(".sce-period").InnerText()
 				state, _ = subject.Locator(".sce-status").InnerText()
 				subjectType, _ = subject.Locator(".sce-tipo-ex").InnerText()
 				teacher, _ = subject.Locator(".sce-teacher").InnerText()
 			}
+
+			if subjectState != APPROVED {
+				skip = true
+			}
+
+			if skip {
+				subjectsArrayList.Enqueue(NewCurricularSubject(semesterNo, subjectName, period, grade, state, credits, subjectType, teacher))
+				continue
+			}
+
+			gradeString, _ := subject.Locator(".sce-calification").InnerText()
+			grade, _ = strconv.Atoi(gradeString)
+
 			subjectsArrayList.Enqueue(NewCurricularSubject(semesterNo, subjectName, period, grade, state, credits, subjectType, teacher))
 		}
 	}
 	cm := NewCurricularMap(subjectsArrayList.GetArray())
-	fmt.Println("wep")
-	fmt.Println(cm.GetResult()...)
-	fmt.Println("wep")
 	return cm, nil
+}
+
+// XD
+func CredentialsScrap(siia *playwright.Page) (Result, error) {
+	(*siia).Goto("https://siia.uabcs.mx/siia2019/alumnos/credenciales.aspx?gr=alumno&op=photocrede")
+	controlNumber, _ := (*siia).Locator("#ctl00_contentPlaceHolder_alumnosFormView_AlumnoFieldset_AlumnoIDLabel").InnerText()
+	studentId, _ := strconv.Atoi(controlNumber)
+	studentName, _ := (*siia).Locator("#ctl00_contentPlaceHolder_alumnosFormView_AlumnoFieldset_Label1").InnerText()
+	// El correo ya lo tenemos xd asi que podriamos omitirlo
+	studentEmail, _ := (*siia).Locator("#ctl00_contentPlaceHolder_alumnosFormView_AlumnoFieldset_EmailLabel").InnerText()
+	// el campu pues tambien
+	studentCampus, _ := (*siia).Locator("#ctl00_contentPlaceHolder_alumnosFormView_AlumnoFieldset_NombreCampusLabel").InnerText()
+	studentCareer, _ := (*siia).Locator("#ctl00_contentPlaceHolder_alumnosFormView_AlumnoFieldset_NombreCarreraLabel").InnerText()
+	studentPeriod, _ := (*siia).Locator("#ctl00_contentPlaceHolder_alumnosFormView_AlumnoFieldset_PeriodoLabel").InnerText()
+	semesterString, _ := (*siia).Locator("#ctl00_contentPlaceHolder_alumnosFormView_AlumnoFieldset_SemestreLabel").InnerText()
+	currentSemester, _ := strconv.Atoi(semesterString)
+	studentGroup, _ := (*siia).Locator("#ctl00_contentPlaceHolder_alumnosFormView_AlumnoFieldset_GrupoLabel").InnerText()
+	studentTurn, _ := (*siia).Locator("#ctl00_contentPlaceHolder_alumnosFormView_AlumnoFieldset_TurnoLabel").InnerText()
+	studentState, _ := (*siia).Locator("#ctl00_contentPlaceHolder_alumnosFormView_AlumnoFieldset_StatusAlumnoLabel").InnerText()
+
+	st := NewStudentInfo(studentId, studentName, studentEmail, studentCampus, studentCareer, studentPeriod, currentSemester, studentGroup, studentTurn, studentState)
+	return st, nil
 }
 
 // kardex
