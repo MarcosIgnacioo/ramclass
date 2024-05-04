@@ -11,6 +11,7 @@ import Kardex from './views/Kardex';
 import Curricular from './views/Curricular';
 import Credentials from './views/Credentials';
 function Application() {
+  // Desactivar los botones cuando haga submit a un boton y reactivarlos despues de 10 minutos en caso de q no haya habido un error
   return (
     <div>
       <Title title="Ramclass" />

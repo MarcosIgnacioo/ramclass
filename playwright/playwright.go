@@ -1,5 +1,6 @@
 package pw
 
+// CERRAR PLAYWRIGHT CADA VEZ QUE SE HAGA UN SCRAPPPPP !!!
 import (
 	"fmt"
 	"log"

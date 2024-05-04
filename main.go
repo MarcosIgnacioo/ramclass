@@ -12,6 +12,7 @@ import (
 func main() {
 	// scraptest()
 	server()
+
 	// Compute(false)
 	// Compute(false)
 	// Compute(false)
@@ -21,6 +22,7 @@ func main() {
 	// Compute(false)
 	// Compute(true)
 	// Compute(false)
+
 }
 func exec() (bool, error) {
 	response := false
