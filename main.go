@@ -51,7 +51,7 @@ func scraptest() {
 	// sdfd, _ := pw.ScrapMoodleAndClassroom("marcosignc_21", "sopitasprecio")
 	// fmt.Println(sdfd.Moodle...)
 	// fmt.Println(sdfd.ClassRoom...)
-	pw.SiiaInit("credentials", "marcosignc_21", "sopitasprecio")
+	pw.SiiaInit("map", "marcosignc_21", "sopitasprecio")
 	// pw.Testing("marcosignc_21", "sopitasprecio")
 }
 

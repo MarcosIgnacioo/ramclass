@@ -2,7 +2,6 @@ package pw
 
 import (
 	"errors"
-	"fmt"
 	"log"
 	"strconv"
 	"strings"
@@ -15,6 +14,7 @@ const (
 	APPROVED = "sce-student-course-approved"
 	CURRENT  = "sce-student-course-current"
 	NONE     = "sce-tipo-regular"
+	OPTATIVE = "sce-tipo-optativa"
 )
 
 // TOdo agregar en parametros el nombre de usuario y contra
@@ -106,7 +106,6 @@ func CurricularMapScrap(siia *playwright.Page) (Result, error) {
 	(*siia).Goto("https://siia.uabcs.mx/siia2019/alumnos/mapaacademico.aspx?gr=alumno&op=mapa_alum")
 	//
 	semesters, err := (*siia).Locator(".sce-semester").All()
-	semesters = semesters[0 : len(semesters)-1]
 	if err != nil {
 		log.Fatalf("rows not loaded %v", err)
 		return nil, err
@@ -114,7 +113,6 @@ func CurricularMapScrap(siia *playwright.Page) (Result, error) {
 	//
 	for i, semester := range semesters {
 		semesterNo := i + 1
-		fmt.Println(semesterNo)
 		subjects, _ := semester.Locator(".sce-materia").All()
 		//
 		for _, subject := range subjects {
@@ -122,51 +120,43 @@ func CurricularMapScrap(siia *playwright.Page) (Result, error) {
 			classList, _ := subject.GetAttribute("class")
 			classListArray := strings.Split(classList, " ")
 			subjectState := classListArray[len(classListArray)-1]
-
+			//
 			var grade interface{}
 			var credits interface{}
 			var state interface{}
 			var subjectType interface{}
 			var teacher interface{}
 			var period interface{}
-
+			//
 			creditsString, _ := subject.Locator(".sce-creditos").InnerText()
 			credits, _ = strconv.Atoi(creditsString)
-
-			// Era mas facil y entendible hacer un simple switch case en el que redeclaraba 432 veces la misma variable? si
-			// Pero ahora es clean?
-			// Tiene menos lineas que antes
-			// Bueno no
-			// Pero no hace tanto memory allocation
-
+			//
 			skip := false
-
-			switch subjectState {
-			case NONE:
-				grade = nil
-				teacher = nil
-				state = nil
-				period = nil
-			default:
+			//
+			if subjectState == APPROVED || subjectState == CURRENT {
 				grade = nil
 				period, _ = subject.Locator(".sce-period").InnerText()
 				state, _ = subject.Locator(".sce-status").InnerText()
 				subjectType, _ = subject.Locator(".sce-tipo-ex").InnerText()
 				teacher, _ = subject.Locator(".sce-teacher").InnerText()
 			}
-
+			//
 			if subjectState != APPROVED {
 				skip = true
 			}
-
+			//
+			if subjectState == OPTATIVE {
+				semesterNo = 0
+			}
 			if skip {
 				subjectsArrayList.Enqueue(NewCurricularSubject(semesterNo, subjectName, period, grade, state, credits, subjectType, teacher))
 				continue
 			}
 
+			//
 			gradeString, _ := subject.Locator(".sce-calification").InnerText()
 			grade, _ = strconv.Atoi(gradeString)
-
+			//
 			subjectsArrayList.Enqueue(NewCurricularSubject(semesterNo, subjectName, period, grade, state, credits, subjectType, teacher))
 		}
 	}

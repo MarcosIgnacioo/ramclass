@@ -208,6 +208,7 @@ func (c *CurricularMap) GetResult() []interface{} {
 	return c.CurricularMap
 }
 
+// Void
 func (c *CurricularMap) Print() {
 	for _, v := range c.CurricularMap {
 		fmt.Println(v.(CurricularSubject).String())
