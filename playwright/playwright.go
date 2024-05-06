@@ -7,60 +7,60 @@ import (
 	"log"
 )
 
-func ScrapMoodleAndClassroom(username string, password string) (*ScrappedInfo, *LoginError) {
-
-	pw, err := playwright.Run()
-	if err != nil {
-		log.Fatalf("could not start playwright: %v", err)
-	}
-	browser, err := pw.Chromium.Launch(playwright.BrowserTypeLaunchOptions{Headless: playwright.Bool(false)})
-	if err != nil {
-		log.Fatalf("could not launch browser: %v", err)
-	}
-
-	context, err := browser.NewContext()
-	if err != nil {
-		log.Fatalf("could not launch browser: %v", err)
-	}
-
-	cs := make(chan []interface{})
-
-	ctx, err := browser.NewContext()
-
-	if err != nil {
-		return nil, NewError(err)
-	}
-
-	go SiiaLogin(&ctx, username, password)
-	go ClassroomScrapAsync(&browser, username, password, cs)
-	ms, logErr := MoodleScrap(&context, username, password)
-
-	if logErr != nil {
-		if err = browser.Close(); err != nil {
-			log.Fatalf("could not close browser: %v", err)
-		}
-		if err = pw.Stop(); err != nil {
-			log.Fatalf("could not stop Playwright: %v", err)
-		}
-		return nil, NewLoginError(logErr.Error())
-	}
-
-	moodleArray := arraylist.NewArrayList(10)
-	classroomArray := <-cs
-	for _, v := range ms.GetResult() {
-		moodleArray.Push(v)
-	}
-
-	if err = browser.Close(); err != nil {
-		log.Fatalf("could not close browser: %v", err)
-	}
-	if err = pw.Stop(); err != nil {
-		log.Fatalf("could not stop Playwright: %v", err)
-	}
-
-	mArr := moodleArray.GetArray()
-	return NewScrappedInfo(mArr, classroomArray, nil, nil, nil), nil
-}
+// func ScrapMoodleAndClassroom(username string, password string) (*ScrappedInfo, *LoginError) {
+//
+// 	pw, err := playwright.Run()
+// 	if err != nil {
+// 		log.Fatalf("could not start playwright: %v", err)
+// 	}
+// 	browser, err := pw.Chromium.Launch(playwright.BrowserTypeLaunchOptions{Headless: playwright.Bool(false)})
+// 	if err != nil {
+// 		log.Fatalf("could not launch browser: %v", err)
+// 	}
+//
+// 	context, err := browser.NewContext()
+// 	if err != nil {
+// 		log.Fatalf("could not launch browser: %v", err)
+// 	}
+//
+// 	cs := make(chan []interface{})
+//
+// 	ctx, err := browser.NewContext()
+//
+// 	if err != nil {
+// 		return nil, NewError(err)
+// 	}
+//
+// 	go SiiaLogin(&ctx, username, password)
+// 	go ClassroomScrapAsync(&browser, username, password, cs)
+// 	ms, logErr := MoodleScrap(&context, username, password)
+//
+// 	if logErr != nil {
+// 		if err = browser.Close(); err != nil {
+// 			log.Fatalf("could not close browser: %v", err)
+// 		}
+// 		if err = pw.Stop(); err != nil {
+// 			log.Fatalf("could not stop Playwright: %v", err)
+// 		}
+// 		return nil, NewLoginError(logErr.Error())
+// 	}
+//
+// 	moodleArray := arraylist.NewArrayList(10)
+// 	classroomArray := <-cs
+// 	for _, v := range ms.GetResult() {
+// 		moodleArray.Push(v)
+// 	}
+//
+// 	if err = browser.Close(); err != nil {
+// 		log.Fatalf("could not close browser: %v", err)
+// 	}
+// 	if err = pw.Stop(); err != nil {
+// 		log.Fatalf("could not stop Playwright: %v", err)
+// 	}
+//
+// 	mArr := moodleArray.GetArray()
+// 	return NewScrappedInfo(mArr, classroomArray, nil, nil, nil), nil
+// }
 
 // false -> abre el navegador con gui
 //

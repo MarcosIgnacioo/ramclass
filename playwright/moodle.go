@@ -20,6 +20,7 @@ func MoodleScrap(context *playwright.BrowserContext, username string, password s
 	if _, err = moodle.Goto("https://enlinea2024-1.uabcs.mx/login/"); err != nil {
 		log.Fatalf("could not goto: %v", err)
 	}
+	expect.Locator(moodle.Locator("#loginbtn")).ToBeVisible()
 	moodle.Locator("#username").Fill(username)
 	moodle.Locator("#password").Fill(password)
 	moodle.Locator("#loginbtn").Click()

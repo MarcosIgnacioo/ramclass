@@ -1,10 +1,8 @@
 package pw
 
-import "fmt"
-
 // Estas serian las unicas funciones que van a ser publicas en el package
 const (
-	headless = false
+	headless = true
 )
 
 func FullScrap(username string, password string) (Result, *Error) {
@@ -13,67 +11,51 @@ func FullScrap(username string, password string) (Result, *Error) {
 		return nil, (*Error)(NewError(err))
 	}
 
-	credentialsAsync := CreateAsyncScrapping(CredentialsScrap, context, username, password)
-	credentialsChannel := make(chan Result)
-	credentialsErrChannel := make(chan error)
-	go credentialsAsync(credentialsChannel, credentialsErrChannel)
+	credentialsResults, loginError := CredentialsScrap(context, username, password)
+
+	if loginError != nil {
+		CloseScrapper(playwright, browser, context)
+		return nil, (*Error)(NewError(loginError))
+	}
 
 	classRoomAsync := CreateAsyncScrapping(ClassroomScrap, context, username, password)
 	classRoomChannel := make(chan Result)
 	classRoomErrChannel := make(chan error)
 	go classRoomAsync(classRoomChannel, classRoomErrChannel)
 
+	moodleAsync := CreateAsyncScrapping(MoodleScrap, context, username, password)
+	moodleChannel := make(chan Result)
+	moodleErrChannel := make(chan error)
+	go moodleAsync(moodleChannel, moodleErrChannel)
+
 	kardexAsync := CreateAsyncScrapping(KardexScrap, context, username, password)
 	kardexChannel := make(chan Result)
 	kardexErrChannel := make(chan error)
 	go kardexAsync(kardexChannel, kardexErrChannel)
-
-	testc := make(chan Result)
-	testerr := make(chan error)
-	go kardexAsync(testc, testerr)
 
 	curricularMapAsync := CreateAsyncScrapping(CurricularMapScrap, context, username, password)
 	curricularChannel := make(chan Result)
 	curricularErrChannel := make(chan error)
 	go curricularMapAsync(curricularChannel, curricularErrChannel)
 
-	moodleAsync := CreateAsyncScrapping(MoodleScrap, context, username, password)
-	moodleChannel := make(chan Result)
-	moodleErrChannel := make(chan error)
-	go moodleAsync(moodleChannel, moodleErrChannel)
-
 	// Getting the results from scrapping into channels
-	classRoomResults := <-classRoomChannel
-	classRoomErr := <-classRoomErrChannel
 
-	kardexResults := <-kardexChannel
-	kardexErr := <-kardexErrChannel
-
-	curricularResults := <-curricularChannel
-	curricularErr := <-curricularErrChannel
+	// fmt.Println(<-classRoomChannel)
 
 	moodleResults := <-moodleChannel
-	moodleErr := <-moodleErrChannel
 
-	credentialsResults := <-credentialsChannel
-	credentialsErr := <-credentialsErrChannel
+	classRoomResults := <-classRoomChannel
 
-	fmt.Println(kardexErr)
-	fmt.Println(classRoomErr)
-	fmt.Println(curricularErr)
-	fmt.Println(moodleErr)
-	// fmt.Println(credentialsResults.GetResult()...)
-	fmt.Println(credentialsErr)
+	kardexResults := <-kardexChannel
+
+	curricularResults := <-curricularChannel
 
 	// aqui se termina  el scrapping
 	closingErr := CloseScrapper(playwright, browser, context)
 	if closingErr != nil {
-		fmt.Println("wep")
 		return nil, (*Error)(NewError(closingErr))
 	}
-	// fmt.Println(classRoomErr)
-	return NewScrappedInfo(moodleResults.GetResult(), classRoomResults.GetResult(), kardexResults.GetResult(), curricularResults.GetResult(), credentialsResults.GetResult()), (*Error)(NewError(classRoomErr))
-	// return NewScrappedInfo(nil, nil, nil, nil, credentialsResults.GetResult()), nil
+	return NewScrappedInfo(moodleResults.GetResult(), classRoomResults.GetResult(), kardexResults.GetResult(), curricularResults.GetResult(), credentialsResults), (*Error)(NewError(nil))
 }
 
 func Moodle(username string, password string) (Result, *Error) {

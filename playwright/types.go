@@ -74,7 +74,7 @@ type ScrappedInfo struct {
 	ClassRoom     []interface{} `json:"classroom"`
 	Kardex        []interface{} `json:"kardex"`
 	CurricularMap []interface{} `json:"curricular_map"`
-	Student       []interface{} `json:"student"`
+	Student       Result        `json:"student"`
 }
 
 func (si *ScrappedInfo) GetResult() []interface{} {
@@ -92,7 +92,7 @@ func (si *ScrappedInfo) String() string {
 // Cosas que cambiaria
 // En vez de tener que usar interface{} lo que haria seria crear una propia interfaz generica que se llamase Info o algo asi
 // Todos los structs de scrapping implementarian el metodo o metodos de dicha interfaz, y asi podemos usar todos en este struct por ejemplo en vez de ser interface{} serian sus tipos correspondientes, en realidad no se para que ocupo la interfaz generica, diria que para la funcion que retorna los datos pero creo que go lo hace por si mismo asi que pues deberia de experimentar con eso despues
-func NewScrappedInfo(md []interface{}, cr []interface{}, kr []interface{}, cm []interface{}, st []interface{}) *ScrappedInfo {
+func NewScrappedInfo(md []interface{}, cr []interface{}, kr []interface{}, cm []interface{}, st Result) *ScrappedInfo {
 	return &ScrappedInfo{
 		Moodle:        md,
 		ClassRoom:     cr,

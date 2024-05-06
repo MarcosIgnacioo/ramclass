@@ -17,32 +17,35 @@ const (
 	OPTATIVE = "sce-tipo-optativa"
 )
 
-func SiiaLogin(context *playwright.BrowserContext, username string, password string) error {
-	siia, err := (*context).NewPage()
-	if err != nil {
-		log.Fatalf("could not create page: %v", err)
+func siiaLogin(siia *playwright.Page, url string, username string, password string) error {
+
+	(*siia).Goto(url)
+	// Si redirige bien a la url que queremos significa que ya habia iniciado sesion por lo que simplemente hacemos un early return
+	if (*siia).URL() == url {
+		return nil
 	}
-	siia.Goto("https://siia.uabcs.mx/")
-	expect.Locator(siia.Locator("#ctl00_placeHolder_btnIniciarSesion")).ToBeVisible()
-	siia.Locator("#ctl00_placeHolder_txtLogin").Fill(username)
-	siia.Locator("#ctl00_placeHolder_txtPassword").Fill(password)
-	siia.Locator("#ctl00_placeHolder_btnIniciarSesion").Click()
-	if siia.URL() == "https://siia.uabcs.mx/" {
+	expect.Locator((*siia).Locator("#ctl00_ContentPlaceHolder1_initLinkButton1")).ToBeVisible()
+	(*siia).Locator("#ctl00_ContentPlaceHolder1_loginTextBox").Fill(username)
+	(*siia).Locator("#ctl00_ContentPlaceHolder1_passwordTextBox").Fill(password)
+	(*siia).Locator("#ctl00_ContentPlaceHolder1_initLinkButton1").Click()
+
+	if (*siia).URL() != url {
 		return errors.New("Credenciales incorrectas")
 	}
-	siia.Close()
 	return nil
 }
 
 func KardexScrap(context *playwright.BrowserContext, username string, password string) (Result, error) {
-	err := SiiaLogin(context, username, password)
+	kardexUrl := "https://siia.uabcs.mx/siia2019/alumnos/kardex.aspx?gr=alumno"
+	siia, _ := (*context).NewPage()
+	siia.Goto(kardexUrl)
+	err := siiaLogin(&siia, kardexUrl, username, password)
 	if err != nil {
 		return nil, err
 	}
 	subjectsArrayList := arraylist.NewArrayList(100)
-	siia, _ := (*context).NewPage()
-	siia.Goto("https://siia.uabcs.mx/siia2019/alumnos/kardex.aspx?gr=alumno&op=kardex")
 	//
+	expect.Locator(siia.Locator("tbody tr")).ToBeVisible()
 	rows, err := siia.Locator("tbody tr").All()
 	if err != nil {
 		log.Fatalf("rows not loaded %v", err)
@@ -76,18 +79,20 @@ func KardexScrap(context *playwright.BrowserContext, username string, password s
 }
 
 func CurricularMapScrap(context *playwright.BrowserContext, username string, password string) (Result, error) {
-	err := SiiaLogin(context, username, password)
-	if err != nil {
-		return nil, err
-	}
+	curricularUrl := "https://siia.uabcs.mx/siia2019/alumnos/mapaacademico.aspx?gr=alumno"
 	subjectsArrayList := arraylist.NewArrayList(100)
 
 	siia, _ := (*context).NewPage()
-	siia.Goto("https://siia.uabcs.mx/siia2019/alumnos/mapaacademico.aspx?gr=alumno&op=mapa_alum")
+	err := siiaLogin(&siia, curricularUrl, username, password)
+	// if err != nil {
+	// 	// log.Fatalf("login error %v", err)
+	// 	fmt.Println(err)
+	// 	return nil, err
+	// }
 	//
+	expect.Locator(siia.Locator(".sce-semester")).ToBeVisible()
 	semesters, err := siia.Locator(".sce-semester").All()
 	if err != nil {
-		log.Fatalf("rows not loaded %v", err)
 		return nil, err
 	}
 	//
@@ -147,12 +152,12 @@ func CurricularMapScrap(context *playwright.BrowserContext, username string, pas
 
 // XD
 func CredentialsScrap(context *playwright.BrowserContext, username string, password string) (Result, error) {
-	err := SiiaLogin(context, username, password)
+	siia, _ := (*context).NewPage()
+	credentialsUrl := "https://siia.uabcs.mx/siia2019/alumnos/credenciales.aspx?gr=alumno"
+	err := siiaLogin(&siia, credentialsUrl, username, password)
 	if err != nil {
 		return nil, err
 	}
-	siia, _ := (*context).NewPage()
-	siia.Goto("https://siia.uabcs.mx/siia2019/alumnos/credenciales.aspx?gr=alumno&op=photocrede")
 	expect.Locator(siia.Locator("#ctl00_contentPlaceHolder_alumnosFormView_AlumnoFieldset_AlumnoIDLabel")).ToBeVisible()
 	controlNumber, _ := siia.Locator("#ctl00_contentPlaceHolder_alumnosFormView_AlumnoFieldset_AlumnoIDLabel").InnerText()
 	studentId, _ := strconv.Atoi(controlNumber)
