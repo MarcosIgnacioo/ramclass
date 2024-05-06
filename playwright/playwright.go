@@ -2,11 +2,9 @@ package pw
 
 // CERRAR PLAYWRIGHT CADA VEZ QUE SE HAGA UN SCRAPPPPP !!!
 import (
-	"fmt"
-	"log"
-
 	"github.com/MarcosIgnacioo/arraylist"
 	"github.com/playwright-community/playwright-go"
+	"log"
 )
 
 func ScrapMoodleAndClassroom(username string, password string) (*ScrappedInfo, *LoginError) {
@@ -20,11 +18,22 @@ func ScrapMoodleAndClassroom(username string, password string) (*ScrappedInfo, *
 		log.Fatalf("could not launch browser: %v", err)
 	}
 
+	context, err := browser.NewContext()
+	if err != nil {
+		log.Fatalf("could not launch browser: %v", err)
+	}
+
 	cs := make(chan []interface{})
 
-	go SiiaLogin(&browser, username, password)
+	ctx, err := browser.NewContext()
+
+	if err != nil {
+		return nil, NewError(err)
+	}
+
+	go SiiaLogin(&ctx, username, password)
 	go ClassroomScrapAsync(&browser, username, password, cs)
-	ms, logErr := MoodleScrap(&browser, username, password)
+	ms, logErr := MoodleScrap(&context, username, password)
 
 	if logErr != nil {
 		if err = browser.Close(); err != nil {
@@ -50,26 +59,31 @@ func ScrapMoodleAndClassroom(username string, password string) (*ScrappedInfo, *
 	}
 
 	mArr := moodleArray.GetArray()
-	return NewScrappedInfo(mArr, classroomArray), nil
+	return NewScrappedInfo(mArr, classroomArray, nil, nil, nil), nil
 }
 
 // false -> abre el navegador con gui
 //
 // true -> no abre el navegador lo hace por websockets(oalgoasi)
-func GenerateBrowser(headless bool) (*playwright.Browser, *playwright.Playwright, error) {
+func GenerateContext(headless bool) (*playwright.BrowserContext, *playwright.Browser, *playwright.Playwright, error) {
 	//
 	pw, err := playwright.Run()
 	//
 	if err != nil {
-		return nil, nil, err
+		return nil, nil, nil, err
 	}
 	//
 	browser, err := pw.Chromium.Launch(playwright.BrowserTypeLaunchOptions{Headless: playwright.Bool(headless)})
 	//
 	if err != nil {
-		return nil, pw, err
+		return nil, nil, pw, err
 	}
-	return &browser, pw, err
+	context, err := browser.NewContext()
+
+	if err != nil {
+		return nil, nil, pw, err
+	}
+	return &context, &browser, pw, err
 	//
 }
 
@@ -84,10 +98,15 @@ func ScrapMoodle(username string, password string) (*[]interface{}, *LoginError)
 	browser, err := pw.Chromium.Launch(playwright.BrowserTypeLaunchOptions{Headless: playwright.Bool(true)})
 
 	if err != nil {
-		log.Fatalf("could not launch browser: %v", err)
+		return nil, NewError(err)
 	}
 
-	ms, logErr := MoodleScrap(&browser, username, password)
+	context, err := browser.NewContext()
+	if err != nil {
+		return nil, NewError(err)
+	}
+
+	ms, logErr := MoodleScrap(&context, username, password)
 
 	if logErr != nil {
 		if err = browser.Close(); err != nil {
@@ -122,7 +141,12 @@ func ScrapClassroom(username string, password string) (Result, *LoginError) {
 		log.Fatalf("could not launch browser: %v", err)
 	}
 
-	ca, logErr := ClassroomScrap(&browser, username, password)
+	context, err := browser.NewContext()
+
+	ca, logErr := ClassroomScrap(&context, username, password)
+
+	context.Close()
+	CloseScrapper(pw, &browser, &context)
 
 	if logErr != nil {
 		if err = browser.Close(); err != nil {
@@ -135,24 +159,4 @@ func ScrapClassroom(username string, password string) (Result, *LoginError) {
 	}
 
 	return ca, nil
-}
-
-func Testing(username string, password string) {
-	browser, pw, err := GenerateBrowser(false)
-	if err != nil {
-		panic(err)
-	}
-
-	cr := make(chan Result)
-	ce := make(chan error)
-	asyncClassroom := CreateAsyncScrapping(ClassroomScrap, browser, username, password)
-	go asyncClassroom(cr, ce)
-	mood, err, _, _ := ChronoScrap(MoodleScrap, true, browser, username, password)
-	err = CloseScrapper(pw, browser)
-	if err != nil {
-		panic(err)
-	}
-	classroomAssigments := <-cr
-	fmt.Println(classroomAssigments.GetResult()...)
-	fmt.Println(mood.GetResult()...)
 }

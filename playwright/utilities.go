@@ -52,9 +52,9 @@ func ChronoScrap(scrapFn func(*playwright.Browser, string, string) (Result, erro
 	}
 }
 
-func CreateAsyncScrapping(scrapFn func(*playwright.Browser, string, string) (Result, error), browser *playwright.Browser, username string, password string) func(chan Result, chan error) {
+func CreateAsyncScrapping(scrapFn func(*playwright.BrowserContext, string, string) (Result, error), context *playwright.BrowserContext, username string, password string) func(chan Result, chan error) {
 	return func(cr chan Result, ce chan error) {
-		r, e := scrapFn(browser, username, password)
+		r, e := scrapFn(context, username, password)
 		cr <- r
 		ce <- e
 	}
@@ -79,14 +79,18 @@ func CreateAsyncScrapping(scrapFn func(*playwright.Browser, string, string) (Res
 // playwright: (*playwright.Playwright) Se debe de pasar el propio playwright que se tiene que cerrar
 // browser: (*playwright.Browser) Se tiene que pasar el propio navegador que se tiene que cerrar
 // retorna error, nil en caso de no haber ningún error, caso contrario ocurrió un error cerrando el browser o playwright
-func CloseScrapper(pw *playwright.Playwright, browser *playwright.Browser) error {
+func CloseScrapper(pw *playwright.Playwright, browser *playwright.Browser, context *playwright.BrowserContext) error {
+	var err error
 	if err := (*browser).Close(); err != nil {
-		return errors.New(fmt.Sprintf("could not close browser: %v", err))
+		err = errors.New(fmt.Sprintf("could not close browser: %v", err))
+	}
+	if err := (*context).Close(); err != nil {
+		err = errors.New(fmt.Sprintf("could not close context: %v", err))
 	}
 	if err := pw.Stop(); err != nil {
-		return errors.New(fmt.Sprintf("could not stop Playwright: %v", err))
+		err = errors.New(fmt.Sprintf("could not stop Playwright: %v", err))
 	}
-	return nil
+	return err
 }
 
 func screenshot(page playwright.Page, name string) {
@@ -112,4 +116,32 @@ func closingError(logErr *error, browser *playwright.Browser, pw *playwright.Pla
 		return NewLoginError((*logErr).Error())
 	}
 	return nil
+}
+
+type Response struct {
+	Res Result `json:"res"`
+	Err error  `json:"err"`
+}
+
+func Cronos(sync bool, browser *playwright.Browser, username string, password string, fn func(browser *playwright.Browser, username string, password string) (Result, error)) Response {
+	if !sync {
+		c := make(chan Response)
+		go func() {
+			var r Response
+			r.Res, r.Err = fn(browser, username, password)
+			c <- r
+		}()
+		return <-c
+	} else {
+		res, err := fn(browser, username, password)
+		fmt.Println("this should go first")
+		return Response{Res: res, Err: err}
+	}
+}
+
+func Asynchronize(fn func(args ...interface{}) []interface{}) func(chan interface{}, interface{}) {
+	return func(c chan interface{}, s interface{}) {
+		res := fn(s)
+		c <- res
+	}
 }

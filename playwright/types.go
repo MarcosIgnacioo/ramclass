@@ -70,8 +70,11 @@ func NewClassRoomInfo(cr []interface{}) *ClassRoomInfo {
 // ScrappedInfo types
 
 type ScrappedInfo struct {
-	Moodle    []interface{} `json:"moodle"`
-	ClassRoom []interface{} `json:"classroom"`
+	Moodle        []interface{} `json:"moodle"`
+	ClassRoom     []interface{} `json:"classroom"`
+	Kardex        []interface{} `json:"kardex"`
+	CurricularMap []interface{} `json:"curricular_map"`
+	Student       []interface{} `json:"student"`
 }
 
 func (si *ScrappedInfo) GetResult() []interface{} {
@@ -86,18 +89,34 @@ func (si *ScrappedInfo) String() string {
 	return assigments
 }
 
-func NewScrappedInfo(md []interface{}, cr []interface{}) *ScrappedInfo {
+// Cosas que cambiaria
+// En vez de tener que usar interface{} lo que haria seria crear una propia interfaz generica que se llamase Info o algo asi
+// Todos los structs de scrapping implementarian el metodo o metodos de dicha interfaz, y asi podemos usar todos en este struct por ejemplo en vez de ser interface{} serian sus tipos correspondientes, en realidad no se para que ocupo la interfaz generica, diria que para la funcion que retorna los datos pero creo que go lo hace por si mismo asi que pues deberia de experimentar con eso despues
+func NewScrappedInfo(md []interface{}, cr []interface{}, kr []interface{}, cm []interface{}, st []interface{}) *ScrappedInfo {
 	return &ScrappedInfo{
-		Moodle:    md,
-		ClassRoom: cr,
+		Moodle:        md,
+		ClassRoom:     cr,
+		Kardex:        kr,
+		CurricularMap: cm,
+		Student:       st,
 	}
+}
+
+type Error struct {
+	ErrorMessage interface{} `json:"error_message"`
+}
+
+func (err *Error) GetResult() []interface{} {
+	return []interface{}{err.ErrorMessage}
 }
 
 type LoginError struct {
 	ErrorMessage interface{} `json:"error_message"`
 }
 
-func (le *LoginError) GetResult() {}
+func (le *LoginError) GetResult() []interface{} {
+	return nil
+}
 
 func NewLoginError(m string) *LoginError {
 	return &LoginError{ErrorMessage: m}

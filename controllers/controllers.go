@@ -11,19 +11,20 @@ func LogInUser(c *gin.Context) {
 	username := c.PostForm("username")
 	password := c.PostForm("password")
 
-	assigments, err := pw.ScrapMoodleAndClassroom(username, password)
+	assigments, err := pw.FullScrap(username, password)
 
-	if err != nil {
+	if err.ErrorMessage != nil {
 		c.JSON(http.StatusTeapot, err)
 		return
 	}
+
 	c.JSON(http.StatusOK, assigments)
 }
 
 func GetMoodleAssigments(c *gin.Context) {
 	username := c.PostForm("username")
 	password := c.PostForm("password")
-	assigments, err := pw.ScrapMoodle(username, password)
+	assigments, err := pw.Moodle(username, password)
 
 	if err != nil {
 		c.JSON(http.StatusTeapot, err)
@@ -35,7 +36,7 @@ func GetMoodleAssigments(c *gin.Context) {
 func GetClassroomAssigments(c *gin.Context) {
 	username := c.PostForm("username")
 	password := c.PostForm("password")
-	assigments, err := pw.ScrapClassroom(username, password)
+	assigments, err := pw.Classroom(username, password)
 
 	if err != nil {
 		c.JSON(http.StatusTeapot, err)
@@ -48,7 +49,7 @@ func GetClassroomAssigments(c *gin.Context) {
 func GetUserCredentials(c *gin.Context) {
 	username := c.PostForm("username")
 	password := c.PostForm("password")
-	subjects, err := pw.SiiaInit("credentials", username, password)
+	subjects, err := pw.StudentCredential(username, password)
 
 	if err != nil {
 		c.JSON(http.StatusTeapot, err)
@@ -61,7 +62,7 @@ func GetUserCredentials(c *gin.Context) {
 func GetKardex(c *gin.Context) {
 	username := c.PostForm("username")
 	password := c.PostForm("password")
-	subjects, err := pw.SiiaInit("kardex", username, password)
+	subjects, err := pw.Grades(username, password)
 
 	if err != nil {
 		c.JSON(http.StatusTeapot, err)
@@ -75,7 +76,7 @@ func GetKardex(c *gin.Context) {
 func GetCurricularMap(c *gin.Context) {
 	username := c.PostForm("username")
 	password := c.PostForm("password")
-	subjects, err := pw.SiiaInit("map", username, password)
+	subjects, err := pw.CareerSubjects(username, password)
 	if err != nil {
 		c.JSON(http.StatusTeapot, err)
 		return

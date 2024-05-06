@@ -36,8 +36,8 @@ func ClassroomScrapAsync(browser *playwright.Browser, username string, password 
 	cs <- scrappedAssigments.GetArray()
 }
 
-func ClassroomScrap(browser *playwright.Browser, username string, password string) (Result, error) {
-	classroom, err := (*browser).NewPage()
+func ClassroomScrap(context *playwright.BrowserContext, username string, password string) (Result, error) {
+	classroom, err := (*context).NewPage()
 	if err != nil {
 		log.Fatalf("could not create page: %v", err)
 	}
@@ -63,6 +63,7 @@ func ClassroomScrap(browser *playwright.Browser, username string, password strin
 		scrappedAssigment := NewAssigment(subject, title, link, utils.DateFormat{})
 		scrappedAssigments.Push(scrappedAssigment)
 	}
+	classroom.Close()
 	classroomAssigmentsArray := scrappedAssigments.GetArray()
 	return NewClassRoomInfo(classroomAssigmentsArray), nil
 }

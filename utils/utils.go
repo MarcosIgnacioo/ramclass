@@ -42,11 +42,3 @@ func (df *DateFormat) String() string {
 type Result interface {
 	GetResult()
 }
-
-// func GenerateAsyncFunction(c chan result, fn func() ) {
-// 	go func() {
-// 		var r result
-// 		r.value, r.err = fn()
-// 		c <- r
-// 	}()
-// }

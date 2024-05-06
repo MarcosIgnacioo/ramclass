@@ -10,8 +10,8 @@ import (
 	"github.com/playwright-community/playwright-go"
 )
 
-func MoodleScrap(browser *playwright.Browser, username string, password string) (Result, error) {
-	moodle, err := (*browser).NewPage()
+func MoodleScrap(context *playwright.BrowserContext, username string, password string) (Result, error) {
+	moodle, err := (*context).NewPage()
 	//
 	if err != nil {
 		log.Fatalf("could not create moodle: %v", err)
@@ -51,5 +51,6 @@ func MoodleScrap(browser *playwright.Browser, username string, password string) 
 		}
 		subjects.Push(NewAssigment(classSubject, assigmentTitle, link, *dateFormated))
 	}
+	moodle.Close()
 	return NewMoodleInfo(subjects.GetArray()), nil
 }
