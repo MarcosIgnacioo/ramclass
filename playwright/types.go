@@ -13,10 +13,10 @@ type Result interface {
 }
 
 type Assigment struct {
-	ClassSubject string           `json:"class_subject"`
-	Title        string           `json:"title"`
-	Link         string           `json:"link"`
-	Date         utils.DateFormat `json:"date"`
+	ClassSubject string           `bson:"class_subject" json:"class_subject"`
+	Title        string           `bson:"title" json:"title"`
+	Link         string           `bson:"link" json:"link"`
+	Date         utils.DateFormat `bson:"date" json:"date"`
 }
 
 func NewAssigment(c string, t string, l string, d utils.DateFormat) Assigment {
@@ -48,7 +48,7 @@ func NewMoodleInfo(mi []interface{}) *MoodleInfo {
 // ClassRoom Types
 
 type ClassRoomInfo struct {
-	ClassRoom []interface{} `json:"classroom"`
+	ClassRoom []interface{} `bson:"classroom" json:"classroom"`
 }
 
 func (ci *ClassRoomInfo) GetResult() []interface{} {
@@ -70,11 +70,11 @@ func NewClassRoomInfo(cr []interface{}) *ClassRoomInfo {
 // ScrappedInfo types
 
 type ScrappedInfo struct {
-	Moodle        []interface{} `json:"moodle"`
-	ClassRoom     []interface{} `json:"classroom"`
-	Kardex        []interface{} `json:"kardex"`
-	CurricularMap []interface{} `json:"curricular_map"`
-	Student       Result        `json:"student"`
+	Moodle        []interface{} `bson:"moodle" json:"moodle"`
+	ClassRoom     []interface{} `bson:"classroom" json:"classroom"`
+	Kardex        []interface{} `bson:"kardex" json:"kardex"`
+	CurricularMap []interface{} `bson:"curricular_map" json:"curricular_map"`
+	Student       Result        `bson:"student" json:"student"`
 }
 
 func (si *ScrappedInfo) GetResult() []interface{} {
@@ -103,7 +103,7 @@ func NewScrappedInfo(md []interface{}, cr []interface{}, kr []interface{}, cm []
 }
 
 type Error struct {
-	ErrorMessage interface{} `json:"error_message"`
+	ErrorMessage interface{} `bson:"error_message" json:"error_message"`
 }
 
 func (err *Error) GetResult() []interface{} {
@@ -111,7 +111,7 @@ func (err *Error) GetResult() []interface{} {
 }
 
 type LoginError struct {
-	ErrorMessage interface{} `json:"error_message"`
+	ErrorMessage interface{} `bson:"error_message" json:"error_message"`
 }
 
 func (le *LoginError) GetResult() []interface{} {
@@ -132,29 +132,31 @@ func NewError(m error) *LoginError {
 // User Types
 
 type User struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
+	Username string `bson:"username" json:"username"`
+	Password string `bson:"password" json:"password"`
 }
 
 // https://siia.uabcs.mx/siia2019/alumnos/credenciales.aspx?gr=alumno&op=photocrede
 type StudentInfo struct {
-	ControlNumber      int    `json:"control_number"`
-	Name               string `json:"name"`
-	InstitutionalEmail string `json:"institutional_email"`
-	Campus             string `json:"campus"`
-	Career             string `json:"career"`
-	Period             string `json:"period"`
-	Semester           int    `json:"semester"`
-	Group              string `json:"group"`
-	Turn               string `json:"turn"`
-	State              string `json:"state"`
+	ControlNumber      int    `bson:"control_number" json:"control_number"`
+	Name               string `bson:"name" json:"name"`
+	InstitutionalEmail string `bson:"institutional_email" json:"institutional_email"`
+	Campus             string `bson:"campus" json:"campus"`
+	Career             string `bson:"career" json:"career"`
+	Period             string `bson:"period" json:"period"`
+	Semester           int    `bson:"semester" json:"semester"`
+	Group              string `bson:"group" json:"group"`
+	Turn               string `bson:"turn" json:"turn"`
+	State              string `bson:"state" json:"state"`
 }
 
 func (s *StudentInfo) GetResult() []interface{} {
 	return []interface{}{s.ControlNumber, s.Name, s.InstitutionalEmail, s.InstitutionalEmail, s.Campus, s.Career, s.Period, s.Semester, s.Semester, s.Group, s.Turn, s.State}
 }
 
-// Control number, name, email, campus, period, semester, group, turn
+// Control:int, Number:string, Name:string, Email:string, Campus:string,
+//
+// Period:string, Semester:int, Group:string, Turn:string, State:string
 func NewStudentInfo(cn int, n string, ie string, c string, ca string, p string, s int, g string, t string, st string) *StudentInfo {
 	return &StudentInfo{ControlNumber: cn, Name: n, InstitutionalEmail: ie, Campus: c, Career: ca, Period: p, Semester: s, Group: g, Turn: t, State: st}
 }
@@ -175,15 +177,15 @@ func NewKardex(k []interface{}) *Kardex {
 }
 
 type Subject struct {
-	Semester int    `json:"semester"`
-	Subject  string `json:"subject_name"`
-	Group    string `json:"group"`
-	Turn     string `json:"turn"`
-	Period   string `json:"period"`
-	Grade    int    `json:"grade"`
-	State    string `json:"state"`
-	Type     string `json:"type"`
-	Teacher  string `json:"teacher"`
+	Semester int    `bson:"semester" json:"semester"`
+	Subject  string `bson:"subject_name" json:"subject_name"`
+	Group    string `bson:"group" json:"group"`
+	Turn     string `bson:"turn" json:"turn"`
+	Period   string `bson:"period" json:"period"`
+	Grade    int    `bson:"grade" json:"grade"`
+	State    string `bson:"state" json:"state"`
+	Type     string `bson:"type" json:"type"`
+	Teacher  string `bson:"teacher" json:"teacher"`
 }
 
 func NewSubject(s int, su string, g string, t string, p string, gr int, st string, ty string, te string) *Subject {
@@ -193,14 +195,14 @@ func NewSubject(s int, su string, g string, t string, p string, gr int, st strin
 // Curricular map type
 
 type CurricularSubject struct {
-	Semester int         `json:"semester"`
-	Subject  string      `json:"subject_name"`
-	Period   interface{} `json:"period"`
-	Grade    interface{} `json:"grade"`
-	State    interface{} `json:"state"`
-	Credits  interface{} `json:"credits"`
-	Type     interface{} `json:"type"`
-	Teacher  interface{} `json:"teacher"`
+	Semester int         `bson:"semester" json:"semester"`
+	Subject  string      `bson:"subject_name" json:"subject_name"`
+	Period   interface{} `bson:"period" json:"period"`
+	Grade    interface{} `bson:"grade" json:"grade"`
+	State    interface{} `bson:"state" json:"state"`
+	Credits  interface{} `bson:"credits" json:"credits"`
+	Type     interface{} `bson:"type" json:"type"`
+	Teacher  interface{} `bson:"teacher" json:"teacher"`
 }
 
 func (cs CurricularSubject) String() string {

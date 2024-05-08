@@ -7,13 +7,17 @@ import (
 	"reflect"
 
 	"github.com/MarcosIgnacioo/controllers"
+	"github.com/MarcosIgnacioo/db"
 	pw "github.com/MarcosIgnacioo/playwright"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
+	// fmt.Println("wep")
+	db.Init()
+	db.Mongo()
 	// scraptest()
-	server()
+	// server()
 
 	// Compute(false)
 	// Compute(false)
