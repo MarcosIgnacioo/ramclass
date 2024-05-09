@@ -57,6 +57,7 @@ func Mongo() {
 	// coll := DB.Collection("students")
 
 	ramsesupdate := pw.NewStudentInfo(999, "ramsesactualizado", "ramses@gmail.com", "La paz", "2024-I", "Ing Software", 6, "A", "M", "Active")
+
 	// r, e := coll.InsertOne(context.TODO(), ramses)
 
 	// class_subject	"Ingeniería de Software II Turno Matutino"

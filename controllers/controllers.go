@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
 	pw "github.com/MarcosIgnacioo/playwright"
@@ -10,6 +11,8 @@ import (
 func LogInUser(c *gin.Context) {
 	username := c.PostForm("username")
 	password := c.PostForm("password")
+	fmt.Println("asdfa")
+	fmt.Println(c.Request)
 
 	assigments, err := pw.FullScrap(username, password)
 

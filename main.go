@@ -7,17 +7,16 @@ import (
 	"reflect"
 
 	"github.com/MarcosIgnacioo/controllers"
-	"github.com/MarcosIgnacioo/db"
 	pw "github.com/MarcosIgnacioo/playwright"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	// fmt.Println("wep")
-	db.Init()
-	db.Mongo()
+	// db.Init()
+	// db.Mongo()
 	// scraptest()
-	// server()
+	server()
 
 	// Compute(false)
 	// Compute(false)
@@ -126,6 +125,7 @@ func server() {
 	r.Static("/public/assets", "./public/assets/")
 	r.LoadHTMLGlob("views/*")
 	r.GET("/", ramses)
+	r.GET("/create-account", ramses)
 	r.GET("/classroom-form", ramses)
 	r.GET("/moodle-form", ramses)
 	r.GET("/kardex-form", ramses)
@@ -134,6 +134,7 @@ func server() {
 	r.GET("/test", ramses)
 
 	r.POST("/login-user", controllers.LogInUser)
+	r.POST("/create-account", controllers.LogInUser)
 
 	r.POST("/classroom", controllers.GetClassroomAssigments)
 	r.POST("/moodle", controllers.GetMoodleAssigments)
