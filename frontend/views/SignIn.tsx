@@ -1,24 +1,38 @@
-import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react'
-import login from '../functions/login.ts'
 import { useNavigate } from "react-router-dom";
+import useLogin from '../functions/useLogin';
+import UserData from '../classes/UserData';
 
 export default function SignIn() {
 
-    interface UserData {
-        username: string | FormDataEntryValue
-        password: string | FormDataEntryValue
-    }
-
     const [loginParams, setLoginParams] = useState<UserData | null>(null);
-    const response = useQuery(
-        {
-            queryKey: ["user", loginParams],
-            queryFn: login
-        }
+    const response = useLogin(loginParams)
+
+    if (response.isError) return (<div>
+        <h2>oh no</h2>
+    </div>)
+
+    if (response.isLoading) return (
+        <div className="loading-pane">
+            <h2 className="loader">o</h2>
+        </div>
     )
-    const navigate = useNavigate
-    return (
+
+    if (response.isSuccess) {
+        const { classroom, curricular_map, kardex, moodle, student } = response.data
+        localStorage.setItem("classroom", JSON.stringify(classroom))
+        localStorage.setItem("moodle", JSON.stringify(moodle))
+        localStorage.setItem("kardex", JSON.stringify(kardex))
+        localStorage.setItem("curricular_map", JSON.stringify(curricular_map))
+        localStorage.setItem("student", JSON.stringify(student))
+        localStorage.setItem("identifier", JSON.stringify(loginParams?.username))
+        localStorage.setItem("password", JSON.stringify(loginParams?.password))
+        return (
+            <div className="loading-pane">
+                <h2 className="loader">{student.name}</h2>
+            </div>
+        )
+    } return (
         <form onSubmit={(e) => {
             const formData = new FormData(e.currentTarget)
             const data = {
@@ -26,8 +40,6 @@ export default function SignIn() {
                 password: formData.get("password") ?? ""
             }
             setLoginParams(data)
-            console.log("ou yea diamantes")
-            console.log(response)
             e.preventDefault()
         }}>
             <label htmlFor="username">Creando AAA el frontend</label>
@@ -39,3 +51,4 @@ export default function SignIn() {
     )
     // Poner en el boton que no recarge la pagina que namas pues haga el cambio d ruta o asi
 }
+

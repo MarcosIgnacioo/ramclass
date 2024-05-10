@@ -26,7 +26,6 @@ function Application() {
         <div>
             <Title title="Ramclass" />
             <BrowserRouter>
-
                 <QueryClientProvider client={queryClient}>
                     <Routes >
                         <Route path='/' element={<SignIn />} />
@@ -35,9 +34,8 @@ function Application() {
                         <Route path='/kardex-form' element={<Kardex />} />
                         <Route path='/curricular-form' element={<Curricular />} />
                         <Route path='/credentials-form' element={<Credentials />} />
-                        <Route path='/test' element={<Prueba />} />
+                        <Route path='/test' element={<Prueba qc={queryClient} />} />
                     </Routes>
-
                 </QueryClientProvider>
             </BrowserRouter>
             <div data-v-e62ee844="" className="retro-overlay screen-h screen-w"></div>

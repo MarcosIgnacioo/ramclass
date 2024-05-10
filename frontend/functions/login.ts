@@ -1,4 +1,5 @@
-const fetchSearch = ({ queryKey }) => {
+const fetchSearch = async ({ queryKey }) => {
+    console.log("estamosw los que estamos")
     const data = queryKey[1]
     const username = data.username
     const password = data.password
@@ -17,11 +18,16 @@ const fetchSearch = ({ queryKey }) => {
         body: urlencoded,
         redirect: "follow"
     };
-    fetch("http://localhost:8080/login-user", requestOptions)
-        .then((response) => {
-            return response.text()
-        })
-        .then((result) => console.log(result))
-        .catch((error) => console.error(error));
+    const apiResponse = await fetch("http://localhost:8080/login-user", requestOptions)
+    if (!apiResponse.ok) {
+        throw new Error(`Credentials ${username}, ${password} not okay`);
+    }
+
+    return apiResponse.json()
+    // .then((result) => {
+    //     console.log("aqui andamos")
+    //     console.log(result)
+    // })
+    // .catch((error) => console.error(error));
 }
-export default fetchSearch
+export default fetchSearch;
