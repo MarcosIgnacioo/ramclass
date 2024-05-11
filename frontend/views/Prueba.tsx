@@ -1,16 +1,22 @@
 import React, { useState } from 'react'
-import useLogin from '../functions/useLogin'
-import getUser from '../functions/getUser'
 import UserData from '../classes/UserData';
-export default function Prueba(qc) {
-    console.log(qc)
+import useLogin from '../functions/useLogin';
 
-    const [loginParams, setLoginParams] = useState<UserData | null>(null);
-    const user = getUser()
-    console.log(user)
-    const response = useLogin(user)
-    console.log(response.data)
+
+export default function Prueba() {
+    const [test, setTest] = useState<UserData | null>(null);
+    const results = useLogin(test)
+    console.log(results)
+    console.log(results.data)
+    const testing = new UserData("fra2_21", "Saw211234566")
     return (
-        <h1> hola esto es una prueba</h1 >
+        <div>
+            <button type="button" onClick={() => {
+                setTest(testing)
+            }}>VERGA</button>
+            <h1>FUNCTIONA POR FAVOR</h1>
+        </div>
     )
+    // Poner en el boton que no recarge la pagina que namas pues haga el cambio d ruta o asi
 }
+

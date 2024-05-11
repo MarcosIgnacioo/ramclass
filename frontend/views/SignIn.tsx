@@ -1,12 +1,19 @@
-import React, { useState } from 'react'
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useState } from 'react'
 import useLogin from '../functions/useLogin';
 import UserData from '../classes/UserData';
+import getInfo from '../functions/aaa';
+import { useUser, useUserUpdate } from '../functions/UserContext';
 
 export default function SignIn() {
 
     const [loginParams, setLoginParams] = useState<UserData | null>(null);
-    const response = useLogin(loginParams)
+    const userInfo = useUser()
+    const updateUser = useUserUpdate()
+    updateUser(loginParams)
+
+    console.log("wep?", userInfo)
+
+    const response = useLogin(userInfo)
 
     if (response.isError) return (<div>
         <h2>oh no</h2>
@@ -32,22 +39,29 @@ export default function SignIn() {
                 <h2 className="loader">{student.name}</h2>
             </div>
         )
-    } return (
-        <form onSubmit={(e) => {
-            const formData = new FormData(e.currentTarget)
-            const data = {
-                username: formData.get("username") ?? "",
-                password: formData.get("password") ?? ""
-            }
-            setLoginParams(data)
-            e.preventDefault()
-        }}>
-            <label htmlFor="username">Creando AAA el frontend</label>
-            <input name="username" />
-            <label htmlFor="password">Ingresa tu contraseña</label>
-            <input name="password" type="password" />
-            <button type="submit">Iniciar sesion</button>
-        </form>
+    }
+
+    return (
+        <div>
+            <button type="button" onClick={updateUser}>como</button>
+            <form onSubmit={(e) => {
+                const formData = new FormData(e.currentTarget)
+                const data = {
+                    username: formData.get("username") ?? "",
+                    password: formData.get("password") ?? ""
+                }
+                setLoginParams(data)
+                updateUser(loginParams)
+                e.preventDefault()
+            }}>
+                <label htmlFor="username">Creando AAA el frontend</label>
+                <input name="username" />
+                <label htmlFor="password">Ingresa tu contraseña</label>
+                <input name="password" type="password" />
+                <button type="submit">Iniciar sesion</button>
+            </form>
+            <button type="button" onClick={getInfo}>qieuriqweriuo</button>
+        </div>
     )
     // Poner en el boton que no recarge la pagina que namas pues haga el cambio d ruta o asi
 }

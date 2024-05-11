@@ -1,10 +1,7 @@
 const fetchSearch = async ({ queryKey }) => {
-    console.log("estamosw los que estamos")
     const data = queryKey[1]
     const username = data.username
     const password = data.password
-    console.log(username)
-    console.log(password)
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
@@ -24,10 +21,5 @@ const fetchSearch = async ({ queryKey }) => {
     }
 
     return apiResponse.json()
-    // .then((result) => {
-    //     console.log("aqui andamos")
-    //     console.log(result)
-    // })
-    // .catch((error) => console.error(error));
 }
 export default fetchSearch;
