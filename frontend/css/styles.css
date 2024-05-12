@@ -331,3 +331,24 @@ header[data-v-e62ee844] {
 .text-title {
   font-size: clamp(2.5rem, 10dvw, 4rem);
 }
+
+.navbar {
+  display: flex;
+  direction: left;
+  justify-content: left;
+  align-items: start;
+  background-color: white;
+  height: fit-content;
+}
+.navbar * {
+  padding: 20px;
+  font-size: 2rem;
+  margin: 0 2% 0 2%;
+  color: #1d1d1d;
+}
+
+.navbar *:hover {
+  background-color: #1d1d1d;
+  border: #1d1d1d 1px solid;
+  color: white;
+}

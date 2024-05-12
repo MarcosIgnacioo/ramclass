@@ -125,6 +125,7 @@ func server() {
 	r.Static("/public/assets", "./public/assets/")
 	r.LoadHTMLGlob("views/*")
 	r.GET("/", ramses)
+	r.GET("/student", ramses)
 	r.GET("/create-account", ramses)
 	r.GET("/classroom-form", ramses)
 	r.GET("/moodle-form", ramses)
@@ -143,6 +144,8 @@ func server() {
 	r.POST("/curricular", controllers.GetCurricularMap)
 	r.POST("/credentials", controllers.GetUserCredentials)
 
+	r.GET("/ca", ramses)
+	r.GET("/cb", ramses)
 	// Esto va hasta el final!!!!! XD
 	r.Run()
 }
