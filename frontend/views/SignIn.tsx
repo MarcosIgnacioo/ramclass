@@ -13,8 +13,6 @@ export default function SignIn() {
  const updateUser = useUserUpdate()
  const navigate = useNavigate()
 
- updateUser(loginParams)
-
  const response = useLogin(loginParams)
 
  if (response.isError) return (<div>
@@ -32,6 +30,7 @@ export default function SignIn() {
   const { classroom, curricular_map, kardex, moodle, student } = response.data
   const { username, password } = userInfo
   setAll([moodle, classroom, kardex, curricular_map, student, username, password])
+  updateUser(loginParams)
   navigate("/student")
  }
 

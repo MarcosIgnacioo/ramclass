@@ -126,6 +126,7 @@ func server() {
 	r.LoadHTMLGlob("views/*")
 	r.GET("/", ramses)
 	r.GET("/student", ramses)
+	r.GET("/my-kardex", ramses)
 	r.GET("/create-account", ramses)
 	r.GET("/classroom-form", ramses)
 	r.GET("/moodle-form", ramses)

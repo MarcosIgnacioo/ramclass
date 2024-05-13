@@ -44,6 +44,8 @@ export const setAll = (all: string[]) => {
  }
 }
 
+// Checa la cache en el localstorage, si la propiedad data del react-query no tiene nada pues 
+// checamos la local
 export const checkBothCache = (response: UseQueryResult<any, Error>, cacheName: string) => {
  let userData: Array<String> | Object | null
  if (response.data == undefined) {

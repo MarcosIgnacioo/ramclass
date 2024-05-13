@@ -1,19 +1,22 @@
-import { useQueryClient } from '@tanstack/react-query'
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useUser } from './UserContext'
+import useNavBarEffect from '../functions/useNavBarEffect'
+
 
 export default function Navbar() {
- const queryClient = useQueryClient()
+ const userInfo = useUser()
+ const navBarData = useNavBarEffect(userInfo);
+
+ const navBarLinks: React.ReactElement[] = []
+ for (const link in navBarData) {
+  navBarLinks.push(<Link to={link} onClick={navBarData[link]["function"]}>{navBarData[link]["text"]}</Link>)
+ }
+
  return (
-  <div className='navbar' id='culo'>
-   <Link to="/">Home</Link>
-   <Link to="/student">student</Link>
-   <Link to="/" onClick={() => {
-    localStorage.clear()
-    queryClient.clear()
-    console.log("Logged out")
-   }}>Log-out</Link>
-  </div>
+  <div className='navbar'>
+   {navBarLinks}
+  </div >
  )
 }
 
