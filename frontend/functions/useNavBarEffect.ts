@@ -32,7 +32,7 @@ export default function useNavBarEffect(userQuery: UserData | null) {
      "text": "Mi Kardex",
      "function": ""
     },
-    "curricular-map": {
+    "my-curricular-map": {
      "text": "Mapa Curricular",
      "function": ""
     },

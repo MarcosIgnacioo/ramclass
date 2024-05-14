@@ -28,7 +28,7 @@ export default function SignIn() {
  if (response.isSuccess) {
   // Guardamos en localstorage los datos scrappeados como las credenciales para iniciar sesion de nuevo la siguiente vez que se abra la pagina 
   const { classroom, curricular_map, kardex, moodle, student } = response.data
-  const { username, password } = userInfo
+  const { username, password } = loginParams as UserData
   setAll([moodle, classroom, kardex, curricular_map, student, username, password])
   updateUser(loginParams)
   navigate("/student")

@@ -349,3 +349,21 @@ header[data-v-e62ee844] {
   border: #1d1d1d 1px solid;
   color: white;
 }
+
+.refetch {
+  background-color: white;
+  border: #1d1d1d 3px solid;
+  font-size: 1.2rem;
+  color: #1d1d1d;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.refetch:hover {
+  background-color: #100c09;
+  border: snow 3px solid;
+  font-size: 1.2rem;
+  color: snow;
+  padding: 5px;
+  border-radius: 5px;
+}

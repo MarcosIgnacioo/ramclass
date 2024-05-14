@@ -1,7 +1,7 @@
 import React from 'react'
 import { useUser } from '../components/UserContext';
 import useLogin from '../functions/useLogin';
-import getUser, { checkBothCache } from '../functions/store';
+import getUser, { LSK, checkBothCache } from '../functions/store';
 import StudentCredential from '../components/StudentCredential';
 import Student from '../classes/Student';
 
@@ -12,7 +12,7 @@ export default function Student() {
  if (!userLocal) return (<h1>Esperate wey</h1>)
  const user = useUser()
  const response = useLogin(user)
- const userData = checkBothCache(response, "student")
+ const userData = checkBothCache(response, LSK.Student)
  return (
   <StudentCredential {...userData as Student} />
  )

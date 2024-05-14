@@ -7,7 +7,7 @@ const useLogin = (loginParams: UserData | null | undefined) => {
   {
    queryKey: ["user", loginParams],
    queryFn: login,
-   enabled: ((loginParams?.username !== undefined && loginParams?.password !== undefined)),
+   enabled: ((loginParams?.username !== undefined && loginParams?.password !== undefined) || loginParams !== null),
   }
  )
 }

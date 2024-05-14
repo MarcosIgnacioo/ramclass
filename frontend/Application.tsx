@@ -10,6 +10,8 @@ import { UserProvider } from './components/UserContext';
 import Navbar from './components/Navbar';
 import Student from './views/Student';
 import Kardex from './views/Kardex';
+import { CurricularMap } from './views/CurricularMap';
+import Home from './views/Home';
 
 
 function Application() {
@@ -29,8 +31,11 @@ function Application() {
       <Navbar />
       <Routes >
        <Route path='/' element={<SignIn />} />
+       <Route path='/sign-in' element={<SignIn />} />
+       <Route path='/home' element={<Home />} />
        <Route path='/student' element={<Student />} />
        <Route path='/my-kardex' element={<Kardex />} />
+       <Route path='/my-curricular-map' element={<CurricularMap />} />
        <Route path='/test' element={<Prueba />} />
       </Routes>
      </UserProvider>
