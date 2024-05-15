@@ -67,14 +67,15 @@ export const checkContextUser = (user: UserData) => {
 // Checa la cache en el localstorage, si la propiedad data del react-query no tiene nada pues 
 // checamos la local
 export const checkBothCache = (response: UseQueryResult<any, Error>, cacheName: number) => {
- let userData: Array<Object> | Array<String> | Object | null
  const nameSpace = localNames[cacheName]
- if (response.data == undefined) {
-  userData = getCacheOf(nameSpace)
- } else {
-  userData = response.data[nameSpace]
+ const cache = getCacheOf(nameSpace)
+ if (response.data !== undefined) {
+  if (response.data[nameSpace].length != 0) {
+   return response.data[nameSpace]
+  }
+  response.data[nameSpace] = cache
  }
- return userData
+ return cache
 }
 
 // xd DEPRECATED

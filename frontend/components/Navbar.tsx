@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useUser } from './UserContext'
 import useNavBarEffect from '../functions/useNavBarEffect'
+import Title from './Title'
 
 
 export default function Navbar() {
@@ -15,6 +16,7 @@ export default function Navbar() {
 
  return (
   <div className='navbar'>
+   <Title title="RAMCLASS" />
    {navBarLinks}
   </div >
  )

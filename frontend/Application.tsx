@@ -18,13 +18,12 @@ function Application() {
  const queryClient = new QueryClient({
   defaultOptions: {
    queries: {
-    staleTime: Infinity,
+    staleTime: 0,
    }
   }
  })
  return (
   <div>
-   <Title title="Ramclass" />
    <BrowserRouter>
     <QueryClientProvider client={queryClient}>
      <UserProvider>

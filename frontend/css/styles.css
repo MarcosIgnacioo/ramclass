@@ -9,11 +9,25 @@
   src: url(./fonts/mintsoda.ttf);
 }
 :root {
+  --border-top-size: 25px;
   --bg-dark: #191a1a;
   --fg-light: #f0e9f4;
+  --fg-darker: #c9b6d4;
   --color-accent: #fcbff7;
   --border-width: 0.3rem;
+  --platform-color: #ffa94d;
+  --moodle-color: #ffa94d;
+  --classrroom-color: #d4b238;
+  --idle-color: #9e8fcd;
 }
+.moodle {
+  --platform-color: var(--moodle-color);
+}
+
+.classroom {
+  --platform-color: var(--classrroom-color);
+}
+
 * {
   box-sizing: border-box;
   color: var(--fg-light);
@@ -332,6 +346,18 @@ header[data-v-e62ee844] {
   font-size: clamp(2.5rem, 10dvw, 4rem);
 }
 
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.subtitle {
+  color: var(--platform-color);
+  font-style: italic;
+}
+
 .navbar {
   display: flex;
   flex-wrap: wrap;
@@ -344,26 +370,125 @@ header[data-v-e62ee844] {
   color: #1d1d1d;
 }
 
-.navbar *:hover {
+.navbar a:hover {
   background-color: #1d1d1d;
   border: #1d1d1d 1px solid;
   color: white;
 }
 
+.moodle,
+.classroom {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px;
+}
 .refetch {
+  text-align: center;
   background-color: white;
-  border: #1d1d1d 3px solid;
+  box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.5);
+  /* border: #1d1d1d 3px solid; */
   font-size: 1.2rem;
+  font-weight: bolder;
   color: #1d1d1d;
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  max-width: 300px;
+}
+
+.date-format .day,
+.month,
+.year {
+  font-weight: bolder;
+}
+
+.refetch:hover {
+  background-color: var(--platform-color);
+  font-size: 1.2rem;
+  color: white;
   padding: 5px;
   border-radius: 5px;
 }
 
-.refetch:hover {
-  background-color: #100c09;
-  border: snow 3px solid;
-  font-size: 1.2rem;
-  color: snow;
-  padding: 5px;
+.no.assigment {
+  border-top: var(--border-top-size) var(--idle-color) solid;
+}
+.no.assigment a {
+  color: var(--idle-color);
+}
+
+.assigment {
+  box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.5);
+  margin-top: 2%;
+  border-top: var(--border-top-size) var(--platform-color) solid;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
   border-radius: 5px;
+  padding: 1% 3% 1% 3%;
+  min-width: 50vw;
+  max-width: 50vw;
+}
+.assigment * {
+  color: var(--bg-dark);
+}
+.class_subject {
+  margin-left: -10px;
+}
+
+.link {
+  font-weight: bolder;
+  text-decoration: underline;
+  color: #ffa94d;
+  text-shadow: hsl(100%, 1, 1) 4px 4px;
+}
+.assigment-info {
+  font-size: 1.6rem;
+}
+
+.text-title * {
+  padding: 0;
+}
+.loading {
+  background-color: white;
+  border-top: var(--border-top-size) var(--idle-color) solid;
+  text-align: center;
+  font-size: 1.6rem;
+  min-width: 50vw;
+  max-width: 50vw;
+}
+
+.loading * {
+  color: var(--bg-dark);
+}
+.credential {
+  background-color: white;
+  box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.5);
+  border: 5px #f783ac dashed;
+  width: fit-content;
+  padding: 2%;
+  border-radius: 5px;
+  font-size: 1.5rem;
+}
+.credential * {
+  margin: 10px 0 10px 0;
+  color: var(--bg-dark);
+}
+.upper-credential {
+  display: flex;
+}
+.fields-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.fields-container.values {
+  margin-left: 50px;
+}
+.field-value {
+  font-weight: bolder;
+  text-decoration: underline;
+}
+.school-data {
+  font-size: 1.2rem;
 }
