@@ -7,11 +7,12 @@ export enum LSK {
  Kardex,
  CurricularMap,
  Student,
+ GPA,
  Identifier,
  Password
 }
 
-const localNames = ["moodle", "classroom", "kardex", "curricular_map", "student", "identifier", "password"]
+const localNames = ["moodle", "classroom", "kardex", "curricular_map", "student", "gpa", "identifier", "password"]
 
 const getUser = (): UserData | null => {
  let identifier = (localStorage.getItem("identifier") ?? "")

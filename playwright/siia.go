@@ -74,8 +74,10 @@ func KardexScrap(context *playwright.BrowserContext, username string, password s
 		teacher, _ := columns[7].InnerText()
 		subjectsArrayList.Enqueue(NewSubject(semester, subjectName, group, turn, period, grade, state, subjectType, teacher))
 	}
+	gpaString, _ := siia.Locator("tfoot tr .number").InnerText()
+	gpa, _ := strconv.Atoi(gpaString)
 	siia.Close()
-	return NewKardex(subjectsArrayList.GetArray()), nil
+	return NewKardex(gpa, subjectsArrayList.GetArray()), nil
 }
 
 func CurricularMapScrap(context *playwright.BrowserContext, username string, password string) (Result, error) {

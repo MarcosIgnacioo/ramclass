@@ -75,6 +75,7 @@ type ScrappedInfo struct {
 	Kardex        []interface{} `bson:"kardex" json:"kardex"`
 	CurricularMap []interface{} `bson:"curricular_map" json:"curricular_map"`
 	Student       Result        `bson:"student" json:"student"`
+	GPA           Result        `bson:"gpa" json:"gpa"`
 }
 
 func (si *ScrappedInfo) GetResult() []interface{} {
@@ -92,13 +93,14 @@ func (si *ScrappedInfo) String() string {
 // Cosas que cambiaria
 // En vez de tener que usar interface{} lo que haria seria crear una propia interfaz generica que se llamase Info o algo asi
 // Todos los structs de scrapping implementarian el metodo o metodos de dicha interfaz, y asi podemos usar todos en este struct por ejemplo en vez de ser interface{} serian sus tipos correspondientes, en realidad no se para que ocupo la interfaz generica, diria que para la funcion que retorna los datos pero creo que go lo hace por si mismo asi que pues deberia de experimentar con eso despues
-func NewScrappedInfo(md []interface{}, cr []interface{}, kr []interface{}, cm []interface{}, st Result) *ScrappedInfo {
+func NewScrappedInfo(md []interface{}, cr []interface{}, kr []interface{}, cm []interface{}, st Result, gpa Result) *ScrappedInfo {
 	return &ScrappedInfo{
 		Moodle:        md,
 		ClassRoom:     cr,
 		Kardex:        kr,
 		CurricularMap: cm,
 		Student:       st,
+		GPA:           gpa,
 	}
 }
 
@@ -163,8 +165,25 @@ func NewStudentInfo(cn int, n string, ie string, c string, ca string, p string, 
 
 // https://siia.uabcs.mx/siia2019/alumnos/kardex.aspx?gr=alumno&op=kardex
 
+type GPA struct {
+	GPA int `gson:"gpa" json:"gpa"`
+}
+
+func NewGPA(gpa int) *GPA {
+	return &GPA{GPA: gpa}
+}
+
+func (g *GPA) GetResult() []interface{} {
+	return nil
+}
+
+func (g *GPA) GetGPA() int {
+	return g.GPA
+}
+
 // Kardex types
 type Kardex struct {
+	GPA    int           `gson:"gpa" json:"gpa"`
 	Kardex []interface{} `json:"kardex"`
 }
 
@@ -172,8 +191,12 @@ func (k *Kardex) GetResult() []interface{} {
 	return k.Kardex
 }
 
-func NewKardex(k []interface{}) *Kardex {
-	return &Kardex{Kardex: k}
+func (k *Kardex) GetGPA() int {
+	return k.GPA
+}
+
+func NewKardex(gpa int, k []interface{}) *Kardex {
+	return &Kardex{GPA: gpa, Kardex: k}
 }
 
 type Subject struct {

@@ -6,15 +6,20 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import SignIn from './views/SignIn';
 import Prueba from './views/Prueba';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { UserProvider } from './components/UserContext';
+import { UserProvider, useLocationContext, useLocationUpdateContext } from './components/UserContext';
 import Navbar from './components/Navbar';
 import Student from './views/Student';
 import Kardex from './views/Kardex';
 import { CurricularMap } from './views/CurricularMap';
 import Home from './views/Home';
+import useLocationEffect from './functions/effects/useLocationEffect';
+import Settings from './views/Settings';
+import Faq from './views/Faq';
 
 
 function Application() {
+
+
  const queryClient = new QueryClient({
   defaultOptions: {
    queries: {
@@ -35,6 +40,8 @@ function Application() {
        <Route path='/student' element={<Student />} />
        <Route path='/my-kardex' element={<Kardex />} />
        <Route path='/my-curricular-map' element={<CurricularMap />} />
+       <Route path='/settings' element={<Settings />} />
+       <Route path='/faq' element={<Faq />} />
        <Route path='/test' element={<Prueba />} />
       </Routes>
      </UserProvider>

@@ -12,9 +12,10 @@ interface Props {
  cache: Object[];
  nameSpace: string;
  Container: React.ComponentType<any>;
+ returnArray: boolean
 }
 
-const State: React.FC<Props> = ({ fetchedData, cache, nameSpace, Container }) => {
+const State = ({ fetchedData, cache, nameSpace, Container, returnArray }) => {
 
  let userLocal: UserData | null
  userLocal = (useUser().username == "") ? getUser() : useUser()
@@ -35,13 +36,19 @@ const State: React.FC<Props> = ({ fetchedData, cache, nameSpace, Container }) =>
   cache = fetchedData.data[nameSpace];
  }
 
+ if (!cache) {
+  return <Error />;
+ }
+
  if (cache.length === 0) return <Empty />
 
- const assignments = cache.map((assignment, index) => (
-  <Container key={index} {...assignment} />
+ const responseData = cache.map((data, index) => (
+  <Container key={index} {...data} />
  ));
 
- return <>{assignments}</>;
+ if (!returnArray) return <>{responseData}</>;
+
+ return cache
 };
 
 export default State;

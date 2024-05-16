@@ -5,6 +5,7 @@ import getUser from "./store";
 
 export default function useNavBarEffect(userQuery: UserData | null) {
  const [navBarData, setNavBarData] = useState({});
+
  useEffect(() => {
   const userLocal = getUser()
   if (!userLocal && (userQuery?.username == "" && userQuery?.password == "")) {
@@ -13,8 +14,8 @@ export default function useNavBarEffect(userQuery: UserData | null) {
      "text": "Iniciar sesión",
      "function": ""
     },
-    "FAQ": {
-     "text": "faq",
+    "faq": {
+     "text": "FAQ",
      "function": ""
     }
    })

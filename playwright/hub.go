@@ -55,7 +55,10 @@ func FullScrap(username string, password string) (Result, *Error) {
 	if closingErr != nil {
 		return nil, (*Error)(NewError(closingErr))
 	}
-	return NewScrappedInfo(moodleResults.GetResult(), classRoomResults.GetResult(), kardexResults.GetResult(), curricularResults.GetResult(), credentialsResults), (*Error)(NewError(nil))
+
+	GPA := NewGPA(kardexResults.(*Kardex).GPA)
+
+	return NewScrappedInfo(moodleResults.GetResult(), classRoomResults.GetResult(), kardexResults.GetResult(), curricularResults.GetResult(), credentialsResults, GPA), (*Error)(NewError(nil))
 }
 
 func Moodle(username string, password string) (Result, *Error) {

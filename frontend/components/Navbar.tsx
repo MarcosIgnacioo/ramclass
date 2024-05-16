@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useUser } from './UserContext'
 import useNavBarEffect from '../functions/useNavBarEffect'
@@ -11,7 +11,7 @@ export default function Navbar() {
 
  const navBarLinks: React.ReactElement[] = []
  for (const link in navBarData) {
-  navBarLinks.push(<Link to={link} onClick={navBarData[link]["function"]}>{navBarData[link]["text"]}</Link>)
+  navBarLinks.push(<Link id={link} to={link} onClick={navBarData[link]["function"]}>{navBarData[link]["text"]}</Link>)
  }
 
  return (

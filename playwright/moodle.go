@@ -38,7 +38,7 @@ func MoodleScrap(context *playwright.BrowserContext, username string, password s
 		classSubject, _ := v.Locator("small").InnerText()
 		anchorTag := v.Locator("a").First()
 		dueDate, _ := anchorTag.GetAttribute("aria-label")
-		r, _ := regexp.Compile(`\d \w* \w* \w* \d*, \d*:\d*`)
+		r, _ := regexp.Compile(`\d+ \w* \w* \w* \d*, \d*:\d*`)
 		date := r.FindAll([]byte(dueDate), -1)
 		dateFormated := utils.CreateDate(date)
 		//
