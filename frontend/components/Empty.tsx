@@ -3,7 +3,7 @@ import React from 'react'
 export default function Empty() {
  return (
   <div className='no assigment'>
-   <h1 className='class_subject'>No hay nada que hacer</h1>
+   <h1 className='class_subject'>No hay nada aquí</h1>
    <div className='date'>
     <div className='date-format'>
      <span></span>
@@ -20,7 +20,7 @@ export default function Empty() {
     <br />
     <div className='assigment-info'>
      <span className='title'></span>
-     <a className='link' href=''>No hay tarea!</a>
+     <a className='link' href=''>Quizás mas tarde...</a>
     </div>
    </div>
   </div>

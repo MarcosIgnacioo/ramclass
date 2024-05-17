@@ -1,32 +1,53 @@
-import React from 'react'
-import { useLocationContext, useLocationUpdateContext, useUser } from '../components/UserContext';
+import React, { useState } from 'react'
+import { useUser } from '../components/UserContext';
 import useLogin from '../functions/useLogin';
 import getUser, { LSK, checkBothCache } from '../functions/store';
 import StudentCredential from '../components/StudentCredential';
 import Student from '../classes/Student';
-import useLocationEffect from '../functions/effects/useLocationEffect';
-
-// Esta vista/componente se encarga de obtener al estudiante de la cache (React-Query o LocalStorage)
-
-// const locationUpdate = useLocationUpdateContext()
-// locationUpdate(window.location.pathname)
-// const currentLocation = useLocationContext()
-// useLocationEffect(currentLocation)
+import SignIn from './SignIn';
+import UserData from '../classes/UserData';
+import updateCurrentLocation from '../functions/location';
+import useCredentials from '../functions/useCredentials';
+import State from '../components/State';
 
 export default function Student() {
+ const [userCredentials, setUserCredentials] = useState<UserData | null>(null);
 
- const locationUpdate = useLocationUpdateContext()
- locationUpdate(window.location.pathname)
- const currentLocation = useLocationContext()
- useLocationEffect(currentLocation)
+ updateCurrentLocation()
 
- const userLocal = getUser()
- if (!userLocal) return (<h1>Esperate wey</h1>)
+ const userLocal = (useUser().username == "") ? getUser() : useUser()
+
+ if (!userLocal) return (<SignIn />)
+
  const user = useUser()
  const response = useLogin(user)
- const userData = checkBothCache(response, LSK.Student)
+
+ const credentialsFetch = useCredentials(userCredentials)
+ let userData = checkBothCache(response, LSK.Student)
+
+ let credentialsInfo = State({ fetchedData: credentialsFetch, cache: [userData], nameSpace: "student", Container: StudentCredential, isFiltered: false })
+
+ if (credentialsInfo === null || credentialsInfo.props.name === undefined && !credentialsFetch.isLoading) {
+  return (<main>
+   <div className='warn'>
+    <h1 className='warn-header'>Advertencia</h1>
+    <div className='warn-content'>
+     <h1>No se cargó correctamente tu credencial,<br /> presiona aquí para hacerlo</h1>
+     <button type="button" onClick={() => {
+      setUserCredentials(userLocal)
+     }} className='refetch kardex'>Cargar credencial</button>
+    </div>
+   </div>
+  </main>)
+ }
+
  return (
-  <StudentCredential {...userData as Student} />
+  <main className='credential-container'>
+   {credentialsInfo}
+   <button type='button' className="refetch credentials" onClick={() => {
+    setUserCredentials(userLocal)
+   }}>Actualizar credencial</button>
+  </main>
  )
 }
 

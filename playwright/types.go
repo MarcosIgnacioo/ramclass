@@ -245,7 +245,7 @@ func NewCurricularSubject(s int, su string, p interface{}, g interface{}, st int
 }
 
 type CurricularMap struct {
-	CurricularMap []interface{}
+	CurricularMap []interface{} `bson:"curricular_map" json:"curricular_map"`
 }
 
 func (c *CurricularMap) GetResult() []interface{} {

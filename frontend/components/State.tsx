@@ -6,6 +6,7 @@ import getUser, { storeInLocal } from '../functions/store'
 import Empty from './Empty'
 import UserData from '../classes/UserData'
 import { useUser } from './UserContext'
+import Student from '../classes/Student'
 
 interface Props {
  fetchedData: UseQueryResult<any, Error>;
@@ -15,7 +16,7 @@ interface Props {
  returnArray: boolean
 }
 
-const State = ({ fetchedData, cache, nameSpace, Container, returnArray }) => {
+const State = ({ fetchedData, cache, nameSpace, Container, isFiltered }) => {
 
  let userLocal: UserData | null
  userLocal = (useUser().username == "") ? getUser() : useUser()
@@ -23,7 +24,7 @@ const State = ({ fetchedData, cache, nameSpace, Container, returnArray }) => {
  if (!userLocal) return (<h1 className='alert'>No has iniciado sesión</h1>)
 
  if (fetchedData.isLoading) {
-
+  console.log("HOLA")
   return <Loading />;
  }
 
@@ -32,23 +33,28 @@ const State = ({ fetchedData, cache, nameSpace, Container, returnArray }) => {
  }
 
  if (fetchedData.isSuccess) {
-  storeInLocal(fetchedData.data[nameSpace], nameSpace);
-  cache = fetchedData.data[nameSpace];
+  if (fetchedData.data[nameSpace] === undefined) {
+   storeInLocal(fetchedData.data, nameSpace);
+   if (!isFiltered || cache === undefined || cache === null) cache = [fetchedData.data];
+  } else {
+   storeInLocal(fetchedData.data[nameSpace], nameSpace);
+   if (!isFiltered || cache === undefined || cache === null) cache = fetchedData.data[nameSpace];
+  }
  }
 
  if (!cache) {
-  return <Error />;
+  return null;
  }
 
  if (cache.length === 0) return <Empty />
+
+ if (cache.length === 1) return <Container {...cache[0]} />
 
  const responseData = cache.map((data, index) => (
   <Container key={index} {...data} />
  ));
 
- if (!returnArray) return <>{responseData}</>;
-
- return cache
+ return <>{responseData}</>;
 };
 
 export default State;

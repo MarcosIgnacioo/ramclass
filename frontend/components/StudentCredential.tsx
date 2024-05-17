@@ -1,10 +1,11 @@
 import React from 'react'
 import Title from './Title'
+import SpanWithCopy from './SpanWithCopy'
 
 // Este componente se encarga de plasmar la credencial del usuario en un container
 export default function StudentCredential({ name, control_number, institutional_email, campus, career, period, semester, group, turn, state }) {
  return (
-  <main className='credential-container'>
+  <div>
    <Title title='Credencial del estudiante' />
    <div className='credential'>
     <div className='upper-credential'>
@@ -15,9 +16,9 @@ export default function StudentCredential({ name, control_number, institutional_
       <span className='field-name'>Carrera: </span>
      </div>
      <div className='fields-container values'>
-      <span className='field-value'>{control_number}</span>
-      <span className='field-value'>{name} </span>
-      <span className='field-value'>{institutional_email} </span>
+      {SpanWithCopy(control_number)}
+      {SpanWithCopy(name)}
+      {SpanWithCopy(institutional_email)}
       <span className='field-value'>{career} </span>
      </div>
     </div>
@@ -40,7 +41,8 @@ export default function StudentCredential({ name, control_number, institutional_
      </div>
     </div>
    </div>
-  </main>
+
+  </div>
  )
 }
 

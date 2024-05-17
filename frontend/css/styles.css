@@ -425,7 +425,6 @@ main {
   text-align: center;
   background-color: white;
   box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.5);
-  /* border: #1d1d1d 3px solid; */
   font-size: 1.2rem;
   font-weight: bolder;
   color: #1d1d1d;
@@ -433,6 +432,7 @@ main {
   border-radius: 5px;
   margin-bottom: 5px;
   max-width: 300px;
+  min-width: 300px;
 }
 
 .date-format .day,
@@ -443,7 +443,7 @@ main {
 
 .refetch:hover {
   background-color: var(--platform-color);
-  font-size: 1.2rem;
+  /* font-size: 1.2rem; */
   color: white;
   padding: 5px;
   border-radius: 5px;
@@ -520,6 +520,50 @@ main {
   color: snow;
 }
 
+.warn {
+  display: flex;
+  width: 40vw;
+  background-color: whitesmoke;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: bolder;
+  font-size: 1rem;
+  border-radius: 15px;
+}
+
+.warn-content {
+  display: flex;
+  padding: 2%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.warn-content h1 {
+  color: black;
+}
+.warn-content h1,
+button {
+  margin-bottom: 5%;
+}
+.warn-header {
+  text-align: center;
+  font-weight: bolder;
+  color: white;
+  width: 100%;
+  padding: 1%;
+  border-radius: 15px 15px 0 0;
+  background-color: #ffa94d;
+}
+.refetch.kardex:hover {
+  background-color: #ebebeb !important;
+  border: none;
+}
+
+.warn button {
+  font-size: 2rem;
+}
+
 .refresh-button {
   display: flex;
   justify-content: center;
@@ -537,7 +581,7 @@ main {
   background-color: white;
   box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.5);
   border: 5px #f783ac dashed;
-  width: fit-content;
+  width: 50vw;
   padding: 2%;
   border-radius: 5px;
   font-size: 1.5rem;
@@ -638,7 +682,7 @@ p {
   text-justify: auto;
 }
 .subjects-filter {
-  width: 60vw;
+  width: 41vw;
   max-width: 60vw;
 }
 .subject-filter {
@@ -663,11 +707,34 @@ p {
   margin-top: 5px;
 }
 .refetch.kardex:hover {
+  padding: 5px;
+  border-radius: 5px;
   background-color: #ccf6d9;
   color: var(--bg-dark);
+}
+.refetch.credentials {
+  margin-top: 1%;
 }
 .current-location {
   background-color: #1d1d1d;
   border: #1d1d1d 1px solid;
   color: white;
+}
+.kardex-top {
+  display: flex;
+}
+option {
+  color: black;
+}
+.clipboard {
+  cursor: pointer;
+  text-decoration: none !important;
+}
+
+.clipboard-container {
+  display: flex;
+  align-items: center;
+}
+.clipboard-container * {
+  margin: 0;
 }

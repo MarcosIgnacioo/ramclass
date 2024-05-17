@@ -129,7 +129,7 @@ func server() {
 	r.GET("/student", ramses)
 	r.GET("/home", ramses)
 	r.GET("/my-kardex", ramses)
-	r.GET("my-curricular-map", ramses)
+	r.GET("/my-curricular-map", ramses)
 	r.GET("/create-account", ramses)
 	r.GET("/classroom-form", ramses)
 	r.GET("/moodle-form", ramses)
@@ -147,7 +147,7 @@ func server() {
 	r.POST("/moodle", controllers.GetMoodleAssigments)
 
 	r.POST("/kardex", controllers.GetKardex)
-	r.POST("/curricular", controllers.GetCurricularMap)
+	r.POST("/curricular-map", controllers.GetCurricularMap)
 	r.POST("/credentials", controllers.GetUserCredentials)
 
 	r.GET("/ca", ramses)

@@ -4,18 +4,15 @@ import { checkCache } from '../functions/checkLogin'
 import Assigment from '../components/Assigment'
 import UserData from '../classes/UserData'
 import useMoodle from '../functions/useMoodle'
-import { useLocationContext, useLocationUpdateContext, useUser } from '../components/UserContext'
+import { useUser } from '../components/UserContext'
 import useClassRoom from '../functions/useClassRoom'
 import State from '../components/State'
 import Title from '../components/Title'
-import useLocationEffect from '../functions/effects/useLocationEffect'
+import updateCurrentLocation from '../functions/location'
 
 export default function Home() {
 
- const locationUpdate = useLocationUpdateContext()
- locationUpdate(window.location.pathname)
- const currentLocation = useLocationContext()
- useLocationEffect(currentLocation)
+ updateCurrentLocation()
 
  const [userClassRoomParams, setUserClassRoomParams] = useState<UserData | null>(null);
  const [userMoodleParams, setUserMoodleParams] = useState<UserData | null>(null);
@@ -25,8 +22,10 @@ export default function Home() {
  let classRoom = checkCache(LSK.Classroom) as Object[]
  let moodle = checkCache(LSK.Moodle) as Object[]
 
- const moodleAssigments = State({ fetchedData: moodleFetch, cache: moodle, nameSpace: "moodle", Container: Assigment, returnArray: false })
- const classRoomAssigments = State({ fetchedData: classRoomFetch, cache: classRoom, nameSpace: "classroom", Container: Assigment, returnArray: false })
+ // TODO: Por alguna razon cuando le pico 2 veces, la primera si carga el loading pero la segunda no lo hace pero si hace el fetch
+
+ const moodleAssigments = State({ fetchedData: moodleFetch, cache: moodle, nameSpace: "moodle", Container: Assigment, isFiltered: false })
+ const classRoomAssigments = State({ fetchedData: classRoomFetch, cache: classRoom, nameSpace: "classroom", Container: Assigment, isFiltered: false })
 
  const userLocal = (useUser().username == "") ? getUser() : useUser()
 

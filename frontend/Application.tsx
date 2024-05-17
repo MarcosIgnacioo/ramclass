@@ -16,7 +16,6 @@ import useLocationEffect from './functions/effects/useLocationEffect';
 import Settings from './views/Settings';
 import Faq from './views/Faq';
 
-
 function Application() {
 
 
@@ -50,7 +49,6 @@ function Application() {
    <div data-v-e62ee844="" className="retro-overlay screen-h screen-w"></div>
   </div>
  )
-
 }
 const root = ReactDOM.createRoot(document.querySelector('#ramses')!)
 root.render(<Application />)

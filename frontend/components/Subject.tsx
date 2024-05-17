@@ -4,6 +4,9 @@ import { SemestersMap } from '../globals/globals'
 export default function Subject({ grade, group, period, semester, state, subject_name, teacher, turn, type }) {
  const semesterTag = (semester === 0) ? "Optativa" : "Semestre:"
  const semesterNo = (semester === 0) ? "" : semester
+ const groupText = (group !== undefined) ? "Grupo:" : ""
+ const turnText = (turn !== undefined) ? "Grupo:" : ""
+ const gradeText = (grade !== null) ? "Calificación:" : ""
  return (
   <div className={`subject ${SemestersMap[semester]}`}>
    <div className='subject-data'>
@@ -15,13 +18,13 @@ export default function Subject({ grade, group, period, semester, state, subject
       </span>
      </div>
      <div>
-      <span>Grupo:</span>
+      <span>{groupText}</span>
       <span className='group'>
        {group}
       </span>
      </div>
      <div>
-      <span>Turno:</span>
+      <span>{turnText}</span>
       <span className='turn'>{turn} </span>
      </div>
     </div>
@@ -35,7 +38,7 @@ export default function Subject({ grade, group, period, semester, state, subject
       </span>
      </div>
      <div>
-      <span>Calificación:</span>
+      <span>{gradeText}</span>
       <br />
       <span className='grade'>
        {grade}

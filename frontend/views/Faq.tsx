@@ -1,12 +1,8 @@
 import React from 'react'
-import { useLocationUpdateContext, useLocationContext } from '../components/UserContext'
-import useLocationEffect from '../functions/effects/useLocationEffect'
+import updateCurrentLocation from '../functions/location'
 
 export default function Faq() {
- const locationUpdate = useLocationUpdateContext()
- locationUpdate(window.location.pathname)
- const currentLocation = useLocationContext()
- useLocationEffect(currentLocation)
+ updateCurrentLocation()
 
  return (
   <div>Faq</div>

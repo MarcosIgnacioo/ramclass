@@ -1,19 +1,16 @@
 import React, { useState } from 'react'
 import useLogin from '../functions/useLogin';
 import UserData from '../classes/UserData';
-import { useLocationContext, useLocationUpdateContext, useUserUpdate } from '../components/UserContext';
+import { useUserUpdate } from '../components/UserContext';
 import { setAll } from '../functions/store';
 import { useNavigate } from 'react-router-dom';
 import Error from '../components/Error';
 import Loading from '../components/Loading';
-import useLocationEffect from '../functions/effects/useLocationEffect';
+import updateCurrentLocation from '../functions/location';
 
 export default function SignIn() {
 
- const locationUpdate = useLocationUpdateContext()
- locationUpdate(window.location.pathname)
- const currentLocation = useLocationContext()
- useLocationEffect(currentLocation)
+ updateCurrentLocation()
 
  const [loginParams, setLoginParams] = useState<UserData | null>(null);
 

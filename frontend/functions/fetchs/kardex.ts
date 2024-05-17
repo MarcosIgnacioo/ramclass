@@ -1,7 +1,6 @@
 const nameSpace = "kardex"
 
 const kardex = async ({ queryKey }) => {
- console.log("iniciamos kardex")
  const data = queryKey[1]
  const { username, password } = data
  if (!username || !password) return
@@ -25,7 +24,6 @@ const kardex = async ({ queryKey }) => {
   throw new Error(`Credentials ${username}, ${password} not okay`);
  }
 
- console.log("kardex terminado")
  return apiResponse.json()
 }
 export default kardex;
