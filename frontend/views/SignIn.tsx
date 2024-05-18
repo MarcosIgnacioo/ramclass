@@ -7,12 +7,18 @@ import { useNavigate } from 'react-router-dom';
 import Error from '../components/Error';
 import Loading from '../components/Loading';
 import updateCurrentLocation from '../functions/location';
+import Terms from '../components/Terms';
 
 export default function SignIn() {
 
+ const [loginParams, setLoginParams] = useState<UserData | null>(null);
+ const [isAccepting, setIsAccepting] = useState(true)
+ const [isHidden, setIsHidden] = useState(true)
+ const buttonClass = (!isAccepting) ? "inactive" : ""
+
  updateCurrentLocation()
 
- const [loginParams, setLoginParams] = useState<UserData | null>(null);
+ console.log(isAccepting)
 
  const updateUser = useUserUpdate()
  const navigate = useNavigate()
@@ -48,6 +54,13 @@ export default function SignIn() {
  return (
   <main className='signin-container'>
    <form onSubmit={(e) => {
+    if (isHidden) {
+     console.log("estoy entreando al early return")
+     setIsHidden(false)
+     setIsAccepting(false)
+     e.preventDefault()
+     return
+    }
     const formData = new FormData(e.currentTarget)
     const data = {
      username: formData.get("username") ?? "",
@@ -59,16 +72,21 @@ export default function SignIn() {
    }} className='signin-form'>
     <h1>Inciar sesión</h1>
     <label htmlFor="username">Ingrese su identificador</label>
-    <input name="username" />
+    <input required name="username" />
     <label htmlFor="password">Ingresa tu contraseña</label>
-    <input name="password" type="password" />
-    <button type="submit">Iniciar sesion</button>
+    <input required name="password" type="password" />
+    <Terms setIsAccepting={setIsAccepting} isHidden={isHidden} />
+    <button className={buttonClass} disabled={!isAccepting} type="submit">Iniciar sesion</button>
    </form>
    <p>Recuerda, tu identificador es
     <br />
     el inicio de tu dirección de correo
     <br />
-    electrónico hasta el @.</p>
+    electrónico hasta el @.
+    <br />
+    <br />
+    Ejemplo: <b>pikminc_21</b> @alu.uabcs.mx
+   </p>
   </main>
  )
  // Poner en el boton que no recarge la pagina que namas pues haga el cambio d ruta o asi

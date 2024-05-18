@@ -183,6 +183,7 @@ func (g *GPA) GetGPA() int {
 
 // Kardex types
 type Kardex struct {
+	Name   string        `gson:"name" json:"name"`
 	GPA    int           `gson:"gpa" json:"gpa"`
 	Kardex []interface{} `json:"kardex"`
 }
@@ -195,8 +196,12 @@ func (k *Kardex) GetGPA() int {
 	return k.GPA
 }
 
-func NewKardex(gpa int, k []interface{}) *Kardex {
-	return &Kardex{GPA: gpa, Kardex: k}
+func NewKardex(gpa int, k []interface{}, params ...string) *Kardex {
+	var name string
+	if len(params) > 0 {
+		name = params[0]
+	}
+	return &Kardex{Name: name, GPA: gpa, Kardex: k}
 }
 
 type Subject struct {
@@ -245,6 +250,7 @@ func NewCurricularSubject(s int, su string, p interface{}, g interface{}, st int
 }
 
 type CurricularMap struct {
+	Name          string        `gson:"name" json:"name"`
 	CurricularMap []interface{} `bson:"curricular_map" json:"curricular_map"`
 }
 
@@ -259,6 +265,10 @@ func (c *CurricularMap) Print() {
 	}
 }
 
-func NewCurricularMap(c []interface{}) *CurricularMap {
-	return &CurricularMap{CurricularMap: c}
+func NewCurricularMap(c []interface{}, params ...string) *CurricularMap {
+	var name string
+	if len(params) > 0 {
+		name = params[0]
+	}
+	return &CurricularMap{Name: name, CurricularMap: c}
 }

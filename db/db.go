@@ -6,7 +6,6 @@ import (
 	"log"
 	"os"
 
-	"github.com/MarcosIgnacioo/models"
 	pw "github.com/MarcosIgnacioo/playwright"
 	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"

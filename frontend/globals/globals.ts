@@ -1,3 +1,4 @@
+export const BASE_PATH = "http://localhost:8080"
 export const SemestersMap = {
  0: "optative",
  1: "first",
@@ -12,4 +13,4 @@ export const SemestersMap = {
  10: "tenth",
 }
 
-export const semesters = ["Todos", "Primero", "Segundo", "Tercero", "Cuarto", "Quinto", "Sexto", "Séptimo", "Noveno"]
+export const semesters = ["Todos", "Primero", "Segundo", "Tercero", "Cuarto", "Quinto", "Sexto", "Séptimo", "Octavo", "Noveno", "Optativas"]

@@ -15,6 +15,7 @@ import Home from './views/Home';
 import useLocationEffect from './functions/effects/useLocationEffect';
 import Settings from './views/Settings';
 import Faq from './views/Faq';
+import Todo from './views/Todo';
 
 function Application() {
 
@@ -40,6 +41,7 @@ function Application() {
        <Route path='/my-kardex' element={<Kardex />} />
        <Route path='/my-curricular-map' element={<CurricularMap />} />
        <Route path='/settings' element={<Settings />} />
+       <Route path='/todo' element={<Todo />} />
        <Route path='/faq' element={<Faq />} />
        <Route path='/test' element={<Prueba />} />
       </Routes>

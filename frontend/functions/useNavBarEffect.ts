@@ -37,14 +37,18 @@ export default function useNavBarEffect(userQuery: UserData | null) {
      "text": "Mapa Curricular",
      "function": ""
     },
-    "/": {
-     "text": "Cerrar sesión",
-     "function": logOut
+    "todo": {
+     "text": "TODO App",
+     "function": ""
     },
     "settings": {
      "text": "Configuración",
      "function": ""
-    }
+    },
+    "/": {
+     "text": "Cerrar sesión",
+     "function": logOut
+    },
    })
   }
  }, [userQuery])
