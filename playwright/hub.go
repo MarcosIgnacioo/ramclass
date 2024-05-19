@@ -56,7 +56,7 @@ func FullScrap(username string, password string) (Result, *Error) {
 		return nil, (*Error)(NewError(closingErr))
 	}
 
-	GPA := NewGPA(kardexResults.(*Kardex).GPA)
+	GPA := kardexResults.(*Kardex).GPA
 
 	return NewScrappedInfo(moodleResults.GetResult(), classRoomResults.GetResult(), kardexResults.GetResult(), curricularResults.GetResult(), credentialsResults, GPA), (*Error)(NewError(nil))
 }

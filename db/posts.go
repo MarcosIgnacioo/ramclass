@@ -7,18 +7,21 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-func InsertPost(post *models.Post) (*mongo.InsertOneResult, error) {
-	coll := DB.Collection("posts")
-	r, e := coll.InsertOne(context.TODO(), post)
-	return r, e
+func InsertTasks(identifier string, tasks *models.Tasks) error {
+	coll := DB.Collection("tasks")
+	res := coll.FindOneAndReplace(context.TODO(), bson.D{{"identifier", identifier}}, tasks)
+	if res.Err() != nil {
+		coll.InsertOne(context.TODO(), tasks)
+	}
+	return res.Err()
 }
 
-func UpdatePost(cn int, md *models.Post) *mongo.SingleResult {
-	coll := DB.Collection("posts")
+func UpdateTask(username string, md *models.Task) *mongo.SingleResult {
+	coll := DB.Collection("tasks")
 	update := bson.M{
 		"$set": md,
 	}
-	err := coll.FindOneAndUpdate(context.TODO(), bson.D{{"control_number", cn}}, update)
+	err := coll.FindOneAndUpdate(context.TODO(), bson.D{{"identifier", cn}}, update)
 	// _, err := coll.UpdateOne(context.TODO(), bson.D{{"control_number", cn}}, update)
 	return err
 }

@@ -12,7 +12,6 @@ import Student from './views/Student';
 import Kardex from './views/Kardex';
 import { CurricularMap } from './views/CurricularMap';
 import Home from './views/Home';
-import useLocationEffect from './functions/effects/useLocationEffect';
 import Settings from './views/Settings';
 import Faq from './views/Faq';
 import Todo from './views/Todo';

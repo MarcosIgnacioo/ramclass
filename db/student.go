@@ -8,25 +8,18 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-type Generic struct {
-	Student    *pw.StudentInfo
-	Assigments *[]interface{} `json:"assigments"`
-}
-
-func NewGeneric(s *pw.StudentInfo, a *[]interface{}) *Generic {
-	return &Generic{Student: s, Assigments: a}
-}
-
-func InsertClassRoom(student *pw.StudentInfo, classRoom []interface{}) (*mongo.InsertOneResult, error) {
+func InsertClassRoom(identifier string, classRoom []interface{}) (*mongo.InsertOneResult, error) {
 	coll := DB.Collection("classroom")
-	r, e := coll.InsertOne(context.TODO(), NewGeneric(student, &classRoom))
+	r, e := coll.InsertOne(context.TODO(), pw.NewClassRoomInfo(classRoom, identifier))
 	return r, e
 }
-func InsertMoodle(student *pw.StudentInfo, moodle []interface{}) (*mongo.InsertOneResult, error) {
+
+func InsertMoodle(identifier string, moodle []interface{}) (*mongo.InsertOneResult, error) {
 	coll := DB.Collection("moodle")
-	r, e := coll.InsertOne(context.TODO(), NewGeneric(student, &moodle))
+	r, e := coll.InsertOne(context.TODO(), pw.NewMoodleInfo(moodle, identifier))
 	return r, e
 }
+
 func InsertStudent(student *pw.StudentInfo) (*mongo.InsertOneResult, error) {
 	_, checkStudent := GetStudent(student.ControlNumber)
 	if checkStudent != nil {

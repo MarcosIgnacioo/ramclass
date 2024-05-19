@@ -32,7 +32,8 @@ export const CurricularMap = () => {
 
  let curricularMapSubjects = State({ fetchedData: curricularMapFetch, cache: curricularMap, nameSpace: "curricular_map", Container: Subject, isFiltered: true })
 
- const gpa = checkBothCache(response, LSK.GPA)
+ let gpa = checkBothCache(response, LSK.GPA)
+ gpa = (gpa === null) ? "Error, actualiza tu Kardex" : gpa
 
  if (curricularMapSubjects == null) return (<main>
   <div className='warn'>
@@ -54,7 +55,7 @@ export const CurricularMap = () => {
    <div className='kardex-top'>
     {SubjectFilters(semester, setSemester, subjectName, setSubjectName)}
     <div>
-     <h1>Promedio general: {gpa.gpa} </h1>
+     <h1 className='gpa'>Promedio general: {gpa} </h1>
      <button type="button" onClick={() => {
       setUserCredentials(userLocal)
      }} className='refetch kardex'>Actualizar Mapa Curricular</button>

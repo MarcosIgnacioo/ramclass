@@ -23,12 +23,11 @@ const State = ({ fetchedData, cache, nameSpace, Container, isFiltered }) => {
 
  if (!userLocal) return (<h1 className='alert'>No has iniciado sesión</h1>)
 
- if (fetchedData.isLoading) {
-  console.log("HOLA")
+ if (fetchedData.isLoading && Container) {
   return <Loading />;
  }
 
- if (fetchedData.isError) {
+ if (fetchedData.isError && Container) {
   return <Error />;
  }
 
@@ -42,9 +41,9 @@ const State = ({ fetchedData, cache, nameSpace, Container, isFiltered }) => {
   }
  }
 
- if (!cache) {
-  return null;
- }
+ if (!cache) return null;
+
+ if (!Container) return cache
 
  if (cache.length === 0) return <Empty />
 

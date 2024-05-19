@@ -26,6 +26,7 @@ func NewAssigment(c string, t string, l string, d utils.DateFormat) Assigment {
 // Moodle Types
 
 type MoodleInfo struct {
+	Name   string        `gson:"name" json:"name"`
 	Moodle []interface{} `json:"moodle"`
 }
 
@@ -41,13 +42,18 @@ func (mi *MoodleInfo) String() string {
 	return assigments
 }
 
-func NewMoodleInfo(mi []interface{}) *MoodleInfo {
-	return &MoodleInfo{Moodle: mi}
+func NewMoodleInfo(mi []interface{}, params ...string) *MoodleInfo {
+	var name string
+	if len(params) > 0 {
+		name = params[0]
+	}
+	return &MoodleInfo{Moodle: mi, Name: name}
 }
 
 // ClassRoom Types
 
 type ClassRoomInfo struct {
+	Name      string        `gson:"name" json:"name"`
 	ClassRoom []interface{} `bson:"classroom" json:"classroom"`
 }
 
@@ -63,8 +69,12 @@ func (ci *ClassRoomInfo) String() string {
 	return assigments
 }
 
-func NewClassRoomInfo(cr []interface{}) *ClassRoomInfo {
-	return &ClassRoomInfo{ClassRoom: cr}
+func NewClassRoomInfo(cr []interface{}, params ...string) *ClassRoomInfo {
+	var name string
+	if len(params) > 0 {
+		name = params[0]
+	}
+	return &ClassRoomInfo{ClassRoom: cr, Name: name}
 }
 
 // ScrappedInfo types
@@ -75,7 +85,7 @@ type ScrappedInfo struct {
 	Kardex        []interface{} `bson:"kardex" json:"kardex"`
 	CurricularMap []interface{} `bson:"curricular_map" json:"curricular_map"`
 	Student       Result        `bson:"student" json:"student"`
-	GPA           Result        `bson:"gpa" json:"gpa"`
+	GPA           int           `bson:"gpa" json:"gpa"`
 }
 
 func (si *ScrappedInfo) GetResult() []interface{} {
@@ -93,7 +103,7 @@ func (si *ScrappedInfo) String() string {
 // Cosas que cambiaria
 // En vez de tener que usar interface{} lo que haria seria crear una propia interfaz generica que se llamase Info o algo asi
 // Todos los structs de scrapping implementarian el metodo o metodos de dicha interfaz, y asi podemos usar todos en este struct por ejemplo en vez de ser interface{} serian sus tipos correspondientes, en realidad no se para que ocupo la interfaz generica, diria que para la funcion que retorna los datos pero creo que go lo hace por si mismo asi que pues deberia de experimentar con eso despues
-func NewScrappedInfo(md []interface{}, cr []interface{}, kr []interface{}, cm []interface{}, st Result, gpa Result) *ScrappedInfo {
+func NewScrappedInfo(md []interface{}, cr []interface{}, kr []interface{}, cm []interface{}, st Result, gpa int) *ScrappedInfo {
 	return &ScrappedInfo{
 		Moodle:        md,
 		ClassRoom:     cr,

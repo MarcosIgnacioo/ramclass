@@ -7,7 +7,6 @@ import SubjectFilters from '../components/SubjectFilters.tsx';
 import UserData from '../classes/UserData.ts';
 import useKardex from '../functions/useKardex.ts';
 import State from '../components/State.tsx';
-import useLocationEffect from '../functions/effects/useLocationEffect.ts';
 import { filterSubjects } from '../functions/filterSubjects.ts';
 import SignIn from './SignIn.tsx';
 import updateCurrentLocation from '../functions/location.ts';
@@ -32,6 +31,12 @@ export default function Kardex() {
 
  let kardexSubjects = State({ fetchedData: kardexFetch, cache: kardex, nameSpace: "kardex", Container: Subject, isFiltered: true })
 
+ let gpa = checkBothCache(response, LSK.GPA)
+
+ let gpaState = State({ fetchedData: kardexFetch, cache: gpa, nameSpace: "gpa", Container: null, isFiltered: true })
+
+ gpaState = (gpaState === null) ? "Error, actualiza tu Kardex" : gpaState
+
  if (kardexSubjects == null) return (<main>
   <div className='warn'>
    <h1 className='warn-header'>Advertencia</h1>
@@ -44,10 +49,7 @@ export default function Kardex() {
   </div>
  </main>)
 
-
  const contentClass = (kardexSubjects.props.children !== undefined) ? "subjects-container" : ""
-
- const gpa = checkBothCache(response, LSK.GPA)
 
  if (!userLocal) return (<SignIn />)
 
@@ -56,7 +58,7 @@ export default function Kardex() {
    <div className='kardex-top'>
     {SubjectFilters(semester, setSemester, subjectName, setSubjectName)}
     <div>
-     <h1>Promedio general: {gpa.gpa} </h1>
+     <h1 className='gpa'>Promedio general: {gpaState} </h1>
      <button type="button" onClick={() => {
       setUserCredentials(userLocal)
      }} className='refetch kardex'>Actualizar Kardex</button>

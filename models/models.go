@@ -2,6 +2,24 @@ package models
 
 import ()
 
+type Tasks struct {
+	Identifier string `bson:"identifier" json:"identifier"`
+	Tasks      []Task `bson:"tasks" json:"tasks"`
+}
+
+func NewTasksCollection(identifier string, tasks []Task) *Tasks {
+	return &Tasks{Identifier: identifier, Tasks: tasks}
+}
+
+type Task struct {
+	Day  string `bson:"day" json:"day"`
+	Task string `bson:"task" json:"task"`
+}
+
+func NewTask(day string, task string) *Task {
+	return &Task{Day: day, Task: task}
+}
+
 type Post struct {
 	Post      string `bson:"post" json:"post"`
 	Author    string `bson:"author" json:"author"`
