@@ -4,12 +4,12 @@ export default interface Tasks {
 }
 
 export class TaskClass {
- day: string | null | undefined
  task_description: string | null | undefined
  is_done: boolean
- constructor(day: string | null | undefined, task_description: string | null | undefined, is_done: boolean) {
-  this.day = day;
+ is_deleted: boolean
+ constructor(task_description: string | null | undefined, is_done: boolean) {
   this.task_description = task_description;
   this.is_done = is_done;
+  this.is_deleted = false;
  }
 }

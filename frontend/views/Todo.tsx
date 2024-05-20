@@ -1,44 +1,94 @@
-import React, { DragEvent, DragEventHandler, useEffect, useState } from 'react'
+import React, { ButtonHTMLAttributes, DragEvent, DragEventHandler, useEffect, useState } from 'react'
 import updateCurrentLocation from '../functions/location'
 import "../css/todo.css"
 import { Navigate, useLocation, useNavigation } from 'react-router-dom'
 import Tasks, { TaskClass } from '../classes/Tasks'
 import Task from '../components/Task'
+import getUser, { checkBothCache, getCacheOf, storeInLocal } from '../functions/store'
+import { useUser } from '../components/UserContext'
+import UserData from '../classes/UserData'
+import useTasks from '../functions/useTasks'
+import useGetTasks from '../functions/useGetTasks'
 
 const days = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
+
 export default function Todo() {
- const [text, setText] = React.useState('');
-
+ checkBothCache
+ const [taskCache, setTaskCache] = useState(getCacheOf("tasks"))
+ console.log(taskCache)
  updateCurrentLocation()
+ const userLocal = ((useUser().username == "") ? getUser() : useUser() as UserData)?.username as string
+ useTasks(taskCache as Object, userLocal)
+ useGetTasks(userLocal)
+ startDraggable(userLocal)
 
- startDraggable()
  return (
-  <div>
+  <div onInputCapture={() => storeInLocal(createTasksCollection(), "tasks")}>
    <div className='todo-header' >
-    {days.map(day => (
-     <div className='task-container'>
-      <span className='day'>{day}</span>
-      <Task />
-     </div>))}
+    {(days).map(day => {
+     if (taskCache !== null && taskCache[day] !== undefined) {
+      //
+      const tasksInsideContainer = taskCache[day].map((task, index) => {
+       if (!task.is_deleted) {
+        // This makes completly sense i swear !!!
+        return (<div>
+         <Task day={day} setCache={setTaskCache} cache={taskCache} index={index} is_done={task.is_done} task_description={task.task_description} is_deleted={task.is_deleted} />
+        </div>)
+       }
+      })
+      //
+      return (
+       <div className='task-container'>
+        <span className='day'>
+         {day}
+        </span>
+        {tasksInsideContainer}
+        <button type="button" onClick={() => addTask(taskCache as Object, day, setTaskCache)}>+</button>
+       </div>)
+     }
+     //
+     else {
+      return (<div className='task-container'>
+       <span className='day'>{day}</span>
+       <Task cache={taskCache} is_done={false} task_description={""} />
+       <button type="button" onClick={() => addTask(taskCache as Object, day, setTaskCache)}>+</button>
+      </div>)
+     }
+    }
+    )}
    </div>
-   <button type="button" onClick={() => { createTasksCollection("marcos") }}>AAAA</button>
+   <button type="button" className='cloud-button' onClick={() => { setTaskCache(createTasksCollection()) }}>Guardar en la nube</button>
   </div>
  )
 }
 
-function createTasksCollection(identifier: string) {
- const tasksContainers = document.querySelectorAll('.task-container')
- const caca: TaskClass[] = []
- tasksContainers.forEach(taskContainer => {
-  const taskDescription = (taskContainer.querySelector(".task-text") as HTMLInputElement).value
-  const day = (taskContainer.querySelector(".day") as HTMLSpanElement).innerText
-  const isDone = (taskContainer.querySelector(".check-button") as HTMLInputElement).checked
-  caca.push(new TaskClass(day, taskDescription, isDone))
- })
- console.log(caca)
+
+
+function addTask(taskCache: object, day: string, setTaskCache) {
+ const newTaskCache = { ...taskCache }
+ newTaskCache[day].push({ is_done: false, task_description: "" })
+ storeInLocal(newTaskCache, "tasks")
+ setTaskCache(newTaskCache)
 }
 
-function startDraggable() {
+
+function createTasksCollection() {
+ const tasksContainers = document.querySelectorAll('.task-container')
+ const tasks: Object = {}
+ tasksContainers.forEach(taskContainer => {
+  const tasksInsideContainer = taskContainer.querySelectorAll(".task")
+  const day = (taskContainer.querySelector(".day") as HTMLSpanElement).innerText
+  tasksInsideContainer.forEach(task => {
+   const taskDescription = ((task.querySelector(".task-text") as HTMLInputElement) || { value: "" }).value
+   const isDone = ((task.querySelector(".check-button") as HTMLInputElement) || { checked: false }).checked
+   if (tasks[day] === undefined) tasks[day] = []
+   tasks[day].push(new TaskClass(taskDescription, isDone))
+  })
+ })
+ return tasks
+}
+
+function startDraggable(userLocal) {
  const tasksDraggable = document.querySelectorAll(".task")
  const containers = document.querySelectorAll(".task-container")
  tasksDraggable.forEach(task => {
@@ -59,6 +109,8 @@ function startDraggable() {
    } else {
     container.insertBefore(draggingTask!, closest)
    }
+   const tasksCollection = createTasksCollection(userLocal)
+   storeInLocal(tasksCollection, "tasks")
   })
  })
 }

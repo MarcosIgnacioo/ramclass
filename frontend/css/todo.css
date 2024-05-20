@@ -2,11 +2,11 @@
   font-size: 2.4rem;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
 }
 .task-container {
-  /* de momento causan problemas con el flexwrap */
-  min-width: 15vw;
+  height: fit-content;
+  min-width: 14vw;
+  max-width: 14vw;
   background-color: white;
 }
 .task-container * {
@@ -24,7 +24,7 @@ svg {
 
 .task {
   font-size: 3rem;
-  max-width: 90%;
+  max-width: 100%;
   border: 5px red solid;
 }
 

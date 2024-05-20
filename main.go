@@ -48,6 +48,9 @@ func server() {
 	r.POST("/curricular-map", controllers.GetCurricularMap)
 	r.POST("/credentials", controllers.GetUserCredentials)
 
+	r.GET("/get-tasks", controllers.GetTasks)
+	r.POST("/save-tasks", controllers.PostTasks)
+
 	r.GET("/ca", ramses)
 	r.GET("/cb", ramses)
 	// Esto va hasta el final!!!!! XD

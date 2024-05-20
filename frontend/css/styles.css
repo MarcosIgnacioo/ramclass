@@ -421,6 +421,25 @@ main {
   flex-direction: column;
   margin-bottom: 5px;
 }
+
+.cloud-button {
+  text-align: center;
+  background-color: #8fd1c6;
+  box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.5);
+  font-size: 1.2rem;
+  color: #343636;
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  max-width: 300px;
+  min-width: 300px;
+  font-weight: bolder !important;
+}
+
+.cloud-button:hover {
+  background-color: #7cd1c3;
+}
+
 .refetch {
   text-align: center;
   background-color: white;

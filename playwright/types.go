@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/MarcosIgnacioo/utils"
+	"go.mongodb.org/mongo-driver/bson"
 )
 
 // Assigments Types
@@ -86,6 +87,8 @@ type ScrappedInfo struct {
 	CurricularMap []interface{} `bson:"curricular_map" json:"curricular_map"`
 	Student       Result        `bson:"student" json:"student"`
 	GPA           int           `bson:"gpa" json:"gpa"`
+	Tasks         bson.M        `bson:"tasks" json:"tasks"`
+	Calendar      bson.M        `bson:"calendar" json:"calendar"`
 }
 
 func (si *ScrappedInfo) GetResult() []interface{} {

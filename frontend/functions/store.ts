@@ -12,7 +12,7 @@ export enum LSK {
  Password
 }
 
-const localNames = ["moodle", "classroom", "kardex", "curricular_map", "student", "gpa", "identifier", "password"]
+const localNames = ["moodle", "classroom", "kardex", "curricular_map", "student", "gpa", "tasks", "calendar", "identifier", "password"]
 
 const getUser = (): UserData | null => {
  let identifier = (localStorage.getItem("identifier") ?? "")
@@ -25,9 +25,9 @@ const getUser = (): UserData | null => {
 }
 
 export const storeInLocal = (itemsToStore: Array<Object> | Array<String> | Object | string, itemName: string) => {
- const curricularMapParsed = JSON.stringify(itemsToStore)
+ const itemsToStoreParsed = JSON.stringify(itemsToStore)
  localStorage.removeItem(itemName)
- localStorage.setItem(itemName, curricularMapParsed)
+ localStorage.setItem(itemName, itemsToStoreParsed)
 }
 
 export const getCacheOf = (itemName: string): Array<Object> | Array<String> | Object | string | null => {

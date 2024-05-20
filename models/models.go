@@ -3,8 +3,8 @@ package models
 import ()
 
 type Tasks struct {
-	Identifier string `bson:"identifier" json:"identifier"`
-	Tasks      []Task `bson:"tasks" json:"tasks"`
+	Identifier string      `bson:"identifier" json:"identifier"`
+	Tasks      interface{} `bson:"tasks" json:"tasks"`
 }
 
 func NewTasksCollection(identifier string, tasks []Task) *Tasks {

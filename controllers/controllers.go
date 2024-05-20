@@ -2,7 +2,10 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
+	"io"
 	"net/http"
+	"strings"
 
 	"github.com/MarcosIgnacioo/db"
 	"github.com/MarcosIgnacioo/models"
@@ -27,6 +30,16 @@ func LogInUser(c *gin.Context) {
 		c.JSON(http.StatusTeapot, err)
 		return
 	}
+
+	tasks, errTasks := db.GetTasks(username)
+
+	if errTasks != nil {
+		fmt.Println(errTasks)
+		return
+	}
+
+	scrappedInfo.(*pw.ScrappedInfo).Tasks = tasks
+	scrappedInfo.(*pw.ScrappedInfo).Calendar = tasks
 
 	c.JSON(http.StatusOK, scrappedInfo)
 }
@@ -91,6 +104,18 @@ func GetKardex(c *gin.Context) {
 
 }
 
+func SaveTasks(c *gin.Context) {
+	username := c.PostForm("identifier")
+	tasks := c.PostForm("tasks")
+	fmt.Println(username, tasks)
+	// if err != nil {
+	// 	c.JSON(http.StatusTeapot, err)
+	// 	return
+	// }
+	//
+	c.JSON(http.StatusOK, tasks)
+}
+
 func GetCurricularMap(c *gin.Context) {
 	username := c.PostForm("username")
 	password := c.PostForm("password")
@@ -106,13 +131,25 @@ func GetCurricularMap(c *gin.Context) {
 func PostTasks(c *gin.Context) {
 	tasksString := c.PostForm("tasks")
 	var tasks models.Tasks
-	json.Unmarshal([]byte(tasksString), tasks)
-	err := db.InsertTasks(tasks.Identifier, &tasks)
-
+	json.Unmarshal([]byte(tasksString), &tasks)
+	err := db.InsertTasks(&tasks)
 	if err != nil {
-		c.JSON(http.StatusTeapot, err)
+		c.JSON(http.StatusConflict, err)
 		return
 	}
-
 	c.JSON(http.StatusOK, "ok")
+}
+
+func GetTasks(c *gin.Context) {
+	bodyAsByteArray, err := io.ReadAll(c.Request.Body)
+	if err != nil {
+		c.JSON(http.StatusConflict, err)
+		return
+	}
+	res, err := db.GetTasks(strings.Split(string(bodyAsByteArray), "=")[1])
+	if err != nil {
+		c.JSON(http.StatusConflict, err)
+		return
+	}
+	c.JSON(http.StatusOK, res)
 }
