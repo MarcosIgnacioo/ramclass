@@ -41,8 +41,9 @@ func LogInUser(c *gin.Context) {
 	if tasks["tasks"] != nil {
 		scrappedInfo.(*pw.ScrappedInfo).Tasks = tasks["tasks"].(primitive.M)
 	} else {
-		scrappedInfo.(*pw.ScrappedInfo).Tasks = bson.M{"tasks": "{}"}
+		scrappedInfo.(*pw.ScrappedInfo).Tasks = bson.M{}
 	}
+
 	scrappedInfo.(*pw.ScrappedInfo).Calendar = tasks
 
 	c.JSON(http.StatusOK, scrappedInfo)
@@ -156,5 +157,10 @@ func GetTasks(c *gin.Context) {
 		c.JSON(http.StatusConflict, err)
 		return
 	}
-	c.JSON(http.StatusOK, res["tasks"])
+
+	if res["tasks"] != nil {
+		c.JSON(http.StatusOK, res["tasks"])
+	} else {
+		c.JSON(http.StatusOK, bson.M{})
+	}
 }

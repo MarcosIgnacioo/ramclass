@@ -836,26 +836,35 @@ b {
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
 }
+
 @keyframes hideAnimation {
   to {
+    display: none;
     width: 0;
     height: 0;
     overflow: hidden;
   }
 }
+
 @-webkit-keyframes hideAnimation {
   to {
+    display: none;
     width: 0;
     height: 0;
     visibility: hidden;
   }
 }
 
-success {
-  color: black !important;
+.success {
   background-color: #ccf6d9;
+  color: black !important;
 }
 .error {
   background-color: #f24968;
   color: snow !important;
+}
+
+.todo-main {
+  padding: 2rem 0;
+  width: 100vw;
 }

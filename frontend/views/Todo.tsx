@@ -11,7 +11,8 @@ import useGetTasks from '../functions/useGetTasks'
 import Error from '../components/Error'
 import Loading from '../components/Loading'
 import Message from '../components/Message'
-import Success from '../components/Success'
+import SaveOnCloudButton from '../components/SaveOnCloudButton'
+import AddTaskButton from '../components/AddTaskButton'
 
 const days = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
 
@@ -21,13 +22,12 @@ export default function Todo() {
  const identifier = userLocal?.username as string
  let [taskCache, setTaskCache] = useState(getCacheOf("tasks"))
  const [taskCacheUpdate, setTaskCacheUpdate]: any = useState()
- let successMessage = true
- let ErrorMessage = true
+ console.log(taskCache)
  const successMessageRef = useRef()
  const errorMessageRef = useRef()
  const tasksResponse = useGetTasks(identifier, taskCache)
  const savingTask = useTasks(taskCacheUpdate, identifier)
-
+ let message: React.JSX.Element
 
  startDraggable()
 
@@ -53,24 +53,25 @@ export default function Todo() {
   </main>)
  }
  //
+ //
  if (savingTask.isSuccess) {
-  console.log(successMessageRef)
-  console.log(successMessageRef.current)
-  console.log(errorMessageRef.current)
+  message = <Message ref={successMessageRef} message="Se guardó con éxito" class="message success" />
  }
  //
  if (savingTask.isError) {
-  console.log(errorMessageRef.current)
+  message = <Message ref={errorMessageRef} message="Ocurrió un error innesperado" class="message error" />
  }
  //
  return (
-  <div onInputCapture={() => {
+  <main className='todo-main' onInputCapture={() => {
    const localChanges = createTasksCollection()
+   console.log(localChanges)
    storeInLocal(localChanges, "tasks")
   }}>
-   <div className='todo-header' >
+   <div className='todo-container' >
     {(days).map(day => {
      if (taskCache !== undefined && taskCache[day] !== undefined) {
+      //
       //
       const tasksInsideContainer = (taskCache[day] as Array<any>).map((task, index) => {
        if (!task.is_deleted) {
@@ -82,8 +83,9 @@ export default function Todo() {
       //
       return (
        <div className='task-container'>
-        <span className='day'>
+        <span className='day' data-day={day}>
          {day}
+         <AddTaskButton properties={{ taskCache, day, setTaskCache, addTask }} />
         </span>
         {tasksInsideContainer}
        </div>)
@@ -91,23 +93,23 @@ export default function Todo() {
      //
      else {
       return (
-       <div className='task-container'>
-        <span className='day'>
+       <div className='task-container' >
+        <span className='day' data-day={day}>
          {day}
+         <AddTaskButton properties={{ taskCache, day, setTaskCache, addTask }} />
         </span>
-        <Task cache={taskCache} is_done={false} task_description={""} />
+        <Task day={day} setCache={setTaskCache} cache={taskCache} is_done={false} task_description={""} />
        </div>)
      }
     }
 
     )}
    </div>
-   <div>
+   <div className='save-container'>
     <button type="button" className='cloud-button' onClick={() => { setTaskCacheUpdate(createTasksCollection()) }}>Guardar en la nube</button>
-    <Message ref={successMessageRef} message="Se guardó con éxito" isHidden={false} class="message success" />
-    <Message ref={errorMessageRef} message="Ocurrió un error innesperado" isHidden={false} class="message error" />
+    {message}
    </div>
-  </div>
+  </main>
  )
 }
 
@@ -115,6 +117,7 @@ export default function Todo() {
 
 function addTask(taskCache: object, day: string, setTaskCache) {
  const newTaskCache = { ...taskCache }
+ if (newTaskCache[day] === undefined) newTaskCache[day] = []
  newTaskCache[day].push({ is_done: false, task_description: "" })
  storeInLocal(newTaskCache, "tasks")
  setTaskCache(newTaskCache)
@@ -126,7 +129,7 @@ function createTasksCollection() {
  const tasks: Object = {}
  tasksContainers.forEach(taskContainer => {
   const tasksInsideContainer = taskContainer.querySelectorAll(".task")
-  const day = (taskContainer.querySelector(".day") as HTMLSpanElement).innerText.replace("+", "")
+  const day = (taskContainer.querySelector(".day") as HTMLSpanElement).dataset.day || ""
   tasksInsideContainer.forEach(task => {
    const taskDescription = ((task.querySelector(".task-text") as HTMLInputElement) || { value: "" }).value
    const isDone = ((task.querySelector(".check-button") as HTMLInputElement) || { checked: false }).checked

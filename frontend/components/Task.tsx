@@ -9,6 +9,7 @@ export default function Task(props) {
  return (
   <div className='task'>
    <div className='task-header' draggable={true}>
+    :::
    </div>
    <div className='task-content'>
     <input className='check-button' checked={isDone} onChange={(e) => setIsDone(e.target.checked)} type="checkbox" name="" value="" />
