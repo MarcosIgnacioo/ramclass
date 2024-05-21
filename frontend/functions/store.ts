@@ -8,6 +8,8 @@ export enum LSK {
  CurricularMap,
  Student,
  GPA,
+ Tasks,
+ Calendar,
  Identifier,
  Password
 }
@@ -77,6 +79,16 @@ export const checkBothCache = (response: UseQueryResult<any, Error>, cacheName: 
   response.data[nameSpace] = cache
  }
  return cache
+}
+
+// Checa la cache en el localstorage, si la propiedad data del react-query no tiene nada pues 
+// checamos la local
+export const checkCacheLocalFirst = (response: UseQueryResult<any, Error>, cacheName: number) => {
+ const nameSpace = localNames[cacheName]
+ const cache = getCacheOf(nameSpace)
+ console.log("localt", cache)
+ console.log("db", response.data)
+ console.log(cache === response.data)
 }
 
 // xd DEPRECATED

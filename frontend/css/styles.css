@@ -818,3 +818,44 @@ b {
 .gpa {
   font-size: 1.2rem;
 }
+
+.message {
+  font-weight: bolder;
+  border-radius: 5px;
+  width: fit-content;
+  font-size: 1.5rem;
+  padding: 10px;
+}
+
+.fade-animation {
+  -moz-animation: hideAnimation 0s ease-in 5s forwards;
+  -webkit-animation: hideAnimation 0s ease-in 5s forwards;
+  -o-animation: hideAnimation 0s ease-in 5s forwards;
+  /* Opera */
+  animation: hideAnimation 0s ease-in 5s forwards;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+@keyframes hideAnimation {
+  to {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+  }
+}
+@-webkit-keyframes hideAnimation {
+  to {
+    width: 0;
+    height: 0;
+    visibility: hidden;
+  }
+}
+
+success {
+  color: black !important;
+  background-color: #ccf6d9;
+}
+.error {
+  background-color: #f24968;
+  color: snow !important;
+}

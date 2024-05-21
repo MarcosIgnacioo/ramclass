@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import saveTasks from './fetchs/tasks.ts';
 
-const useTasks = (tasks: Object, identifier: string) => {
+const useTasks = (tasks: Object | undefined, identifier: string | null) => {
  return useQuery(
   {
    queryKey: ["tasks", { tasks, identifier }],
    queryFn: saveTasks,
-   enabled: (tasks !== null && identifier !== null),
+   enabled: (tasks !== undefined && identifier !== null),
   }
  )
 }

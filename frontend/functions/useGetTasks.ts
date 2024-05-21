@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import getTasks from './fetchs/getTasks.ts';
 
-const useGetTasks = (identifier: string) => {
+const useGetTasks = (identifier: string, cache: Object | null) => {
  return useQuery(
   {
    queryKey: ["get-tasks", identifier],
    queryFn: getTasks,
-   enabled: (identifier !== null),
+   enabled: (identifier !== null && cache === null),
   }
  )
 }

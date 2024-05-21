@@ -18,8 +18,6 @@ export default function SignIn() {
 
  updateCurrentLocation()
 
- console.log(isAccepting)
-
  const updateUser = useUserUpdate()
  const navigate = useNavigate()
 
@@ -46,8 +44,7 @@ export default function SignIn() {
   // Guardamos en localstorage los datos scrappeados como las credenciales para iniciar sesion de nuevo la siguiente vez que se abra la pagina 
   const { classroom, curricular_map, kardex, moodle, student, gpa, tasks, calendar } = response.data
   const { username, password } = loginParams as UserData
-  console.log(tasks.tasks.tasks)
-  setAll([moodle, classroom, kardex, curricular_map, student, gpa, tasks.tasks.tasks, calendar, username, password])
+  setAll([moodle, classroom, kardex, curricular_map, student, gpa, tasks, calendar, username, password])
   updateUser(loginParams)
   navigate("/student")
  }
@@ -56,7 +53,6 @@ export default function SignIn() {
   <main className='signin-container'>
    <form onSubmit={(e) => {
     if (isHidden) {
-     console.log("estoy entreando al early return")
      setIsHidden(false)
      setIsAccepting(false)
      e.preventDefault()

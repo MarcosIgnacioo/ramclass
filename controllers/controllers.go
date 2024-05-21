@@ -3,14 +3,14 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
-	"strings"
 
 	"github.com/MarcosIgnacioo/db"
 	"github.com/MarcosIgnacioo/models"
 	pw "github.com/MarcosIgnacioo/playwright"
 	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func LogInUser(c *gin.Context) {
@@ -38,7 +38,11 @@ func LogInUser(c *gin.Context) {
 		return
 	}
 
-	scrappedInfo.(*pw.ScrappedInfo).Tasks = tasks
+	if tasks["tasks"] != nil {
+		scrappedInfo.(*pw.ScrappedInfo).Tasks = tasks["tasks"].(primitive.M)
+	} else {
+		scrappedInfo.(*pw.ScrappedInfo).Tasks = bson.M{"tasks": "{}"}
+	}
 	scrappedInfo.(*pw.ScrappedInfo).Calendar = tasks
 
 	c.JSON(http.StatusOK, scrappedInfo)
@@ -141,15 +145,16 @@ func PostTasks(c *gin.Context) {
 }
 
 func GetTasks(c *gin.Context) {
-	bodyAsByteArray, err := io.ReadAll(c.Request.Body)
-	if err != nil {
+	identifier, err := c.GetQuery("identifier")
+	fmt.Println(identifier)
+	if err != true {
 		c.JSON(http.StatusConflict, err)
 		return
 	}
-	res, err := db.GetTasks(strings.Split(string(bodyAsByteArray), "=")[1])
-	if err != nil {
+	res, errDb := db.GetTasks(identifier)
+	if errDb != nil {
 		c.JSON(http.StatusConflict, err)
 		return
 	}
-	c.JSON(http.StatusOK, res)
+	c.JSON(http.StatusOK, res["tasks"])
 }
