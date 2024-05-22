@@ -21,8 +21,8 @@ export default function Todo() {
  const userLocal = ((useUser().username == "") ? getUser() : useUser() as UserData)
  const identifier = userLocal?.username as string
  let [taskCache, setTaskCache] = useState(getCacheOf("tasks"))
- const [taskCacheUpdate, setTaskCacheUpdate]: any = useState()
  console.log(taskCache)
+ const [taskCacheUpdate, setTaskCacheUpdate]: any = useState()
  const successMessageRef = useRef()
  const errorMessageRef = useRef()
  const tasksResponse = useGetTasks(identifier, taskCache)
@@ -61,8 +61,6 @@ export default function Todo() {
   message = <Message ref={errorMessageRef} message="Ocurrió un error innesperado" class="message error" />
  }
  //
-
-
  return (
   <main className='todo-main' onInputCapture={() => {
    const localChanges = createTasksCollection()

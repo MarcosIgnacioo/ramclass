@@ -18,3 +18,14 @@ export interface TaskDrag {
  day: string
  index: number
 }
+
+export type Task = {
+ task_description: string;
+ is_done: boolean;
+ is_deleted: boolean;
+};
+
+// Define the type for the state
+export type TaskList = {
+ [day: string]: Task[];
+};
