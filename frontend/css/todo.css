@@ -39,7 +39,7 @@ svg {
   box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.17);
 }
 
-.task *:not("svg") {
+.task *:not(svg) {
   padding: 5px;
 }
 
@@ -84,4 +84,7 @@ svg {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+.test {
+  background-color: red !important;
 }

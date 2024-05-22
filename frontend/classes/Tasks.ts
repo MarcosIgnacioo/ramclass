@@ -13,3 +13,8 @@ export class TaskClass {
   this.is_deleted = false;
  }
 }
+
+export interface TaskDrag {
+ day: string
+ index: number
+}

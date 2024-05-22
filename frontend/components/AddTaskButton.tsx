@@ -1,9 +1,9 @@
 import React from 'react'
 
 export default function AssTaskButton(props) {
- const { taskCache, day, setTaskCache, addTask } = props.properties
+ const { day, setTaskCache, addTask } = props.properties
  return (
-  <button type="button" onClick={() => addTask(taskCache as Object, day, setTaskCache)}>+</button>
+  <button type="button" onClick={() => addTask(day, setTaskCache)}>+</button>
  )
 }
 

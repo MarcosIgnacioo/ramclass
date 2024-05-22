@@ -11,8 +11,8 @@ import useGetTasks from '../functions/useGetTasks'
 import Error from '../components/Error'
 import Loading from '../components/Loading'
 import Message from '../components/Message'
-import SaveOnCloudButton from '../components/SaveOnCloudButton'
-import AddTaskButton from '../components/AddTaskButton'
+import TaskContainer from '../components/TaskContainer'
+import { createTasksCollection, addTask } from '../functions/todoFunctions'
 
 const days = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
 
@@ -29,7 +29,6 @@ export default function Todo() {
  const savingTask = useTasks(taskCacheUpdate, identifier)
  let message: React.JSX.Element
 
- startDraggable()
 
  if (taskCache === null && tasksResponse.isError) {
   return (<main>
@@ -62,47 +61,37 @@ export default function Todo() {
   message = <Message ref={errorMessageRef} message="Ocurrió un error innesperado" class="message error" />
  }
  //
+
+
  return (
   <main className='todo-main' onInputCapture={() => {
    const localChanges = createTasksCollection()
-   console.log(localChanges)
    storeInLocal(localChanges, "tasks")
   }}>
    <div className='todo-container' >
     {(days).map(day => {
      if (taskCache !== undefined && taskCache[day] !== undefined) {
       //
-      //
       const tasksInsideContainer = (taskCache[day] as Array<any>).map((task, index) => {
        if (!task.is_deleted) {
         return (
-         <Task day={day} setCache={setTaskCache} cache={taskCache} index={index} is_done={task.is_done} task_description={task.task_description} is_deleted={task.is_deleted} />
+         <Task day={day} taskCache={taskCache} setTaskCache={setTaskCache} index={index} is_done={task.is_done} task_description={task.task_description} is_deleted={task.is_deleted} />
         )
        }
       })
       //
       return (
-       <div className='task-container'>
-        <span className='day' data-day={day}>
-         {day}
-         <AddTaskButton properties={{ taskCache, day, setTaskCache, addTask }} />
-        </span>
-        {tasksInsideContainer}
-       </div>)
+       <TaskContainer day={day} setTaskCache={setTaskCache} addTask={addTask} tasks={tasksInsideContainer} />
+      )
      }
      //
      else {
+      const tasks = <Task day={day} taskCache={taskCache} setCache={setTaskCache} is_done={false} task_description={""} />
       return (
-       <div className='task-container' >
-        <span className='day' data-day={day}>
-         {day}
-         <AddTaskButton properties={{ taskCache, day, setTaskCache, addTask }} />
-        </span>
-        <Task day={day} setCache={setTaskCache} cache={taskCache} is_done={false} task_description={""} />
-       </div>)
+       <TaskContainer day={day} taskCache={taskCache} setTaskCache={setTaskCache} addTask={addTask} tasks={tasks} />
+      )
      }
     }
-
     )}
    </div>
    <div className='save-container'>
@@ -113,69 +102,3 @@ export default function Todo() {
  )
 }
 
-
-
-function addTask(taskCache: object, day: string, setTaskCache) {
- const newTaskCache = { ...taskCache }
- if (newTaskCache[day] === undefined) newTaskCache[day] = []
- newTaskCache[day].push({ is_done: false, task_description: "" })
- storeInLocal(newTaskCache, "tasks")
- setTaskCache(newTaskCache)
-}
-
-
-function createTasksCollection() {
- const tasksContainers = document.querySelectorAll('.task-container')
- const tasks: Object = {}
- tasksContainers.forEach(taskContainer => {
-  const tasksInsideContainer = taskContainer.querySelectorAll(".task")
-  const day = (taskContainer.querySelector(".day") as HTMLSpanElement).dataset.day || ""
-  tasksInsideContainer.forEach(task => {
-   const taskDescription = ((task.querySelector(".task-text") as HTMLInputElement) || { value: "" }).value
-   const isDone = ((task.querySelector(".check-button") as HTMLInputElement) || { checked: false }).checked
-   if (tasks[day] === undefined) tasks[day] = []
-   tasks[day].push(new TaskClass(taskDescription, isDone))
-  })
- })
- return tasks
-}
-
-function startDraggable() {
- const tasksDraggable = document.querySelectorAll(".task")
- const containers = document.querySelectorAll(".task-container")
- tasksDraggable.forEach(task => {
-  task.addEventListener('dragstart', () => {
-   task.classList.add("dragging")
-  })
-  task.addEventListener('dragend', () => {
-   task.classList.remove("dragging")
-  })
- })
- containers.forEach(container => {
-  container.addEventListener('dragover', (e) => {
-   e.preventDefault()
-   const draggingTask = document.querySelector(".dragging")
-   const closest = getDragAfterElement(container, e.clientY)
-
-   if (closest === null) {
-    container.appendChild(draggingTask!)
-   } else {
-    container.insertBefore(draggingTask!, closest)
-   }
-   const tasksCollection = createTasksCollection()
-   storeInLocal(tasksCollection, "tasks")
-  })
- })
-}
-
-function getDragAfterElement(container, y) {
- const tasksInContainer = [...container.querySelectorAll(".task:not(.dragging)")]
- return tasksInContainer.reduce((closest, task) => {
-  const box = task.getBoundingClientRect()
-  const offset = y - box.top - (box.height / 2)
-  if (offset < 0 && offset > closest.offset) {
-   return { offset: offset, element: task }
-  }
-  else { return closest }
- }, { offset: Number.NEGATIVE_INFINITY }).element
-}
