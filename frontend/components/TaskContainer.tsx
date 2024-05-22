@@ -1,6 +1,7 @@
 import React from 'react'
 import AddTaskButton from './AddTaskButton'
 
+// day, setTaskCache, addTask, tasks
 export default function TaskContainer(props) {
  const { day, setTaskCache, addTask, tasks } = props
  return (
