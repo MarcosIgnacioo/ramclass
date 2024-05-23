@@ -1,0 +1,23 @@
+.month-container,
+.year-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.month-container *,
+.year-container * {
+  margin: 0 5px;
+}
+
+.month-container span,
+.year-container span {
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.month-container h2,
+.year-container h2 {
+  text-align: center;
+  width: 250px;
+}
