@@ -24,6 +24,7 @@ func server() {
 	r.GET("/my-kardex", ramses)
 	r.GET("/my-curricular-map", ramses)
 	r.GET("/todo", ramses)
+	r.GET("/calendar", ramses)
 	r.GET("/settings", ramses)
 	r.GET("/faq", ramses)
 

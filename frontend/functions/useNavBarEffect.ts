@@ -41,6 +41,10 @@ export default function useNavBarEffect(userQuery: UserData | null) {
      "text": "TODO App",
      "function": ""
     },
+    "calendar": {
+     "text": "Calendario Escolar",
+     "function": ""
+    },
     "settings": {
      "text": "Configuración",
      "function": ""

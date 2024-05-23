@@ -15,6 +15,7 @@ import Home from './views/Home';
 import Settings from './views/Settings';
 import Faq from './views/Faq';
 import Todo from './views/Todo';
+import Calendar from './views/Calendar';
 
 function Application() {
 
@@ -41,6 +42,8 @@ function Application() {
        <Route path='/my-curricular-map' element={<CurricularMap />} />
        <Route path='/settings' element={<Settings />} />
        <Route path='/todo' element={<Todo />} />
+       <Route path='/calendar' element={<Calendar />} />
+
        <Route path='/faq' element={<Faq />} />
        <Route path='/test' element={<Prueba />} />
       </Routes>
