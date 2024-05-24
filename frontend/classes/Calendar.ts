@@ -1,6 +1,38 @@
 export const currentYear = new Date().getFullYear()
 export const currentMonth = new Date().getMonth()
 
+export const weekDays = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+export const weekDaysTraslation = {
+ sunday: "Domingo",
+ monday: "Lunes",
+ tuesday: "Martes",
+ wednesday: "Miércoles",
+ thursday: "Jueves",
+ friday: "Viernes",
+ saturday: "Sábado"
+}
+
+const monthsEng = [
+ "January",
+ "February",
+ "March",
+ "April",
+ "May",
+ "June",
+ "July",
+ "August",
+ "September",
+ "October",
+ "November",
+ "December"
+];
+
+export function getWeekDay(year, day, month) {
+ const date = `${monthsEng[month]} ${day}, ${year}`
+ console.log(date)
+ const d = new Date(date);
+ return weekDays[d.getDay()]
+}
 const calendarMap = {
  begin: "Inicio de clases",
  holyday: "Día festivo",
@@ -128,7 +160,7 @@ export const calendar = {
    { day: 1, events: ["Día Lectivo"], type: "school" },
    { day: 2, events: ["Sin evento"], type: "blank" },
    { day: 3, events: ["Sin evento"], type: "blank" },
-   { day: 4, events: ["Día Lectivo"], type: "shool" },
+   { day: 4, events: ["Día Lectivo"], type: "school" },
    { day: 5, events: ["Día Lectivo"], type: "school" },
    { day: 6, events: ["Día Lectivo"], type: "school" },
    { day: 7, events: ["Día Lectivo"], type: "school" },
@@ -199,7 +231,7 @@ export const calendar = {
    { day: 7, events: ["Día Lectivo"], type: "school" },
    { day: 8, events: ["Día Lectivo"], type: "school" },
    { day: 9, events: ["Día Lectivo"], type: "school" },
-   { day: 10, events: ["Días Festivos"], type: "academic" },
+   { day: 10, events: ["Días Festivos"], type: "holyday" },
    { day: 11, events: ["Sin evento"], type: "blank" },
    { day: 12, events: ["Sin evento"], type: "blank" },
    { day: 13, events: ["Día Lectivo"], type: "school" },
@@ -230,8 +262,8 @@ export const calendar = {
    { day: 5, events: ["Exámenes Ordinarios"], type: "ordinaries" },
    { day: 6, events: ["Exámenes Ordinarios"], type: "ordinaries" },
    { day: 7, events: ["Exámenes Ordinarios"], type: "ordinaries" },
-   { day: 8, events: ["Sin evento"] },
-   { day: 9, events: ["Sin evento"] },
+   { day: 8, events: ["Sin evento"], type: "blank" },
+   { day: 9, events: ["Sin evento"], type: "blank" },
    { day: 10, events: ["Exámenes Ordinarios"], type: "ordinaries" },
    { day: 11, events: ["Exámenes Ordinarios"], type: "ordinaries" },
    { day: 12, events: ["Sin evento"], type: "blank" },

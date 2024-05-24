@@ -1,3 +1,69 @@
+.blank {
+  background-color: whitesmoke;
+  color: #14120d;
+}
+.academic {
+  background-color: #b8cf10;
+  color: #14120d;
+}
+
+.administrative {
+  background-color: #4f4f4f;
+  color: white;
+}
+.begin {
+  background-color: #666ed1;
+  color: white;
+  border: 8px #d5b22f solid;
+}
+.school {
+  background-color: #93d3b5;
+  color: #14120d;
+}
+.holyday {
+  background-color: #c03169;
+  color: white;
+}
+.vacational {
+  background-color: #ffb3d1;
+  color: white;
+  font-weight: bolder;
+}
+.graduation {
+  background-color: #e5c454;
+  color: #14120d;
+}
+.ordinaries {
+  background-color: #92c6d5;
+  color: #14120d;
+}
+.extraordinaries {
+  background-color: #9292d5;
+  color: #14120d;
+}
+.inscriptions {
+  background-color: #c9d592;
+  color: #14120d;
+}
+.reinscriptions {
+  background-color: #daaf4c;
+  /* color: white; */
+  color: #14120d;
+  font-weight: bold;
+}
+.new_admission_call {
+  background-color: #f3d4f9;
+  color: #14120d;
+}
+.log_records {
+  background-color: #14120d;
+  color: white;
+}
+.end {
+  background-color: #930e3e;
+  color: white;
+  border: 8px #d5b22f solid;
+}
 .month-container,
 .year-container {
   display: flex;
@@ -12,12 +78,56 @@
 
 .month-container span,
 .year-container span {
-  font-size: 2rem;
+  font-size: 4rem;
   cursor: pointer;
 }
 
 .month-container h2,
 .year-container h2 {
+  font-size: 3rem;
   text-align: center;
   width: 250px;
+}
+
+.month-days {
+  display: grid;
+  grid-template-columns: repeat(7, 7fr);
+  gap: 5%;
+  width: 80vw;
+  height: 90vh;
+  background-color: whitesmoke;
+  padding: 5%;
+  border-radius: 16px;
+}
+
+.day-calendar {
+  font-size: 3rem;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  height: fit-flex;
+  padding: 5px 10px;
+  border-radius: 8px;
+}
+.simbology {
+  display: flex;
+  margin-right: auto;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin-top: 5%;
+}
+.simbology * {
+  text-align: center;
+  padding: 5px;
+}
+#symbology-title {
+  text-align: left;
+}
+.event-text {
+  font-size: 0.9rem;
+  font-weight: 900;
+  border: none;
 }
