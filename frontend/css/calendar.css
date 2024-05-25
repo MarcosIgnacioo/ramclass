@@ -105,7 +105,7 @@
   font-size: 3rem;
   display: flex;
   flex-direction: column;
-  cursor: pointer;
+  /* cursor: pointer; */
   text-align: center;
   justify-content: center;
   align-items: center;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Week, calendar, currentMonth, currentYear, getWeekDay, months, monthsEng, weekDays, weekDaysTraslation } from '../classes/Calendar'
+import { Week, calendar, currentMonth, currentYear, getWeekDay, months } from '../classes/Calendar'
 import "../css/calendar.css"
 import FowardArrow from '../components/FowardArrow'
 import BackwardArrow from '../components/BackwardArrow'
@@ -11,76 +11,27 @@ export default function Calendar() {
  const [year, setYear] = useState(currentYear)
  const [month, setMonth] = useState(currentMonth)
 
- const daysWeek = {
-  sunday: [],
-  monday: [],
-  tuesday: [],
-  wednesday: [],
-  thursday: [],
-  friday: [],
-  saturday: [],
- }
-
- // pasara de una interfa z a una clase paro
  let calendarRows: Array<Week> = []
- calendarRows.push({
-  sunday: <Day day="Do" events={[]} type="week-title" />,
-  monday: <Day day="Lu" events={[]} type="week-title" />,
-  tuesday: <Day day="Ma" events={[]} type="week-title" />,
-  wednesday: <Day day="Mi" events={[]} type="week-title" />,
-  thursday: <Day day="Ju" events={[]} type="week-title" />,
-  friday: <Day day="Vi" events={[]} type="week-title" />,
-  saturday: <Day day="Sá" events={[]} type="week-title" />,
- }
- )
+ calendarRows.push(getEmptyWeek("Do", "Lu", "Ma", "Mi",
+  "Ju", "Vi", "Sá"))
 
  if (calendar[year] != undefined) {
   if (calendar[year][months[month]] !== undefined) {
-   // Obtenemos los dias del mes en el que estamos
    const daysInMonth = calendar[year][months[month]]
-   // Los recorremos
-   let obj: Week = {
-    sunday: <Day day="" events={[]} type="" />,
-    monday: <Day day="" events={[]} type="" />,
-    tuesday: <Day day="" events={[]} type="" />,
-    wednesday: <Day day="" events={[]} type="" />,
-    thursday: <Day day="" events={[]} type="" />,
-    friday: <Day day="" events={[]} type="" />,
-    saturday: <Day day="" events={[]} type="" />,
-   }
-
+   let week: Week = getEmptyWeek()
    daysInMonth.forEach((day, index) => {
     const weekDay = getWeekDay(year, day.day, month)
     if (weekDay === "sunday" && index !== 0) {
-     calendarRows.push(obj)
-     obj = {
-      sunday: <Day day="" events={[]} type="" />,
-      monday: <Day day="" events={[]} type="" />,
-      tuesday: <Day day="" events={[]} type="" />,
-      wednesday: <Day day="" events={[]} type="" />,
-      thursday: <Day day="" events={[]} type="" />,
-      friday: <Day day="" events={[]} type="" />,
-      saturday: <Day day="" events={[]} type="" />,
-     }
+     calendarRows.push(week)
+     week = getEmptyWeek()
     }
-    obj[weekDay] = (<Day day={day.day} events={day.events} type={day.type} />)
+    week[weekDay] = (<Day day={day.day} events={day.events} type={day.type} />)
     if ((index + 1) === daysInMonth.length) {
-     calendarRows.push({ ...obj })
+     calendarRows.push({ ...week })
     }
-    daysWeek[weekDay].push(<Day day={day.day} events={day.events} type={day.type} />)
    });
   }
  }
-
- let daysContainer = <div className='month-days'>
-  {weekDays.map((weekDay) => (
-   <div className={`week-days ${weekDay}`}>
-    <h1 className='week-day-title'>{weekDaysTraslation[weekDay]}</h1>
-    {...daysWeek[weekDay] as Array<React.JSX.Element>}
-   </div>
-  ))}
- </div>
- // console.log(daysWeek)
 
  const rows = calendarRows.map(row => (
   <div className='week'>
@@ -93,22 +44,6 @@ export default function Calendar() {
    {row.saturday}
   </div>
  ))
-
- // // tener un arreglo con un objketop que tenga la interfaz week
- // //
- // daysContainer = calendarRows.map(row => {
- //  return (<div className={`week-days ${weekDay}`}>
- //   <div className='monday'>
- //    row[monday]
- //   </div>
- //   <div className='tuesday'>
- //    row[tuesday]
- //   </div>
- //   y asi se crearan cuadrados vacios en vasos d q no haya
- //   <h1 className='week-day-title'>{weekDaysTraslation[weekDay]}</h1>
- //   {...daysWeek[weekDay] as Array<React.JSX.Element>}
- //  </div>)
- // })
 
  return (
   <main className='calendar-container'>
@@ -146,22 +81,20 @@ export default function Calendar() {
       <h1 className='new_admission_call'>Convocatoria de nuevo ingreso</h1>
      </div>
     </div>
-
-
    </div>
   </main>
  )
 }
 
 
-function getEmptyWeek() {
+function getEmptyWeek(sunday = "", monday = "", tuesday = "", wednesday = "", thursday = "", friday = "", saturday = "") {
  return {
-  sunday: <Day day="" events={[]} type="" />,
-  monday: <Day day="" events={[]} type="" />,
-  tuesday: <Day day="" events={[]} type="" />,
-  wednesday: <Day day="" events={[]} type="" />,
-  thursday: <Day day="" events={[]} type="" />,
-  friday: <Day day="" events={[]} type="" />,
-  saturday: <Day day="" events={[]} type="" />,
+  sunday: <Day day={sunday} events={[]} type="" />,
+  monday: <Day day={monday} events={[]} type="" />,
+  tuesday: <Day day={tuesday} events={[]} type="" />,
+  wednesday: <Day day={wednesday} events={[]} type="" />,
+  thursday: <Day day={thursday} events={[]} type="" />,
+  friday: <Day day={friday} events={[]} type="" />,
+  saturday: <Day day={saturday} events={[]} type="" />,
  }
 }
