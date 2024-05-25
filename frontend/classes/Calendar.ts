@@ -12,7 +12,7 @@ export const weekDaysTraslation = {
  saturday: "Sábado"
 }
 
-const monthsEng = [
+export const monthsEng = [
  "January",
  "February",
  "March",
@@ -29,7 +29,6 @@ const monthsEng = [
 
 export function getWeekDay(year, day, month) {
  const date = `${monthsEng[month]} ${day}, ${year}`
- console.log(date)
  const d = new Date(date);
  return weekDays[d.getDay()]
 }
@@ -369,10 +368,10 @@ export const calendar = {
    { day: 14, events: ["Sin evento"], type: "blank" },
    { day: 15, events: ["Sin evento"], type: "blank" },
    { day: 16, events: ["Días Festivos"], type: "holyday" },
-   { day: 17, events: ["Día Lectivo"], type: "holyday" },
-   { day: 18, events: ["Día Lectivo"], type: "holyday" },
-   { day: 19, events: ["Día Lectivo"], type: "holyday" },
-   { day: 20, events: ["Día Lectivo"], type: "holyday" },
+   { day: 17, events: ["Día Lectivo"], type: "school" },
+   { day: 18, events: ["Día Lectivo"], type: "school" },
+   { day: 19, events: ["Día Lectivo"], type: "school" },
+   { day: 20, events: ["Día Lectivo"], type: "school" },
    { day: 21, events: ["Sin evento"], type: "blank" },
    { day: 22, events: ["Sin evento"], type: "blank" },
    { day: 23, events: ["Día Lectivo"], type: "school" },
@@ -549,3 +548,14 @@ export const calendar = {
   ]
  }
 };
+
+export interface Week {
+ sunday: React.JSX.Element,
+ monday: React.JSX.Element,
+ tuesday: React.JSX.Element,
+ wednesday: React.JSX.Element,
+ thursday: React.JSX.Element,
+ friday: React.JSX.Element,
+ saturday: React.JSX.Element,
+}
+

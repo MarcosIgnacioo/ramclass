@@ -812,9 +812,9 @@ b {
   align-items: center;
 }
 
-.clipboard-container svg {
-  margin-left: 10px;
-}
+/* .clipboard-container svg { */
+/*   margin-left: 10px; */
+/* } */
 .gpa {
   font-size: 1.2rem;
 }

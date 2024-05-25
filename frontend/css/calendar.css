@@ -14,7 +14,7 @@
 .begin {
   background-color: #666ed1;
   color: white;
-  border: 8px #d5b22f solid;
+  border: 8px white solid;
 }
 .school {
   background-color: #93d3b5;
@@ -72,7 +72,8 @@
 }
 
 .month-container *,
-.year-container * {
+.year-container *,
+.week-days * {
   margin: 0 5px;
 }
 
@@ -80,24 +81,24 @@
 .year-container span {
   font-size: 4rem;
   cursor: pointer;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+.week-days {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .month-container h2,
 .year-container h2 {
   font-size: 3rem;
   text-align: center;
-  width: 250px;
+  width: 300px;
 }
 
-.month-days {
-  display: grid;
-  grid-template-columns: repeat(7, 7fr);
-  gap: 5%;
-  width: 80vw;
-  height: 90vh;
-  background-color: whitesmoke;
-  padding: 5%;
-  border-radius: 16px;
+.week {
+  display: flex;
 }
 
 .day-calendar {
@@ -111,23 +112,30 @@
   height: fit-flex;
   padding: 5px 10px;
   border-radius: 8px;
+  width: 135px !important;
+  height: 158px !important;
+  margin: 2px;
 }
 .simbology {
   display: flex;
   margin-right: auto;
-  flex-direction: column;
-  flex-wrap: wrap;
   margin-top: 5%;
 }
 .simbology * {
+  min-width: 30vw;
   text-align: center;
   padding: 5px;
 }
 #symbology-title {
+  margin-top: 5%;
+  width: fit-content;
   text-align: left;
 }
 .event-text {
   font-size: 0.9rem;
   font-weight: 900;
   border: none;
+}
+.reinscriptions h1 {
+  font-size: 0.8rem;
 }
