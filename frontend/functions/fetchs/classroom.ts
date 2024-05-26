@@ -31,6 +31,7 @@ const classRoom = async ({ queryKey }) => {
  };
 
  const apiResponse = await fetch(`${BASE_PATH}${nameSpace}`, requestOptions)
+
  if (!apiResponse.ok) {
   throw new Error(`Credentials ${username}, ${password} not okay`);
  }
