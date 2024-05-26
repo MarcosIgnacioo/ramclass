@@ -60,6 +60,7 @@ func server() {
 	r.POST("/credentials", controllers.GetUserCredentials)
 
 	r.GET("/get-tasks", controllers.GetTasks)
+	r.GET("/pancho", controllers.GetPapancho)
 	r.POST("/save-tasks", controllers.PostTasks)
 
 	r.GET("/ca", ramses)

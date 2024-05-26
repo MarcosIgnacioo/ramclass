@@ -145,6 +145,11 @@ func PostTasks(c *gin.Context) {
 	c.JSON(http.StatusOK, "ok")
 }
 
+func GetPapancho(c *gin.Context) {
+	st, _ := db.GetStudent(2021086013)
+	c.JSON(http.StatusOK, st)
+}
+
 func GetTasks(c *gin.Context) {
 	identifier, err := c.GetQuery("identifier")
 	fmt.Println(identifier)

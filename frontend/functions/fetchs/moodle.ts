@@ -34,7 +34,6 @@ const moodle = async ({ queryKey }) => {
   throw new Error(`Credentials ${username}, ${password} not okay`);
  }
 
- console.log("terminando fgetch moodle")
  return apiResponse.json()
 }
 export default moodle;
