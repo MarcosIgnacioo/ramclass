@@ -9,10 +9,12 @@ import (
 
 	"github.com/MarcosIgnacioo/controllers"
 	"github.com/MarcosIgnacioo/db"
+	pw "github.com/MarcosIgnacioo/playwright"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
+	scraptest()
 	db.Init()
 	fmt.Println("BUILD GAMER")
 	server()
@@ -67,6 +69,62 @@ func server() {
 	r.GET("/cb", ramses)
 	// Esto va hasta el final!!!!! XD
 	r.Run()
+}
+
+func scraptest() {
+	context, _, _, err := pw.GenerateContext(false)
+
+	if err != nil {
+		fmt.Println(err)
+		panic("ERROORROROORORORO")
+	}
+
+	page, err := (*context).NewPage()
+	page2, err := (*context).NewPage()
+
+	page.Goto("https://quotes.toscrape.com/")
+	page2.Goto("https://es.wikipedia.org/wiki/Web_scraping")
+	fmt.Println("wep")
+	quote, _ := page.Locator(".quote span").First().InnerText()
+	fmt.Println("ya hay quote")
+	title, _ := page2.Locator(".mw-page-title-main").First().InnerText()
+	fmt.Println("ya hay title")
+	fmt.Println(quote)
+	fmt.Println(title)
+	page2.Close()
+	if len((*context).Pages()) == 1 {
+		(*context).Close()
+	} else {
+		page.Close()
+	}
+
+	// sdfd, _ := pw.ScrapMoodleAndClassroom("marcosignc_21", "sopitasprecio")
+	// browser, _, _ := pw.GenerateBrowser(false)
+	// page, _ := (*browser).NewPage()
+	// page.Goto("https://es.wikipedia.org/wiki/Web_scraping")
+	// time.Sleep(2 * time.Second)
+	// page.Context().NewPage()
+	// res := pw.Cronos(false, browser, "marcosignc_21", "sopitasprecio", pw.MoodleScrap)
+	// pw.Cronos(false, browser, "marcosignc_21", "sopitasprecio", pw.MoodleScrap)
+	// pw.Cronos(false, browser, "marcosignc_21", "sopitasprecio", pw.MoodleScrap)
+	// pw.Cronos(false, browser, "marcosignc_21", "sopitasprecio", pw.MoodleScrap)
+	// fmt.Println("this should go on")
+	// fmt.Println("and then crash")
+	// fmt.Println(res)
+	// fmt.Println(sdfd.Moodle...)
+	// fmt.Println(sdfd.ClassRoom...)
+	// username := "marcosignc_21"
+	// password := "sopitasprecio"
+	// browser, _, _ := pw.GenerateBrowser(false)
+	// siia, _ := pw.SiiaLogin(browser, username, password)
+	// newPage2, _ := (*siia).Context().NewPage()
+	// pw.KardexScrap(siia)
+	// session, _ := (*browser).NewContext()
+	// page, _ := session.NewPage()
+	// page.Goto("netflix.com")
+
+	// pw.CurricularMapScrap(&newPage2)
+	// pw.Testing("marcosignc_21", "sopitasprecio")
 }
 
 func ramses(c *gin.Context) {
