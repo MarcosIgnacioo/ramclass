@@ -21,7 +21,8 @@ export default async function saveTasks({ queryKey }) {
   redirect: "follow"
  };
 
- const apiResponse = await fetch(`${BASE_PATH}/${nameSpace}`, requestOptions)
+ const apiResponse = await fetch(`${BASE_PATH}${nameSpace}`, requestOptions)
+
  if (!apiResponse.ok) {
   throw new Error(`Credentials ${identifier}, ${tasks} not okay`);
  }
