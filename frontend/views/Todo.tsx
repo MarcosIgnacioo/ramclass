@@ -27,7 +27,7 @@ export default function Todo() {
  const errorMessageRef = useRef()
  const tasksResponse = useGetTasks(identifier, taskCache)
  const savingTask = useTasks(taskCacheUpdate, identifier)
- let message: React.JSX.Element
+ let message: React.JSX.Element = <div></div>
 
 
  if (taskCache === null && tasksResponse.isError) {
@@ -62,7 +62,6 @@ export default function Todo() {
  }
  //
 
-
  return (
   <main className='todo-main' onInputCapture={() => {
    const localChanges = createTasksCollection()
@@ -71,7 +70,6 @@ export default function Todo() {
    <div className='todo-container' >
     {(days).map(day => {
      if (taskCache !== undefined && taskCache[day] !== undefined) {
-      //
       const tasksInsideContainer = (taskCache[day] as Array<any>).map((task, index) => {
        if (!task.is_deleted) {
         return (
@@ -79,12 +77,10 @@ export default function Todo() {
         )
        }
       })
-      //
       return (
        <TaskContainer day={day} setTaskCache={setTaskCache} addTask={addTask} tasks={tasksInsideContainer} />
       )
      }
-     //
      else {
       const tasks = <Task day={day} taskCache={taskCache} setCache={setTaskCache} is_done={false} task_description={""} />
       return (
