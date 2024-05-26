@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -13,17 +14,19 @@ import (
 
 func main() {
 	db.Init()
+	fmt.Println("BUILD GAMER")
 	server()
 }
 
 func server() {
-	r := gin.Default()
 	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+	os.Setenv("HOME", "/home/marcig/")
 	if err != nil {
 		log.Fatal(err)
 	}
-	r.Static("/public/assets", dir+"./public/assets/")
-	r.LoadHTMLGlob(dir + "views/*")
+	r := gin.Default()
+	r.LoadHTMLGlob(dir + "/views/*")
+	r.Static("/public/assets", dir+"/public/assets/")
 	r.GET("/", ramses)
 	r.GET("/sign-in", ramses)
 	r.GET("/student", ramses)

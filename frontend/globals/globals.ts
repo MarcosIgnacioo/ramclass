@@ -1,4 +1,4 @@
-export const BASE_PATH = "http://localhost:8080"
+export const BASE_PATH = window.location.href
 export const SemestersMap = {
  0: "optative",
  1: "first",
