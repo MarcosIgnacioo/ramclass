@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import UserData from '../classes/UserData.ts';
-import kardex from './fetchs/kardex.ts';
+import UserData from '../classes/UserData';
+import kardex from './fetchs/kardex';
 
 const useKardex = (loginParams: UserData | null | undefined) => {
  return useQuery(

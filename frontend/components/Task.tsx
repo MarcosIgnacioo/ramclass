@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { deleteTask, startDraggable } from '../functions/todoFunctions'
+import { deleteTask } from '../functions/todoFunctions'
 import { TaskDrag } from '../classes/Tasks'
 
 export default function Task(props) {

@@ -4,7 +4,6 @@ const nameSpace = "save-tasks"
 export default async function saveTasks({ queryKey }) {
  const data = queryKey[1]
  const { tasks, identifier } = data
- console.log("mehh", tasks, "wep", identifier)
  if (!tasks || !identifier) return
 
  const headers = new Headers();
@@ -21,7 +20,7 @@ export default async function saveTasks({ queryKey }) {
   redirect: "follow"
  };
 
- const apiResponse = await fetch(`${BASE_PATH}/${nameSpace}`, requestOptions)
+ const apiResponse = await fetch(`${BASE_PATH}${nameSpace}`, requestOptions)
  if (!apiResponse.ok) {
   throw new Error(`Credentials ${identifier}, ${tasks} not okay`);
  }

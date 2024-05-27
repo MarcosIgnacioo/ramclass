@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
-import { useLocationContext, useLocationUpdateContext, useUser } from '../components/UserContext';
+import { useUser } from '../components/UserContext';
 import useLogin from '../functions/useLogin';
 import getUser, { LSK, checkBothCache } from '../functions/store';
-import Subject from '../components/Subject.tsx';
-import SubjectFilters from '../components/SubjectFilters.tsx';
-import UserData from '../classes/UserData.ts';
-import useKardex from '../functions/useKardex.ts';
-import State from '../components/State.tsx';
-import { filterSubjects } from '../functions/filterSubjects.ts';
-import SignIn from './SignIn.tsx';
-import updateCurrentLocation from '../functions/location.ts';
+import Subject from '../components/Subject';
+import SubjectFilters from '../components/SubjectFilters';
+import UserData from '../classes/UserData';
+import useKardex from '../functions/useKardex';
+import State from '../components/State';
+import { filterSubjects } from '../functions/filterSubjects';
+import SignIn from './SignIn';
+import updateCurrentLocation from '../functions/location';
 
 export default function Kardex() {
  const [userCredentials, setUserCredentials] = useState<UserData | null>(null);
@@ -19,7 +19,10 @@ export default function Kardex() {
  updateCurrentLocation()
 
  const userLocal = (useUser().username == "") ? getUser() : useUser()
+ if (!userLocal) return (<SignIn />)
+
  const user = useUser()
+
  const response = useLogin(user)
 
  const kardexFetch = useKardex(userCredentials)
@@ -51,7 +54,6 @@ export default function Kardex() {
 
  const contentClass = (kardexSubjects.props.children !== undefined) ? "subjects-container" : ""
 
- if (!userLocal) return (<SignIn />)
 
  return (
   <main className='kardex-container'>

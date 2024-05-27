@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react'
 import updateCurrentLocation from '../functions/location'
 import "../css/todo.css"
-import { TaskClass } from '../classes/Tasks'
 import Task from '../components/Task'
 import getUser, { getCacheOf, storeInLocal } from '../functions/store'
 import { useUser } from '../components/UserContext'
@@ -13,12 +12,15 @@ import Loading from '../components/Loading'
 import Message from '../components/Message'
 import TaskContainer from '../components/TaskContainer'
 import { createTasksCollection, addTask } from '../functions/todoFunctions'
+import SignIn from './SignIn'
 
 const days = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
 
 export default function Todo() {
  updateCurrentLocation()
  const userLocal = ((useUser().username == "") ? getUser() : useUser() as UserData)
+ if (!userLocal) return (<SignIn />)
+
  const identifier = userLocal?.username as string
  let [taskCache, setTaskCache] = useState(getCacheOf("tasks"))
  const [taskCacheUpdate, setTaskCacheUpdate]: any = useState()
@@ -32,7 +34,7 @@ export default function Todo() {
 
  if (taskCache === null && tasksResponse.isError) {
   return (<main>
-   <Error />
+   <Error error={"Ha ocurrido un error inesperado, puedes volver a intentar lo que querías hacer o actualizar la página."} refreshButton={true} />
   </main>)
  }
  //
@@ -48,7 +50,7 @@ export default function Todo() {
  //
  if (taskCache === null) {
   return (<main>
-   <Error />
+   <Error error={"Ha ocurrido un error inesperado, puedes volver a intentar lo que querías hacer o actualizar la página."} refreshButton={true} />
   </main>)
  }
  //

@@ -19,17 +19,17 @@ func LogInUser(c *gin.Context) {
 
 	scrappedInfo, err := pw.FullScrap(username, password)
 
+	if err.ErrorMessage != nil {
+		c.JSON(http.StatusTeapot, err)
+		return
+	}
+
 	// GO routines go brrrrr
 	go db.InsertStudent(scrappedInfo.(*pw.ScrappedInfo).Student.(*pw.StudentInfo))
 	go db.InsertClassRoom(username, scrappedInfo.(*pw.ScrappedInfo).ClassRoom)
 	go db.InsertMoodle(username, scrappedInfo.(*pw.ScrappedInfo).Moodle)
 	go db.InsertKardex(username, scrappedInfo.(*pw.ScrappedInfo).GPA, scrappedInfo.(*pw.ScrappedInfo).Kardex)
 	go db.InsertCurricularMap(username, scrappedInfo.(*pw.ScrappedInfo).CurricularMap)
-
-	if err.ErrorMessage != nil {
-		c.JSON(http.StatusTeapot, err)
-		return
-	}
 
 	tasks, errTasks := db.GetTasks(username)
 

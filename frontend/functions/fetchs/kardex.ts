@@ -1,3 +1,5 @@
+import { BASE_PATH } from "../../globals/globals"
+
 const nameSpace = "kardex"
 
 const kardex = async ({ queryKey }) => {
@@ -19,7 +21,7 @@ const kardex = async ({ queryKey }) => {
   redirect: "follow"
  };
 
- const apiResponse = await fetch(`http://localhost:8080/${nameSpace}`, requestOptions)
+ const apiResponse = await fetch(`${BASE_PATH}${nameSpace}`, requestOptions)
  if (!apiResponse.ok) {
   throw new Error(`Credentials ${username}, ${password} not okay`);
  }

@@ -1,7 +1,6 @@
 import { useEffect } from "react";
-import { TaskClass } from "../../classes/Tasks";
 
-export default function useLocationEffect(tasks: TaskClass) {
+export default function useLocationEffect() {
  useEffect(() => {
   const oldLocation = document.querySelector(".current-location")
   oldLocation?.classList.remove("current-location")

@@ -4,17 +4,14 @@ import UserData from '../classes/UserData';
 import { useUserUpdate } from '../components/UserContext';
 import { setAll } from '../functions/store';
 import { useNavigate } from 'react-router-dom';
-import Error from '../components/Error';
 import Loading from '../components/Loading';
 import updateCurrentLocation from '../functions/location';
-import Terms from '../components/Terms';
+import LoginForm from '../components/LoginForm';
+import ErrorMinified from '../components/ErrorMinified';
 
 export default function SignIn() {
 
  const [loginParams, setLoginParams] = useState<UserData | null>(null);
- const [isAccepting, setIsAccepting] = useState(true)
- const [isHidden, setIsHidden] = useState(true)
- const buttonClass = (!isAccepting) ? "inactive" : ""
 
  updateCurrentLocation()
 
@@ -33,11 +30,20 @@ export default function SignIn() {
 
  if (response.isError) {
   return (
-   <main>
-    <Error />
+   <main className='signin-container'>
+    <ErrorMinified error="Credenciales incorrectas, favor de intentarlo de nuevo" />
+    <LoginForm setLoginParams={setLoginParams} />
+    <p>Recuerda, tu identificador es
+     <br />
+     el inicio de tu dirección de correo
+     <br />
+     electrónico hasta el @.
+     <br />
+     <br />
+     Ejemplo: <b>pikminc_21</b> @alu.uabcs.mx
+    </p>
    </main>
   )
-
  }
 
  if (response.isSuccess) {
@@ -46,35 +52,12 @@ export default function SignIn() {
   const { username, password } = loginParams as UserData
   setAll([moodle, classroom, kardex, curricular_map, student, gpa, tasks, calendar, username, password])
   updateUser(loginParams)
-  navigate("/student")
+  navigate("/home")
  }
 
  return (
   <main className='signin-container'>
-   <form onSubmit={(e) => {
-    if (isHidden) {
-     setIsHidden(false)
-     setIsAccepting(false)
-     e.preventDefault()
-     return
-    }
-    const formData = new FormData(e.currentTarget)
-    const data = {
-     username: formData.get("username") ?? "",
-     password: formData.get("password") ?? ""
-    }
-    // Guardar el usuario en la sesion actual en React
-    setLoginParams(data)
-    e.preventDefault()
-   }} className='signin-form'>
-    <h1>Inciar sesión</h1>
-    <label htmlFor="username">Ingrese su identificador</label>
-    <input required name="username" />
-    <label htmlFor="password">Ingresa tu contraseña</label>
-    <input required name="password" type="password" />
-    <Terms setIsAccepting={setIsAccepting} isHidden={isHidden} />
-    <button className={buttonClass} disabled={!isAccepting} type="submit">Iniciar sesion</button>
-   </form>
+   <LoginForm setLoginParams={setLoginParams} />
    <p>Recuerda, tu identificador es
     <br />
     el inicio de tu dirección de correo

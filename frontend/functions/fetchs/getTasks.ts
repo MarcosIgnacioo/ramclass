@@ -11,6 +11,6 @@ export default async function getTasks({ queryKey }) {
   redirect: "follow"
  };
 
- const response = await fetch(`${BASE_PATH}/${nameSpace}?identifier=${identifier}`, requestOptions)
+ const response = await fetch(`${BASE_PATH}${nameSpace}?identifier=${identifier}`, requestOptions)
  return response.json()
 }

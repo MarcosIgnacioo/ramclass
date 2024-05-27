@@ -531,13 +531,22 @@ main {
 .loading-top * {
   color: snow !important;
 }
-.alert {
+.error-header {
   background-color: #f24968;
   font-weight: bolder;
-  font-size: 2.6rem;
-  padding: 5%;
-  border-radius: 15px;
+  font-size: 2rem;
+  padding: 2%;
+  border-radius: 15px 15px 0 0;
   color: snow;
+}
+
+#error-message {
+  margin: 0;
+  background-color: snow;
+  color: black;
+  padding: 5%;
+  font-weight: bolder;
+  border-radius: 0 0 15px 15px;
 }
 
 .warn {
@@ -584,7 +593,19 @@ button {
   font-size: 2rem;
 }
 
+.error {
+  background-color: #d393a4;
+  font-weight: bolder;
+  font-size: 1.2rem;
+  padding: 0.65%;
+  margin: 10px 0;
+  width: 25%;
+  border-radius: 15px;
+  color: snow;
+}
+
 .refresh-button {
+  margin-top: 5%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -859,12 +880,20 @@ b {
   background-color: #ccf6d9;
   color: black !important;
 }
-.error {
-  background-color: #f24968;
-  color: snow !important;
-}
 
 .todo-main {
   padding: 2rem 0;
   width: 100vw;
+}
+
+.fade-in-text {
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    display: grid;
+    visibility: hidden;
+  }
 }

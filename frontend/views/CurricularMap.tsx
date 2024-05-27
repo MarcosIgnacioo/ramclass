@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
 import getUser, { LSK, checkBothCache } from '../functions/store'
-import { useLocationContext, useLocationUpdateContext, useUser } from '../components/UserContext'
+import { useUser } from '../components/UserContext'
 import useLogin from '../functions/useLogin'
 import Subject from '../components/Subject'
 import Error from '../components/Error'
 import SubjectFilters from '../components/SubjectFilters'
-import useLocationEffect from '../functions/effects/useLocationEffect'
 import UserData from '../classes/UserData'
 import useCurricularMap from '../functions/useCurricularMap'
 import { filterSubjects } from '../functions/filterSubjects'
 import State from '../components/State'
 import updateCurrentLocation from '../functions/location'
+import SignIn from './SignIn'
 
 export const CurricularMap = () => {
  const [userCredentials, setUserCredentials] = useState<UserData | null>(null);
@@ -20,6 +20,7 @@ export const CurricularMap = () => {
  updateCurrentLocation()
 
  const userLocal = (useUser().username == "") ? getUser() : useUser()
+ if (!userLocal) return (<SignIn />)
  const user = useUser()
  const response = useLogin(user)
 

@@ -1,5 +1,7 @@
 package pw
 
+import "fmt"
+
 // Estas serian las unicas funciones que van a ser publicas en el package
 const (
 	headless = true
@@ -12,6 +14,8 @@ func FullScrap(username string, password string) (Result, *Error) {
 	}
 
 	credentialsResults, loginError := CredentialsScrap(context, username, password)
+	fmt.Println(credentialsResults)
+	fmt.Println(loginError)
 
 	if loginError != nil {
 		CloseScrapper(playwright, browser, context)

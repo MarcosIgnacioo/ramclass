@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import getUser, { LSK, storeInLocal } from '../functions/store'
+import getUser, { LSK } from '../functions/store'
 import { checkCache } from '../functions/checkLogin'
 import Assigment from '../components/Assigment'
 import UserData from '../classes/UserData'
@@ -9,10 +9,12 @@ import useClassRoom from '../functions/useClassRoom'
 import State from '../components/State'
 import Title from '../components/Title'
 import updateCurrentLocation from '../functions/location'
+import SignIn from './SignIn'
 
 export default function Home() {
 
  updateCurrentLocation()
+
 
  const [userClassRoomParams, setUserClassRoomParams] = useState<UserData | null>(null);
  const [userMoodleParams, setUserMoodleParams] = useState<UserData | null>(null);
@@ -28,6 +30,7 @@ export default function Home() {
  const classRoomAssigments = State({ fetchedData: classRoomFetch, cache: classRoom, nameSpace: "classroom", Container: Assigment, isFiltered: false })
 
  const userLocal = (useUser().username == "") ? getUser() : useUser()
+ if (!userLocal) return (<SignIn />)
 
  return (
   <main className='home'>

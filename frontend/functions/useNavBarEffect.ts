@@ -17,7 +17,11 @@ export default function useNavBarEffect(userQuery: UserData | null) {
     "faq": {
      "text": "FAQ",
      "function": ""
-    }
+    },
+    "calendar": {
+     "text": "Calendario Escolar",
+     "function": ""
+    },
    })
   } else {
    setNavBarData({

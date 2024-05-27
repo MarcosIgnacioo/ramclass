@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import UserData from '../classes/UserData.ts';
-import classRoom from './fetchs/classroom.ts';
+import UserData from '../classes/UserData';
+import classRoom from './fetchs/classroom';
 
 const useClassRoom = (loginParams: UserData | null | undefined) => {
  return useQuery(
