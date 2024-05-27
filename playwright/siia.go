@@ -2,6 +2,7 @@ package pw
 
 import (
 	"errors"
+	"fmt"
 	"log"
 	"strconv"
 	"strings"
@@ -24,6 +25,7 @@ func siiaLogin(siia *playwright.Page, url string, username string, password stri
 	if (*siia).URL() == url {
 		return nil
 	}
+	fmt.Println("Y SIGO AKIII")
 	expect.Locator((*siia).Locator("#ctl00_ContentPlaceHolder1_initLinkButton1")).ToBeVisible()
 	(*siia).Locator("#ctl00_ContentPlaceHolder1_loginTextBox").Fill(username)
 	(*siia).Locator("#ctl00_ContentPlaceHolder1_passwordTextBox").Fill(password)
@@ -155,11 +157,14 @@ func CurricularMapScrap(context *playwright.BrowserContext, username string, pas
 // XD
 func CredentialsScrap(context *playwright.BrowserContext, username string, password string) (Result, error) {
 	siia, _ := (*context).NewPage()
+	screenshot(&siia, "wtf.png")
+	fmt.Println("yooo")
 	credentialsUrl := "https://siia.uabcs.mx/siia2019/alumnos/credenciales.aspx?gr=alumno"
 	err := siiaLogin(&siia, credentialsUrl, username, password)
 	if err != nil {
 		return nil, err
 	}
+	fmt.Println("PORQUE")
 	expect.Locator(siia.Locator("#ctl00_contentPlaceHolder_alumnosFormView_AlumnoFieldset_AlumnoIDLabel")).ToBeVisible()
 	controlNumber, _ := siia.Locator("#ctl00_contentPlaceHolder_alumnosFormView_AlumnoFieldset_AlumnoIDLabel").InnerText()
 	studentId, _ := strconv.Atoi(controlNumber)

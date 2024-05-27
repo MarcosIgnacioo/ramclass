@@ -94,8 +94,8 @@ func CloseScrapper(pw *playwright.Playwright, browser *playwright.Browser, conte
 	return err
 }
 
-func screenshot(page playwright.Page, name string) {
-	page.Screenshot((playwright.PageScreenshotOptions{
+func screenshot(page *playwright.Page, name string) {
+	(*page).Screenshot((playwright.PageScreenshotOptions{
 		Path: playwright.String(name),
 	}))
 }

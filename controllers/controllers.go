@@ -16,6 +16,8 @@ import (
 func LogInUser(c *gin.Context) {
 	username := c.PostForm("username")
 	password := c.PostForm("password")
+	fmt.Println("username", username)
+	fmt.Println("password", password)
 
 	scrappedInfo, err := pw.FullScrap(username, password)
 
