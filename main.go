@@ -14,7 +14,6 @@ import (
 )
 
 func main() {
-	scraptest()
 	db.Init()
 	fmt.Println("BUILD GAMER")
 	server()
