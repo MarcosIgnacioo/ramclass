@@ -8,9 +8,9 @@ import (
 	"github.com/playwright-community/playwright-go"
 )
 
-var expect = playwright.NewPlaywrightAssertions(20000)
-var loginSiiaExpect = playwright.NewPlaywrightAssertions(20000)
-var await = playwright.NewPlaywrightAssertions(5000)
+var expect = playwright.NewPlaywrightAssertions(100000)
+var loginSiiaExpect = playwright.NewPlaywrightAssertions(200000)
+var await = playwright.NewPlaywrightAssertions(50000)
 
 /*
 scrapFn: func(*playwright.Browser, string, string) (Result, error)
