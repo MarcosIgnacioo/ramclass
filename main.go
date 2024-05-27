@@ -72,7 +72,7 @@ func server() {
 }
 
 func scraptest() {
-	context, _, _, err := pw.GenerateContext(false)
+	context, _, _, err := pw.GenerateContext(true)
 
 	if err != nil {
 		fmt.Println(err)
