@@ -25,14 +25,13 @@ func siiaLogin(siia *playwright.Page, url string, username string, password stri
 	if (*siia).URL() == url {
 		return nil
 	}
-	fmt.Println("Y SIGO AKIII")
+	fmt.Println((*siia).URL())
 	expect.Locator((*siia).Locator("#ctl00_ContentPlaceHolder1_initLinkButton1")).ToBeVisible()
 	(*siia).Locator("#ctl00_ContentPlaceHolder1_loginTextBox").Fill(username)
 	(*siia).Locator("#ctl00_ContentPlaceHolder1_passwordTextBox").Fill(password)
 	(*siia).Locator("#ctl00_ContentPlaceHolder1_initLinkButton1").Click()
-
+	fmt.Println((*siia).URL())
 	if (*siia).URL() != url {
-		fmt.Println("Hoy los buenos recuerdos se caen por las escaleras y tras varios tekilas")
 		return errors.New("Credenciales incorrectas")
 	}
 	return nil
