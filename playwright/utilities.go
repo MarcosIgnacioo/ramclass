@@ -8,9 +8,9 @@ import (
 	"github.com/playwright-community/playwright-go"
 )
 
-var expect = playwright.NewPlaywrightAssertions(10000)
-var loginSiiaExpect = playwright.NewPlaywrightAssertions(1000)
-var await = playwright.NewPlaywrightAssertions(500)
+var expect = playwright.NewPlaywrightAssertions(20000)
+var loginSiiaExpect = playwright.NewPlaywrightAssertions(20000)
+var await = playwright.NewPlaywrightAssertions(5000)
 
 /*
 scrapFn: func(*playwright.Browser, string, string) (Result, error)
@@ -94,7 +94,7 @@ func CloseScrapper(pw *playwright.Playwright, browser *playwright.Browser, conte
 	return err
 }
 
-func screenshot(page *playwright.Page, name string) {
+func Screenshot(page *playwright.Page, name string) {
 	(*page).Screenshot((playwright.PageScreenshotOptions{
 		Path: playwright.String(name),
 	}))

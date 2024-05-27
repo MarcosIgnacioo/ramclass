@@ -14,6 +14,7 @@ import (
 )
 
 func main() {
+	scraptest()
 	db.Init()
 	fmt.Println("BUILD GAMER")
 	server()
@@ -86,6 +87,7 @@ func scraptest() {
 	fmt.Println("wep")
 	quote, _ := page.Locator(".quote span").First().InnerText()
 	fmt.Println("ya hay quote")
+	pw.Screenshot(&page, "CULO.png")
 	title, _ := page2.Locator(".mw-page-title-main").First().InnerText()
 	fmt.Println("ya hay title")
 	fmt.Println(quote)

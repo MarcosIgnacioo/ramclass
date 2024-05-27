@@ -32,6 +32,7 @@ func siiaLogin(siia *playwright.Page, url string, username string, password stri
 	(*siia).Locator("#ctl00_ContentPlaceHolder1_initLinkButton1").Click()
 
 	if (*siia).URL() != url {
+		fmt.Println("Hoy los buenos recuerdos se caen por las escaleras y tras varios tekilas")
 		return errors.New("Credenciales incorrectas")
 	}
 	return nil
@@ -157,7 +158,7 @@ func CurricularMapScrap(context *playwright.BrowserContext, username string, pas
 // XD
 func CredentialsScrap(context *playwright.BrowserContext, username string, password string) (Result, error) {
 	siia, _ := (*context).NewPage()
-	screenshot(&siia, "wtf.png")
+	Screenshot(&siia, "wtf.png")
 	fmt.Println("yooo")
 	credentialsUrl := "https://siia.uabcs.mx/siia2019/alumnos/credenciales.aspx?gr=alumno"
 	err := siiaLogin(&siia, credentialsUrl, username, password)
