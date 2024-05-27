@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import getTasks from './fetchs/getTasks.ts';
+import getTasks from './fetchs/getTasks';
 
 const useGetTasks = (identifier: string, cache: Object | null) => {
  return useQuery(

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import UserData from '../classes/UserData.ts';
-import curricularMap from './fetchs/curricularMap.ts';
+import UserData from '../classes/UserData';
+import curricularMap from './fetchs/curricularMap';
 
 const useCurricularMap = (loginParams: UserData | null | undefined) => {
  return useQuery(

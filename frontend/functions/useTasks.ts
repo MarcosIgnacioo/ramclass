@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import saveTasks from './fetchs/tasks.ts';
+import saveTasks from '../functions/fetchs/tasks';
 
 const useTasks = (tasks: Object | undefined, identifier: string | null) => {
  return useQuery(

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import login from '../functions/login.ts'
-import UserData from '../classes/UserData.ts';
+import UserData from '../classes/UserData';
+import login from './login';
 
 const useLogin = (loginParams: UserData | null | undefined) => {
  return useQuery(

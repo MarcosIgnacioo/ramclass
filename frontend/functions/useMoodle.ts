@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import UserData from '../classes/UserData.ts';
-import moodle from './fetchs/moodle.ts';
-
+import UserData from '../classes/UserData';
+import moodle from '../functions/fetchs/moodle';
 const useMoodle = (loginParams: UserData | null | undefined) => {
  return useQuery(
   {

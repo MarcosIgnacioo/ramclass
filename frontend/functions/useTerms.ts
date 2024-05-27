@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
-import { getTerms } from './fetchs/terms.ts';
+import { getTerms } from './fetchs/terms';
 
 const useTerms = () => {
  return useQuery(
   {
-   queryKey: ["terms"],
+   queryKey: ["terms", "terms"],
    queryFn: getTerms,
   }
  )
