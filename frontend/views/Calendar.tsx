@@ -5,6 +5,7 @@ import FowardArrow from '../components/FowardArrow'
 import BackwardArrow from '../components/BackwardArrow'
 import Day from '../components/Day'
 import updateCurrentLocation from '../functions/location'
+import Title from '../components/Title'
 
 export default function Calendar() {
  updateCurrentLocation()
@@ -47,6 +48,7 @@ export default function Calendar() {
 
  return (
   <main className='calendar-container'>
+   <Title title='Calendario' to='#' />
    <div className='year-container'>
     <BackwardArrow thing={year} setThing={setYear} high={9999} low={0} />
     <h2>{year}</h2>

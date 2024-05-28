@@ -7,16 +7,20 @@ export default function StudentCredential({ name, control_number, institutional_
   <div>
    <div className='credential'>
     <div className='upper-credential'>
-     <div className='fields-container names'>
+     <div className='control-number field-top'>
       <span className='field-name'>Número de control: </span>
-      <span className='field-name'>Nombre:  </span>
-      <span className='field-name'>Correo institucuional: </span>
-      <span className='field-name'>Carrera: </span>
-     </div>
-     <div className='fields-container values'>
       {SpanWithCopy(control_number)}
+     </div>
+     <div className='student-name field-top'>
+      <span className='field-name'>Nombre:  </span>
       {SpanWithCopy(name)}
+     </div>
+     <div className='email field-top'>
+      <span className='field-name'>Correo institucuional: </span>
       {SpanWithCopy(institutional_email)}
+     </div>
+     <div className='career field-top'>
+      <span className='field-name'>Carrera: </span>
       <span className='field-value'>{career} </span>
      </div>
     </div>

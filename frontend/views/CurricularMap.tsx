@@ -11,6 +11,7 @@ import { filterSubjects } from '../functions/filterSubjects'
 import State from '../components/State'
 import updateCurrentLocation from '../functions/location'
 import SignIn from './SignIn'
+import Title from '../components/Title'
 
 export const CurricularMap = () => {
  const [userCredentials, setUserCredentials] = useState<UserData | null>(null);
@@ -53,6 +54,7 @@ export const CurricularMap = () => {
  const contentClass = (curricularMapSubjects.props.children !== undefined) ? "subjects-container" : ""
  return (
   <main className='curricular-map-conatainer' >
+   <Title title='Materias' to='#' />
    <div className='kardex-top'>
     {SubjectFilters(semester, setSemester, subjectName, setSubjectName)}
     <div className='refetch-gpa'>

@@ -13,6 +13,7 @@ import Message from '../components/Message'
 import TaskContainer from '../components/TaskContainer'
 import { createTasksCollection, addTask } from '../functions/todoFunctions'
 import SignIn from './SignIn'
+import Title from '../components/Title'
 
 const days = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
 
@@ -69,6 +70,7 @@ export default function Todo() {
    const localChanges = createTasksCollection()
    storeInLocal(localChanges, "tasks")
   }}>
+   <Title title='To Do' to='#' />
    <div className='todo-container' >
     {(days).map(day => {
      if (taskCache !== undefined && taskCache[day] !== undefined) {

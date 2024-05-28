@@ -9,6 +9,7 @@ import useClassRoom from '../functions/useClassRoom'
 import State from '../components/State'
 import updateCurrentLocation from '../functions/location'
 import SignIn from './SignIn'
+import Title from '../components/Title'
 
 export default function Home() {
 
@@ -34,6 +35,7 @@ export default function Home() {
 
  return (
   <main className='home'>
+   <Title title='Tareas' to='#' />
    <div className='moodle'>
     <h1 className='subtitle moodle'>Moodle</h1>
     <br />
@@ -45,7 +47,7 @@ export default function Home() {
     </div>
    </div>
    <br />
-   <div className='classroom'>
+   <div className='classroom' style={{ marginBottom: "50px" }}>
     <h1 className='subtitle classroom'>Classroom</h1>
     <br />
     <button className='refetch  classroom' onClick={() => {

@@ -12,15 +12,15 @@ export default function Navbar() {
  const navBarLinks: React.ReactElement[] = []
  const navBarLinksMobile: React.ReactElement[] = []
  for (const link in navBarData) {
-  navBarLinks.push(<Link id={link} to={link} onClick={navBarData[link]["function"]}>{navBarData[link]["text"]}</Link>)
-  navBarLinksMobile.push(<Link id={link} to={link} onClick={navBarData[link]["function"]} className="material-symbols-outlined nav__link active-link">{navBarData[link]["icon"]}</Link>)
+  navBarLinks.push(<Link className={`nav-links ${link}-location`} id={link} to={link} onClick={navBarData[link]["function"]}>{navBarData[link]["text"]}</Link>)
+  navBarLinksMobile.push(<Link id={link} to={link} onClick={navBarData[link]["function"]} className={`material-symbols-outlined ${link}-location`}>{navBarData[link]["icon"]}</Link>)
  }
 
  return (
   <div>
    <div className='navbar' ref={navbarRef}>
     <div className='head-navbar'>
-     <Title title="RAMCLASS" />
+     <Title title="RAMCLASS" to='/' />
     </div>
     {navBarLinks}
    </div>

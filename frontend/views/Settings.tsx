@@ -10,7 +10,7 @@ export default function Settings() {
  }
  return (
   <main>
-   <Title title='Ajustes' />
+   <Title title='Ajustes' to='#' />
    <div>
     <label><input type="checkbox" name="" value="" onChange={(e) => {
      setCrtFilter(e.target.checked)

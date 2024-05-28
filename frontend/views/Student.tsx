@@ -9,6 +9,7 @@ import UserData from '../classes/UserData';
 import updateCurrentLocation from '../functions/location';
 import useCredentials from '../functions/useCredentials';
 import State from '../components/State';
+import Title from '../components/Title';
 
 export default function Student() {
  const [userCredentials, setUserCredentials] = useState<UserData | null>(null);
@@ -29,6 +30,7 @@ export default function Student() {
 
  if (credentialsInfo === null || credentialsInfo.props.name === undefined && !credentialsFetch.isLoading) {
   return (<main>
+
    <div className='warn'>
     <h1 className='warn-header'>Advertencia</h1>
     <div className='warn-content'>
@@ -43,6 +45,7 @@ export default function Student() {
 
  return (
   <main className='credential-container'>
+   <Title title='Credencial' to='#' />
    {credentialsInfo}
    <button type='button' className="refetch credentials" onClick={() => {
     setUserCredentials(userLocal)

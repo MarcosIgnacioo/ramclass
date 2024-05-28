@@ -20,11 +20,9 @@ export default function Assigment({ class_subject, date, link, title }) {
      <span className='hour'>{date.hour}</span>
     </div>
    </div>
-   <div>
-    <br />
+   <div className='assigment-info-container'>
     <div className='assigment-info'>
-     <span className='title'>{title}</span>
-     <br />
+     <p className='title'>{title}</p>
      <a className='link' href={link}>Ver tarea</a>
     </div>
    </div>

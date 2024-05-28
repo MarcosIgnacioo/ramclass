@@ -19,9 +19,10 @@ export default function Terms(props) {
     <p>{privacy}</p>
    </div>
    <div className='accept-fields'>
-    <label><input type="checkbox" name="" value="" onChange={(e) => {
-     props.setIsAccepting(e.target.checked)
-    }} />Acepto los términos y condiciones.</label>
+    <label
+     className='accept-label'><input id='accept-terms' type="checkbox" name="" value="" onChange={(e) => {
+      props.setIsAccepting(e.target.checked)
+     }} />Acepto los términos y condiciones.</label>
    </div>
   </div>
  )

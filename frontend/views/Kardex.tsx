@@ -10,6 +10,7 @@ import State from '../components/State';
 import { filterSubjects } from '../functions/filterSubjects';
 import SignIn from './SignIn';
 import updateCurrentLocation from '../functions/location';
+import Title from '../components/Title';
 
 export default function Kardex() {
  const [userCredentials, setUserCredentials] = useState<UserData | null>(null);
@@ -57,6 +58,7 @@ export default function Kardex() {
 
  return (
   <main className='kardex-container'>
+   <Title title='Kardex' to='#' />
    <div className='kardex-top'>
     {SubjectFilters(semester, setSemester, subjectName, setSubjectName)}
     <div className='refetch-gpa'>

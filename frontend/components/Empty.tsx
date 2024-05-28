@@ -16,8 +16,7 @@ export default function Empty() {
      <span className='hour'></span>
     </div>
    </div>
-   <div>
-    <br />
+   <div className='assigment-info-container'>
     <div className='assigment-info'>
      <span className='title'></span>
      <a className='link' href=''>Quizás mas tarde...</a>

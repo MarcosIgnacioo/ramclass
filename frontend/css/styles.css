@@ -8,6 +8,11 @@
   font-style: normal;
   src: url(./fonts/mintsoda.ttf);
 }
+.input-container {
+  display: flex;
+  flex-direction: column;
+}
+
 #hamburger {
   display: none;
 }
@@ -88,6 +93,9 @@ html {
 main {
   padding: 2rem 12rem;
   overflow: hidden;
+}
+main .text-title * {
+  color: white !important;
 }
 header {
   padding: 0.5rem 12rem;
@@ -415,17 +423,13 @@ main {
   color: #1d1d1d;
 }
 
-.navbar a:hover {
+.navbar .nav-links:hover {
   background-color: #1d1d1d;
   color: white;
 }
 
 .about__title {
   font-weight: bolder;
-}
-
-.about__title:hover {
-  background-color: white !important;
 }
 
 .moodle,
@@ -443,7 +447,8 @@ main {
   color: #343636;
   padding: 5px;
   border-radius: 5px;
-  margin-bottom: 5px;
+  margin-bottom: 55px;
+  margin-top: 25px;
   max-width: 300px;
   min-width: 300px;
   font-weight: bolder !important;
@@ -635,17 +640,17 @@ button {
   background-color: white;
   box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.5);
   border: 5px #f783ac dashed;
-  width: 55vw;
+  width: 50vw;
   padding: 2%;
   border-radius: 5px;
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
 .credential * {
   margin: 10px 0 10px 0;
   color: var(--bg-dark);
 }
 .upper-credential {
-  display: flex;
+  flex-direction: column;
 }
 .fields-container {
   display: flex;
@@ -659,6 +664,10 @@ button {
   font-weight: bolder;
   text-decoration: underline;
 }
+.field-top {
+  display: flex;
+}
+
 .school-data {
   font-size: 1.2rem;
 }
@@ -712,7 +721,6 @@ button {
   justify-content: center;
 }
 
-.signin-form label,
 .signin-form input,
 .signin-form button {
   margin: 2%;
@@ -733,7 +741,11 @@ button {
 }
 p {
   margin-top: 5%;
-  text-justify: auto;
+  text-align: justify;
+}
+
+.assigment-info p {
+  margin: 2% 0;
 }
 .subjects-filter {
   width: 41vw;
@@ -784,6 +796,10 @@ option {
   cursor: pointer;
   text-decoration: none !important;
 }
+.copy-span {
+  display: flex;
+  align-items: center;
+}
 
 .clipboard-container * {
   margin: 0;
@@ -799,28 +815,25 @@ option {
 .accept-fields {
   display: flex;
   align-items: center;
-  justify-content: center;
 }
 
 .accept-fields label {
   display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
 .accept-fields label input {
   vertical-align: middle;
   position: relative;
   bottom: 1px;
-  margin-right: 10px;
-}
-
-.accept-fields label,
-input {
-  margin: 10px 10px 0 0 !important;
+  margin: 0 !important;
 }
 
 .accept-fields input {
   height: 25px;
   width: 25px;
+  margin: 0 20px 0 0 !important;
 }
 
 .checkbox-container {
@@ -840,10 +853,6 @@ b {
 .inactive {
   background-color: gray !important;
   cursor: not-allowed;
-}
-.clipboard-container {
-  display: inline-block;
-  align-items: center;
 }
 
 /* .clipboard-container svg { */
@@ -911,11 +920,65 @@ b {
   }
 }
 
+.accept-label {
+  margin: 20px 0;
+}
+
+.accept-label input {
+  margin: 20px 0;
+}
+#accept-terms {
+  margin-right: 20px !important;
+}
+.faq-container {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+.faq h1 {
+  color: white;
+}
+
+.faq h2 {
+  background-color: white;
+  color: black;
+  padding: 2%;
+  border-radius: 5px;
+  width: fit-content;
+  margin-top: 5px;
+}
+.question-container {
+  margin: 30px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 1325px) {
+  .todo-container {
+    flex-direction: column;
+  }
+  .task-container {
+    min-width: 80vw !important;
+    max-width: 80vw !important;
+    width: 80vw !important;
+  }
+  .task-container {
+    margin: 5% 0 !important;
+  }
+  .task {
+    margin: 2% 0 !important;
+  }
+  .cloud-button {
+    max-width: 90vw;
+    min-width: 80vw;
+  }
+}
+
 @media (max-width: 799px) {
   .assigment {
     min-width: 90vw;
     max-width: 90vw;
-    padding: 2.5rem;
+    padding: 1.5rem;
   }
   .subject {
     --border-top-size: 5px;
@@ -959,7 +1022,7 @@ b {
     align-items: center;
   }
   main {
-    padding: 3rem 0;
+    padding: 1rem 0;
   }
   .navbar {
     display: none;
@@ -991,8 +1054,15 @@ b {
   .text-title * {
     font-size: 2rem;
   }
+  main .text-title * {
+    font-size: 3.5rem !important;
+    color: white !important;
+  }
+  .main {
+    padding: 0;
+  }
   main .text-title {
-    display: none;
+    margin: 2% 0 5% 0;
   }
   #hamburger {
     width: 35px;
@@ -1039,20 +1109,6 @@ b {
     transform: rotate(-45deg);
     top: 13px;
   }
-  .todo-container {
-    flex-direction: column;
-  }
-  .task-container {
-    min-width: 80vw !important;
-    max-width: 80vw !important;
-    width: 80vw !important;
-  }
-  .task-container {
-    margin: 5% 0 !important;
-  }
-  .task {
-    margin: 2% 0 !important;
-  }
   .week * {
     font-size: 0.5rem !important;
   }
@@ -1091,5 +1147,87 @@ b {
   .month-container *,
   .year-container * {
     font-size: 2rem !important;
+  }
+  .credential {
+    width: 90vw;
+    padding: 6%;
+  }
+  .credential * {
+    font-size: 3vw;
+  }
+  .refetch.credentials {
+    margin-top: 15px;
+  }
+  .field-top {
+    display: flex;
+    flex-direction: column;
+  }
+  .field-name,
+  .field-value {
+    margin: 0;
+  }
+  .date,
+  .title {
+    font-size: 3.5vw !important;
+  }
+  .class_subject {
+    font-size: 5vw !important;
+  }
+  .date {
+    margin-top: 5%;
+  }
+  .assigment-info p {
+    margin: 3% 0;
+  }
+  .assigment-info-container * {
+    font-size: 1.6rem;
+  }
+  .loading {
+    min-width: 90vw;
+    max-width: 90vw;
+  }
+  .refetch {
+    min-width: 100%;
+    max-width: 100%;
+  }
+  .refetch.credentials {
+    min-width: 70%;
+    max-width: 70%;
+  }
+  .simbology * {
+    font-size: 1.5rem !important;
+  }
+  .signin-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .signin-form h1 {
+    text-align: center;
+  }
+  .signin-form label {
+    font-size: 1.3rem;
+  }
+  .signin-form input {
+    margin: 2% !important;
+  }
+  .terms-container {
+    width: 60%;
+  }
+  .faq {
+    padding: 2%;
+  }
+
+  .faq h1 {
+    font-size: 1.5rem;
+  }
+  .faq h2 {
+    font-size: 1rem;
+  }
+  .current-location {
+    border: none;
+    background-color: white;
+    color: black;
   }
 }
