@@ -89,12 +89,12 @@ export default function Calendar() {
 
 function getEmptyWeek(sunday = "", monday = "", tuesday = "", wednesday = "", thursday = "", friday = "", saturday = "") {
  return {
-  sunday: <Day day={sunday} events={[]} type="" />,
-  monday: <Day day={monday} events={[]} type="" />,
-  tuesday: <Day day={tuesday} events={[]} type="" />,
-  wednesday: <Day day={wednesday} events={[]} type="" />,
-  thursday: <Day day={thursday} events={[]} type="" />,
-  friday: <Day day={friday} events={[]} type="" />,
-  saturday: <Day day={saturday} events={[]} type="" />,
+  sunday: <Day day={sunday} events={[]} type="week-day-container" />,
+  monday: <Day day={monday} events={[]} type="week-day-container" />,
+  tuesday: <Day day={tuesday} events={[]} type="week-day-container" />,
+  wednesday: <Day day={wednesday} events={[]} type="week-day-container" />,
+  thursday: <Day day={thursday} events={[]} type="week-day-container" />,
+  friday: <Day day={friday} events={[]} type="week-day-container" />,
+  saturday: <Day day={saturday} events={[]} type="week-day-container" />,
  }
 }

@@ -11,7 +11,7 @@ const State = ({ fetchedData, cache, nameSpace, Container, isFiltered }) => {
  let userLocal: UserData | null
  userLocal = (useUser().username == "") ? getUser() : useUser()
 
- if (!userLocal) return ("No has iniciado sesión")
+ if (!userLocal) return (<h1 className='alert'>No has iniciado sesión</h1>)
 
  if (fetchedData.isLoading && Container) {
   return <Loading />;

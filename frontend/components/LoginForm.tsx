@@ -5,7 +5,7 @@ export default function LoginForm(props) {
 
  const [isAccepting, setIsAccepting] = useState(true)
  const [isHidden, setIsHidden] = useState(true)
- const buttonClass = (!isAccepting) ? "inactive" : ""
+ const buttonClass = (!isAccepting) ? "" : ""
  const { setLoginParams } = props
 
  return (
@@ -31,8 +31,9 @@ export default function LoginForm(props) {
    <label htmlFor="password">Ingresa tu contraseña</label>
    <input required name="password" type="password" />
    <Terms setIsAccepting={setIsAccepting} isHidden={isHidden} />
-   <button className={buttonClass} disabled={!isAccepting} type="submit">Iniciar sesion</button>
+   <button className={buttonClass} type="submit">Iniciar sesion</button>
   </form>
  )
 }
+// disabled={!isAccepting}
 

@@ -8,6 +8,9 @@
   font-style: normal;
   src: url(./fonts/mintsoda.ttf);
 }
+#hamburger {
+  display: none;
+}
 :root {
   --border-top-size: 25px;
   --bg-dark: #191a1a;
@@ -99,6 +102,9 @@ button {
 a {
   cursor: pointer;
   text-decoration: none;
+}
+.navbar-mobile {
+  display: none;
 }
 .adaptive-text-x {
   font-size: clamp(1rem, 5dvw, 2rem);
@@ -411,8 +417,15 @@ main {
 
 .navbar a:hover {
   background-color: #1d1d1d;
-  border: #1d1d1d 1px solid;
   color: white;
+}
+
+.about__title {
+  font-weight: bolder;
+}
+
+.about__title:hover {
+  background-color: white !important;
 }
 
 .moodle,
@@ -895,5 +908,188 @@ b {
     opacity: 0;
     display: grid;
     visibility: hidden;
+  }
+}
+
+@media (max-width: 799px) {
+  .assigment {
+    min-width: 90vw;
+    max-width: 90vw;
+    padding: 2.5rem;
+  }
+  .subject {
+    --border-top-size: 5px;
+    width: 45vw;
+    max-width: 45vw;
+  }
+  .subjects-container {
+    margin: 50px 0;
+  }
+  .subject * {
+    font-size: 0.5rem;
+  }
+  .subject-filter {
+    width: 100%;
+  }
+  .semester-filter {
+    width: 100%;
+  }
+  .refetch-gpa {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .refetch-gpa * {
+    font-size: 0.8rem;
+  }
+  .refetch-gpa button {
+    width: 50% !important;
+    max-width: 50%;
+    min-width: 50%;
+  }
+  .subjects-filter {
+    display: flex;
+    width: 100vw;
+    flex-direction: column;
+  }
+  .kardex-top {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  main {
+    padding: 3rem 0;
+  }
+  .navbar {
+    display: none;
+    position: absolute;
+    width: 100vw;
+  }
+  .navbar-mobile {
+    display: flex;
+    position: fixed;
+    background-color: #1d1d1d;
+    width: 100vw;
+    bottom: 0;
+  }
+  .navbar-mobile * {
+    color: white;
+    padding: 3%;
+    /* incredible responsive design */
+    font-size: 6.7vw !important;
+  }
+  #hamburger {
+    display: flex;
+    margin-left: auto;
+  }
+  .head-navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .text-title * {
+    font-size: 2rem;
+  }
+  main .text-title {
+    display: none;
+  }
+  #hamburger {
+    width: 35px;
+    height: 30px;
+    margin: 45px 30px;
+    position: absolute;
+    left: 0;
+    padding: 0;
+    cursor: pointer;
+    display: inline-block;
+  }
+  #hamburger span {
+    background-color: black;
+    position: absolute;
+    border-radius: 2px;
+    transition: 0.2s cubic-bezier(0.8, 0.5, 0.2, 1.4);
+    width: 100%;
+    height: 4px;
+    padding: 0;
+    margin: 0;
+    transition-duration: 150ms;
+  }
+  #hamburger span:nth-child(1) {
+    top: 0px;
+    left: 0px;
+  }
+  #hamburger span:nth-child(2) {
+    top: 13px;
+    left: 0px;
+    opacity: 1;
+  }
+  #hamburger span:nth-child(3) {
+    bottom: 0px;
+    left: 0px;
+  }
+  #hamburger.open span:nth-child(1) {
+    transform: rotate(45deg);
+    top: 13px;
+  }
+  #hamburger.open span:nth-child(2) {
+    opacity: 0;
+  }
+  #hamburger.open span:nth-child(3) {
+    transform: rotate(-45deg);
+    top: 13px;
+  }
+  .todo-container {
+    flex-direction: column;
+  }
+  .task-container {
+    min-width: 80vw !important;
+    max-width: 80vw !important;
+    width: 80vw !important;
+  }
+  .task-container {
+    margin: 5% 0 !important;
+  }
+  .task {
+    margin: 2% 0 !important;
+  }
+  .week * {
+    font-size: 0.5rem !important;
+  }
+  .day-calendar {
+    width: 50px !important;
+    height: 60px !important;
+  }
+  .event-text.administrative,
+  .event-text.extraordinaries,
+  .event-text.inscriptions,
+  .event-text.reinscriptions,
+  .event-text.log_records.school,
+  .event-text.begin,
+  .event-text.new_admission_call {
+    font-size: 0.3rem !important;
+  }
+  .simbology-container {
+    padding: 5%;
+  }
+  .simbology {
+    flex-direction: column;
+  }
+  .week-day-container {
+    font-size: 1.6rem !important;
+  }
+  .begin {
+    border: 2px white solid !important;
+  }
+  .end {
+    border: 2px #d5b22f solid !important;
+  }
+  .end h1,
+  .begin h1 {
+    border: none !important;
+  }
+  .month-container *,
+  .year-container * {
+    font-size: 2rem !important;
   }
 }

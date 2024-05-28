@@ -2,6 +2,7 @@ import { useLocationUpdateContext, useLocationContext } from "../components/User
 import useLocationEffect from "./effects/useLocationEffect"
 
 export default function updateCurrentLocation() {
+ console.log("wepk")
  const locationUpdate = useLocationUpdateContext()
  locationUpdate(window.location.pathname)
  const currentLocation = useLocationContext()

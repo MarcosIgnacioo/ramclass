@@ -8,6 +8,7 @@ import Loading from '../components/Loading';
 import updateCurrentLocation from '../functions/location';
 import LoginForm from '../components/LoginForm';
 import ErrorMinified from '../components/ErrorMinified';
+import { BASE_PATH } from '../globals/globals';
 
 export default function SignIn() {
 
@@ -19,7 +20,6 @@ export default function SignIn() {
  const navigate = useNavigate()
 
  const response = useLogin(loginParams)
-
 
  if (response.isLoading) {
   return (

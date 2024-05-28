@@ -55,11 +55,11 @@ export const CurricularMap = () => {
   <main className='curricular-map-conatainer' >
    <div className='kardex-top'>
     {SubjectFilters(semester, setSemester, subjectName, setSubjectName)}
-    <div>
+    <div className='refetch-gpa'>
      <h1 className='gpa'>Promedio general: {gpa} </h1>
      <button type="button" onClick={() => {
       setUserCredentials(userLocal)
-     }} className='refetch kardex'>Actualizar Mapa Curricular</button>
+     }} className='refetch kardex'>Actualizar Mapa</button>
     </div>
    </div>
    <div className={contentClass}>

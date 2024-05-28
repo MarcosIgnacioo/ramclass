@@ -33,7 +33,7 @@ function Application() {
      <UserProvider>
       <Navbar />
       <Routes >
-       <Route path='/' element={<SignIn />} />
+       <Route path='/' element={<Home />} />
        <Route path='/sign-in' element={<SignIn />} />
        <Route path='/home' element={<Home />} />
        <Route path='/student' element={<Student />} />

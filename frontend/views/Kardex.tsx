@@ -59,7 +59,7 @@ export default function Kardex() {
   <main className='kardex-container'>
    <div className='kardex-top'>
     {SubjectFilters(semester, setSemester, subjectName, setSubjectName)}
-    <div>
+    <div className='refetch-gpa'>
      <h1 className='gpa'>Promedio general: {gpaState} </h1>
      <button type="button" onClick={() => {
       setUserCredentials(userLocal)

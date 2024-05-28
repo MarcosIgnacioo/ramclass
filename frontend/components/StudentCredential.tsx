@@ -1,12 +1,10 @@
 import React from 'react'
-import Title from './Title'
 import SpanWithCopy from './SpanWithCopy'
 
 // Este componente se encarga de plasmar la credencial del usuario en un container
 export default function StudentCredential({ name, control_number, institutional_email, campus, career, period, semester, group, turn, state }) {
  return (
   <div>
-   <Title title='Credencial del estudiante' />
    <div className='credential'>
     <div className='upper-credential'>
      <div className='fields-container names'>

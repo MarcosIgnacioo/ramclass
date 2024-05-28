@@ -12,50 +12,61 @@ export default function useNavBarEffect(userQuery: UserData | null) {
    setNavBarData({
     "sign-in": {
      "text": "Iniciar sesión",
-     "function": ""
+     "function": "",
+     "icon": "login"
     },
     "faq": {
      "text": "FAQ",
-     "function": ""
+     "function": "",
+     "icon": "help"
     },
     "calendar": {
      "text": "Calendario Escolar",
-     "function": ""
+     "function": "",
+     "icon": "calendar_month"
     },
    })
   } else {
    setNavBarData({
     "home": {
      "text": "Inicio",
-     "function": ""
+     "function": "",
+     "icon": "home"
     },
     "student": {
      "text": "Mi credencial",
-     "function": ""
+     "function": "",
+     "icon": "person"
     },
     "my-kardex": {
      "text": "Mi Kardex",
-     "function": ""
+     "function": "",
+     "icon": "sheets_rtl"
     },
     "my-curricular-map": {
      "text": "Mapa Curricular",
-     "function": ""
+     "function": "",
+     "icon": "mitre"
     },
     "todo": {
      "text": "TODO App",
-     "function": ""
+     "function": "",
+     "icon": "splitscreen_bottom"
     },
     "calendar": {
      "text": "Calendario Escolar",
-     "function": ""
+     "function": "",
+     "icon": "calendar_month"
     },
     "settings": {
      "text": "Configuración",
-     "function": ""
+     "function": "",
+     "icon": "settings"
     },
     "/": {
      "text": "Cerrar sesión",
-     "function": logOut
+     "function": logOut,
+     "icon": "logout"
     },
    })
   }

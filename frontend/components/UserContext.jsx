@@ -30,12 +30,12 @@ export function UserProvider({ children }) {
   if (user == null) return
   setUserInfo(user)
  }
+
  function updateLocation(currentLocation) {
   setLocation(currentLocation)
  }
 
  return (
-
   <LocationContext.Provider value={location}>
    <LocationUpdateContext.Provider value={updateLocation}>
     <UserContext.Provider value={userInfo}>

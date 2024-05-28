@@ -7,12 +7,12 @@ import useMoodle from '../functions/useMoodle'
 import { useUser } from '../components/UserContext'
 import useClassRoom from '../functions/useClassRoom'
 import State from '../components/State'
-import Title from '../components/Title'
 import updateCurrentLocation from '../functions/location'
 import SignIn from './SignIn'
 
 export default function Home() {
 
+ console.log("we are landing home")
  updateCurrentLocation()
 
 
@@ -34,7 +34,6 @@ export default function Home() {
 
  return (
   <main className='home'>
-   <Title title='Tareas' />
    <div className='moodle'>
     <h1 className='subtitle moodle'>Moodle</h1>
     <br />
