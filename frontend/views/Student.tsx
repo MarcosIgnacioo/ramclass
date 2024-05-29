@@ -47,7 +47,7 @@ export default function Student() {
   <main className='credential-container'>
    <Title title='Credencial' to='#' />
    {credentialsInfo}
-   <button type='button' className="refetch credentials" onClick={() => {
+   <button hidden={credentialsFetch.isFetching} style={{ marginBottom: "75px" }} type='button' className="refetch credentials" onClick={() => {
     setUserCredentials(userLocal)
    }}>Actualizar credencial</button>
   </main>

@@ -1144,6 +1144,9 @@ b {
   .week * {
     font-size: 1.35vw !important;
   }
+  .loading {
+    margin-bottom: 75px;
+  }
   .day-calendar {
     width: 51px !important;
     height: 60px !important;
