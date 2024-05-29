@@ -838,7 +838,7 @@ option {
 }
 
 .terms-container {
-  width: 29vh;
+  width: 38vh;
   height: 20vh;
   overflow: auto;
   font-size: 1.2rem;
@@ -1247,9 +1247,6 @@ b {
   }
   .signin-form input {
     margin: 2% !important;
-  }
-  .terms-container {
-    width: 85%;
   }
   .faq {
     padding: 2%;
