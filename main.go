@@ -1,7 +1,10 @@
 package main
 
 import (
+	"log"
 	"net/http"
+	"os"
+	"path/filepath"
 
 	"github.com/MarcosIgnacioo/controllers"
 	"github.com/MarcosIgnacioo/db"
@@ -14,9 +17,15 @@ func main() {
 }
 
 func server() {
+	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+	os.Setenv("HOME", "/home/marcig/")
+	if err != nil {
+		log.Fatal(err)
+	}
 	r := gin.Default()
-	r.Static("/public/assets", "./public/assets/")
-	r.LoadHTMLGlob("views/*")
+	r.LoadHTMLGlob(dir + "/views/*")
+	r.Static("/public/assets", dir+"/public/assets/")
+
 	r.GET("/", ramses)
 	r.GET("/sign-in", ramses)
 	r.GET("/student", ramses)
