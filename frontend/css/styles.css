@@ -1248,6 +1248,9 @@ b {
   .signin-form input {
     margin: 2% !important;
   }
+  .terms-container {
+    width: 85%;
+  }
   .faq {
     padding: 2%;
   }
