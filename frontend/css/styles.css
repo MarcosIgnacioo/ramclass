@@ -1145,8 +1145,8 @@ b {
     font-size: 1.5vw !important;
   }
   .day-calendar {
-    width: 45px !important;
-    height: 50px !important;
+    width: 50px !important;
+    height: 60px !important;
   }
   .event-text.administrative,
   .event-text.extraordinaries,
