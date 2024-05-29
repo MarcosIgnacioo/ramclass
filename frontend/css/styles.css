@@ -1156,6 +1156,7 @@ b {
   .event-text.begin,
   .event-text.new_admission_call {
     font-size: 0.1rem !important;
+    color: red !important;
   }
   .simbology-container {
     padding: 5%;
