@@ -1142,10 +1142,10 @@ b {
     top: 13px;
   }
   .week * {
-    font-size: 1.25vw !important;
+    font-size: 1.15vw !important;
   }
   .day-calendar {
-    width: 55px !important;
+    width: 50px !important;
     height: 60px !important;
   }
   .event-text.administrative,
@@ -1155,6 +1155,7 @@ b {
   .event-text.log_records.school,
   .event-text.begin,
   .event-text.new_admission_call {
+    font-weight: bolder;
     font-size: 1vw !important;
   }
   .simbology-container {
