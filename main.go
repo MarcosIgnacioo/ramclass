@@ -49,6 +49,8 @@ func server() {
 	r.POST("/curricular-map", controllers.GetCurricularMap)
 	r.POST("/credentials", controllers.GetUserCredentials)
 
+	r.DELETE("/student", controllers.DeleteStudent)
+
 	r.GET("/get-tasks", controllers.GetTasks)
 	r.POST("/save-tasks", controllers.PostTasks)
 

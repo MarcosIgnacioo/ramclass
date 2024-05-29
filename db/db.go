@@ -71,7 +71,6 @@ func Mongo() {
 	before, _ := GetStudent(1)
 	fmt.Println(before)
 	UpdateStudent(1123123213, ramsesupdate)
-	DeleteStudent(999)
 	// after, _ := GetStudent(999)
 	// fmt.Println(after)
 

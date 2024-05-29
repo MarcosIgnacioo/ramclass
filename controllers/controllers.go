@@ -164,3 +164,25 @@ func GetTasks(c *gin.Context) {
 		c.JSON(http.StatusOK, bson.M{})
 	}
 }
+
+func DeleteStudent(c *gin.Context) {
+	id, err := c.GetQuery("identifier")
+	deleteError := db.DeleteStudent(id)
+	if deleteError != nil {
+		c.JSON(http.StatusConflict, deleteError)
+		return
+	}
+	collections := []string{"classroom", "moodle", "kardex", "curricular_map", "tasks"}
+	for _, collection := range collections {
+		deleteError = db.DeleteFromCollection(collection, "name", id)
+		if deleteError != nil {
+			c.JSON(http.StatusConflict, deleteError)
+			return
+		}
+	}
+	if err != true {
+		c.JSON(http.StatusConflict, err)
+		return
+	}
+	c.JSON(http.StatusOK, bson.M{"first": id})
+}

@@ -8,6 +8,38 @@
   font-style: normal;
   src: url(./fonts/mintsoda.ttf);
 }
+.settings-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-container * {
+  font-size: 1.5rem;
+  padding: 5%;
+  margin: 2%;
+}
+.check-label {
+  display: flex;
+  align-items: center;
+}
+.check-label input {
+  width: 30px;
+  height: 30px;
+  margin-right: 5px;
+}
+.seeya {
+  background-color: #4b4b4b;
+}
+.danger {
+  background-color: #c02f56;
+}
+.settings-button {
+  font-size: 1.2rem;
+  width: 20vw;
+  font-weight: bolder;
+  color: white;
+  border-radius: 10px;
+}
 .input-container {
   display: flex;
   flex-direction: column;
@@ -612,7 +644,7 @@ button {
 }
 
 .error {
-  background-color: #d393a4;
+  /* background-color: #d393a4; */
   font-weight: bolder;
   font-size: 1.2rem;
   padding: 0.65%;
@@ -806,7 +838,7 @@ option {
 }
 
 .terms-container {
-  width: 20vw;
+  width: 29vh;
   height: 20vh;
   overflow: auto;
   font-size: 1.2rem;
@@ -1040,7 +1072,7 @@ b {
     color: white;
     padding: 3%;
     /* incredible responsive design */
-    font-size: 6.7vw !important;
+    font-size: 8.2vw !important;
   }
   #hamburger {
     display: flex;
@@ -1213,7 +1245,7 @@ b {
     margin: 2% !important;
   }
   .terms-container {
-    width: 60%;
+    width: 85%;
   }
   .faq {
     padding: 2%;
@@ -1229,5 +1261,31 @@ b {
     border: none;
     background-color: white;
     color: black;
+  }
+  .settings-button {
+    margin: 5%;
+    font-size: 1.2rem;
+    width: 50vw;
+  }
+  .error {
+    width: 80vw;
+    padding: 17px;
+    font-size: 1rem;
+  }
+  .check-label input {
+    margin-right: 15px;
+  }
+  .message.success {
+    margin-bottom: 50px;
+  }
+  .error {
+    width: 98vw;
+  }
+  .error-header {
+    padding: 5%;
+  }
+  #error-message {
+    font-size: 1.2rem !important;
+    padding: 5%;
   }
 }

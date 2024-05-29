@@ -10,10 +10,10 @@ export default function useNavBarEffect(userQuery: UserData | null) {
   const userLocal = getUser()
   if (!userLocal && (userQuery?.username == "" && userQuery?.password == "")) {
    setNavBarData({
-    "sign-in": {
-     "text": "Iniciar sesión",
+    "home": {
+     "text": "Inicio",
      "function": "",
-     "icon": "login"
+     "icon": "home"
     },
     "faq": {
      "text": "FAQ",
@@ -62,12 +62,7 @@ export default function useNavBarEffect(userQuery: UserData | null) {
      "text": "Configuración",
      "function": "",
      "icon": "settings"
-    },
-    "/": {
-     "text": "Cerrar sesión",
-     "function": logOut,
-     "icon": "logout"
-    },
+    }
    })
   }
  }, [userQuery])

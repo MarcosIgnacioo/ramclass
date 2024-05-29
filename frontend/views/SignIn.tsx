@@ -9,6 +9,7 @@ import updateCurrentLocation from '../functions/location';
 import LoginForm from '../components/LoginForm';
 import ErrorMinified from '../components/ErrorMinified';
 import { BASE_PATH } from '../globals/globals';
+import Title from '../components/Title';
 
 export default function SignIn() {
 
@@ -31,6 +32,7 @@ export default function SignIn() {
  if (response.isError) {
   return (
    <main className='signin-container'>
+    <Title title='Inciar sesión' to='/' />
     <ErrorMinified error="Credenciales incorrectas, favor de intentarlo de nuevo" />
     <LoginForm setLoginParams={setLoginParams} />
     <p>Recuerda, tu identificador es
@@ -57,6 +59,7 @@ export default function SignIn() {
 
  return (
   <main className='signin-container'>
+   <Title title='Inciar sesión' to='/' />
    <LoginForm setLoginParams={setLoginParams} />
    <p>Recuerda, tu identificador es
     <br />

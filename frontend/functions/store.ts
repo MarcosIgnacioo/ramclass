@@ -26,13 +26,13 @@ const getUser = (): UserData | null => {
  return new UserData(identifier, password)
 }
 
-export const storeInLocal = (itemsToStore: Array<Object> | Array<String> | Object | string, itemName: string) => {
+export const storeInLocal = (itemsToStore: Array<Object> | Array<String> | Object | string | boolean, itemName: string) => {
  const itemsToStoreParsed = JSON.stringify(itemsToStore)
  localStorage.removeItem(itemName)
  localStorage.setItem(itemName, itemsToStoreParsed)
 }
 
-export const getCacheOf = (itemName: string): Array<Object> | Array<String> | Object | string | null => {
+export const getCacheOf = (itemName: string): Array<Object> | Array<String> | Object | string | boolean | null => {
  let item = localStorage.getItem(itemName)
  if (!item) return null
  return JSON.parse(item)
@@ -73,7 +73,7 @@ export const checkBothCache = (response: UseQueryResult<any, Error>, cacheName: 
  const nameSpace = localNames[cacheName]
  const cache = getCacheOf(nameSpace)
  if (response.data !== undefined) {
-  if (response.data[nameSpace].length != 0) {
+  if (response.data[nameSpace] !== null && response.data[nameSpace].length != 0) {
    return response.data[nameSpace]
   }
   response.data[nameSpace] = cache
@@ -86,9 +86,6 @@ export const checkBothCache = (response: UseQueryResult<any, Error>, cacheName: 
 export const checkCacheLocalFirst = (response: UseQueryResult<any, Error>, cacheName: number) => {
  const nameSpace = localNames[cacheName]
  const cache = getCacheOf(nameSpace)
- console.log("localt", cache)
- console.log("db", response.data)
- console.log(cache === response.data)
 }
 
 // xd DEPRECATED

@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 import Terms from './Terms'
-import Title from './Title'
 
 export default function LoginForm(props) {
 
  const [isAccepting, setIsAccepting] = useState(true)
  const [isHidden, setIsHidden] = useState(true)
- const buttonClass = (!isAccepting) ? "" : ""
+ const buttonClass = (!isAccepting) ? "inactive" : ""
  const { setLoginParams } = props
 
  return (
@@ -26,7 +25,6 @@ export default function LoginForm(props) {
    setLoginParams(data)
    e.preventDefault()
   }} className='signin-form'>
-   <Title title='Inciar sesión' to='/' />
    <div className='input-container'>
     <label htmlFor="username">Ingrese su identificador</label>
     <input required name="username" />
@@ -36,9 +34,7 @@ export default function LoginForm(props) {
     <input required name="password" type="password" />
    </div>
    <Terms setIsAccepting={setIsAccepting} isHidden={isHidden} />
-   <button className={buttonClass} type="submit">Iniciar sesion</button>
+   <button disabled={!isAccepting} className={buttonClass} type="submit">Iniciar sesion</button>
   </form>
  )
 }
-// disabled={!isAccepting}
-
