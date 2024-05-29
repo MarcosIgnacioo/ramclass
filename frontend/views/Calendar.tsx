@@ -48,7 +48,7 @@ export default function Calendar() {
 
  return (
   <main className='calendar-container'>
-   <Title title='Calendario' to='#' />
+   <Title title='Calendariowo' to='#' />
    <div className='year-container'>
     <BackwardArrow thing={year} setThing={setYear} high={9999} low={0} />
     <h2>{year}</h2>
