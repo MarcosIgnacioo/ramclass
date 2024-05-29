@@ -1142,7 +1142,7 @@ b {
     top: 13px;
   }
   .week * {
-    font-size: 1.15vw !important;
+    font-size: 1.25vw !important;
   }
   .day-calendar {
     width: 51px !important;
@@ -1156,7 +1156,7 @@ b {
   .event-text.begin,
   .event-text.new_admission_call {
     font-weight: bolder;
-    font-size: 1vw !important;
+    font-size: 0.9vw !important;
   }
   .simbology-container {
     padding: 5%;
