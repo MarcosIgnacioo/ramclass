@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom'
 import { logOut } from '../functions/logOut'
 import { getCacheOf, storeInLocal } from '../functions/store'
 import useDeleteAccount from '../functions/useDeleteAccount'
+import FloatingWindow from '../components/FloatingWindow'
+import DeleteAccount from '../components/DeleteAccount'
 
 export default function Settings() {
  updateCurrentLocation()
@@ -17,6 +19,8 @@ export default function Settings() {
  }
  const [isCrtOn, setIsCrtOn] = useState(crtPref)
  const [account, setAccount] = useState("")
+ const [floatingPopup, setFloatingPopup] = useState<React.JSX.Element>(<div hidden>
+ </div>)
  const overlay = document.querySelector(".retro-overlay")
  useDeleteAccount(account)
 
@@ -29,6 +33,7 @@ export default function Settings() {
 
  return (
   <main>
+   {floatingPopup}
    <Title title='Ajustes' to='#' />
    <div className='settings-container'>
     <label className='check-label'><input type="checkbox" checked={isCrtOn as boolean} name="" onChange={(e) => {
@@ -36,10 +41,10 @@ export default function Settings() {
      storeInLocal(e.target.checked, "crt")
      setIsCrtOn(e.target.checked)
     }} />Filtro CRT</label>
+    <Link className='faq settings-button' to={"/faq"}>FAQ</Link>
     <Link className='seeya settings-button' to={"/"} onClick={logOut}>Cerrar sesión</Link>
     <button className="danger settings-button" onClick={() => {
-     setAccount(getCacheOf("identifier") as string)
-     localStorage.clear()
+     setFloatingPopup(<FloatingWindow setFloatingPopup={setFloatingPopup} content={<DeleteAccount setAccount={setAccount} />} />)
     }}>Borrar cuenta</button>
    </div>
   </main>

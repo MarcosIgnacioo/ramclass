@@ -172,13 +172,19 @@ func DeleteStudent(c *gin.Context) {
 		c.JSON(http.StatusConflict, deleteError)
 		return
 	}
-	collections := []string{"classroom", "moodle", "kardex", "curricular_map", "tasks"}
+	collections := []string{"classroom", "moodle", "kardex", "curricular_map"}
 	for _, collection := range collections {
 		deleteError = db.DeleteFromCollection(collection, "name", id)
 		if deleteError != nil {
 			c.JSON(http.StatusConflict, deleteError)
 			return
 		}
+	}
+	// Cambiar la manera en la que guardamos las tasks para que en vez de que se guarde con identifier se guarde con name para no tener q hacer esto
+	deleteError = db.DeleteFromCollection("tasks", "identifier", id)
+	if deleteError != nil {
+		c.JSON(http.StatusConflict, deleteError)
+		return
 	}
 	if err != true {
 		c.JSON(http.StatusConflict, err)
