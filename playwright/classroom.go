@@ -53,8 +53,8 @@ func ClassroomScrap(context *playwright.BrowserContext, username string, passwor
 
 	expect.Locator(classroom.Locator(".hrUpcomingAssignmentGroup > a").Last()).ToBeVisible()
 	classes, _ := classroom.Locator("li:has(.hrUpcomingAssignmentGroup)").All()
+
 	scrappedAssigments := arraylist.NewArrayList(10)
-	screenshot(&classroom, "wtf2.png")
 	for _, class := range classes {
 		assigment := class.Locator(".hrUpcomingAssignmentGroup > a").First()
 		subject, _ := class.Locator("h2 a div").First().TextContent()
@@ -64,6 +64,8 @@ func ClassroomScrap(context *playwright.BrowserContext, username string, passwor
 		scrappedAssigment := NewAssigment(subject, title, link, utils.DateFormat{})
 		scrappedAssigments.Push(scrappedAssigment)
 	}
+
+	screenshot(&classroom, "wtf2.png")
 	classroom.Close()
 	classroomAssigmentsArray := scrappedAssigments.GetArray()
 	return NewClassRoomInfo(classroomAssigmentsArray), nil
