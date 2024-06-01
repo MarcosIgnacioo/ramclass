@@ -33,6 +33,7 @@ func ClassroomScrapAsync(browser *playwright.Browser, username string, password 
 		scrappedAssigment := NewAssigment(subject, title, link, utils.DateFormat{})
 		scrappedAssigments.Push(scrappedAssigment)
 	}
+
 	cs <- scrappedAssigments.GetArray()
 }
 
@@ -51,9 +52,7 @@ func ClassroomScrap(context *playwright.BrowserContext, username string, passwor
 	classroom.Locator("#password").Fill(password)
 	classroom.Locator("input").Nth(2).Click()
 
-	screenshot(&classroom, "ne.png")
 	expect.Locator(classroom.Locator(".hrUpcomingAssignmentGroup > a").Last()).ToBeVisible()
-	screenshot(&classroom, "no.png")
 	classes, _ := classroom.Locator("li:has(.hrUpcomingAssignmentGroup)").All()
 
 	scrappedAssigments := arraylist.NewArrayList(10)
@@ -66,6 +65,10 @@ func ClassroomScrap(context *playwright.BrowserContext, username string, passwor
 		scrappedAssigment := NewAssigment(subject, title, link, utils.DateFormat{})
 		scrappedAssigments.Push(scrappedAssigment)
 	}
+
+	classroom.Goto("https://classroom.google.com/u/0/a/not-turned-in/all")
+	expect.Locator(classroom.GetByText("tarde")).ToBeVisible()
+	screenshot(&classroom, "no.png")
 
 	classroom.Close()
 	classroomAssigmentsArray := scrappedAssigments.GetArray()
