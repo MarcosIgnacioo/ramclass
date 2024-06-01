@@ -52,6 +52,9 @@
   color: black;
   background-color: #fff;
 }
+.day-calendar.week-day-container {
+  height: 45px !important;
+}
 .seeya {
   background-color: #4b4b4b;
 }

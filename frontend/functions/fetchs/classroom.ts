@@ -3,7 +3,6 @@ import { BASE_PATH } from "../../globals/globals"
 const nameSpace = "classroom"
 
 const classRoom = async ({ queryKey }) => {
- console.log("classroom")
  const data = queryKey[1]
  const { username, password } = data
  if (!username || !password) return

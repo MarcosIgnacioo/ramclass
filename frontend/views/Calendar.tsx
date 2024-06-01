@@ -48,12 +48,6 @@ export default function Calendar() {
 
  return (
   <main className='calendar-container'>
-   <Title title='Calendariowo' to='#' />
-   <div className='year-container'>
-    <BackwardArrow thing={year} setThing={setYear} high={9999} low={0} />
-    <h2>{year}</h2>
-    <FowardArrow thing={year} setThing={setYear} high={9999} low={0} />
-   </div>
    <div className='month-container'>
     <BackwardArrow thing={month} setThing={setMonth} high={11} low={0} />
     <h2>{months[month]}</h2>

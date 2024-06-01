@@ -37,7 +37,6 @@ export default function Settings() {
    <Title title='Ajustes' to='#' />
    <div className='settings-container'>
     <label className='check-label'><input type="checkbox" checked={isCrtOn as boolean} name="" onChange={(e) => {
-     console.log("crt:", e.target.checked)
      storeInLocal(e.target.checked, "crt")
      setIsCrtOn(e.target.checked)
     }} />Filtro CRT</label>

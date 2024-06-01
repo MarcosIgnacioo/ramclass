@@ -25,13 +25,11 @@ export default function Todo() {
  const identifier = userLocal?.username as string
  let [taskCache, setTaskCache] = useState(getCacheOf("tasks"))
  const [taskCacheUpdate, setTaskCacheUpdate]: any = useState()
- console.log(taskCache)
  const successMessageRef = useRef()
  const errorMessageRef = useRef()
  const tasksResponse = useGetTasks(identifier, taskCache)
  const savingTask = useTasks(taskCacheUpdate, identifier)
  let message: React.JSX.Element = <div></div>
-
 
  if (taskCache === null && tasksResponse.isError) {
   return (<main>
@@ -73,22 +71,47 @@ export default function Todo() {
    <Title title='To Do' to='#' />
    <div className='todo-container' >
     {(days).map(day => {
-     if (taskCache !== undefined && taskCache[day] !== undefined) {
+     if ((taskCache !== undefined && taskCache !== null) && taskCache[day] !== undefined) {
       const tasksInsideContainer = (taskCache[day] as Array<any>).map((task, index) => {
        if (!task.is_deleted) {
         return (
-         <Task day={day} taskCache={taskCache} setTaskCache={setTaskCache} index={index} is_done={task.is_done} task_description={task.task_description} is_deleted={task.is_deleted} />
+         <Task
+          day={day}
+          taskCache={taskCache}
+          setTaskCache={setTaskCache}
+          index={index}
+          is_done={task.is_done}
+          task_description={task.task_description}
+          is_deleted={task.is_deleted}
+         />
         )
        }
       })
       return (
-       <TaskContainer day={day} setTaskCache={setTaskCache} addTask={addTask} tasks={tasksInsideContainer} />
+       <TaskContainer
+        day={day}
+        setTaskCache={setTaskCache}
+        addTask={addTask}
+        tasks={tasksInsideContainer}
+       />
       )
      }
      else {
-      const tasks = <Task day={day} taskCache={taskCache} setCache={setTaskCache} is_done={false} task_description={""} />
+      const tasks =
+       <Task
+        day={day}
+        taskCache={taskCache}
+        setCache={setTaskCache}
+        is_done={false}
+        task_description={""}
+       />
       return (
-       <TaskContainer day={day} taskCache={taskCache} setTaskCache={setTaskCache} addTask={addTask} tasks={tasks} />
+       <TaskContainer
+        day={day}
+        taskCache={taskCache}
+        setTaskCache={setTaskCache}
+        addTask={addTask}
+        tasks={tasks} />
       )
      }
     }

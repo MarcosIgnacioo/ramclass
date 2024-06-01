@@ -3,7 +3,6 @@ import { BASE_PATH } from "../../globals/globals"
 const nameSpace = "credentials"
 
 const credentials = async ({ queryKey }) => {
- console.log("inicio")
  const data = queryKey[1]
  const { username, password } = data
  if (!username || !password) return
@@ -27,8 +26,6 @@ const credentials = async ({ queryKey }) => {
  if (!apiResponse.ok) {
   throw new Error(`Credentials ${username}, ${password} not okay`);
  }
-
- console.log("fin")
  return apiResponse.json()
 }
 export default credentials;

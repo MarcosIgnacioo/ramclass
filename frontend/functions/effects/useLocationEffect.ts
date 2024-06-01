@@ -7,8 +7,8 @@ export default function useLocationEffect(location: string) {
   oldLocations.forEach(oldLocation => {
    oldLocation?.classList.remove("current-location")
   })
-  location = (location === "") ? "home-location" : location
-  const locationInNavBar = document.querySelectorAll(`.${location}-location`)
+  location = (location === "") ? ".home-location" : `.${location}-location`
+  const locationInNavBar = document.querySelectorAll(location)
   locationInNavBar.forEach(navbarElement => {
    navbarElement?.classList.add("current-location")
   })

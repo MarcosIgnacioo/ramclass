@@ -3,9 +3,7 @@ import { getCacheOf, storeInLocal } from "./store"
 
 export function addTask(day: string, setTaskCache) {
  const newTaskCache = { ...getCacheOf("tasks") as Object }
- console.log("cache:", newTaskCache[day])
  if (newTaskCache[day] === undefined || newTaskCache[day] === null) newTaskCache[day] = []
- console.log("cache:", newTaskCache[day])
  newTaskCache[day].push({ is_done: false, task_description: "" })
  storeInLocal(newTaskCache, "tasks")
  setTaskCache(newTaskCache)
@@ -34,11 +32,9 @@ export function startDraggable() {
  tasksDraggable.forEach(task => {
   task.classList.add("test")
   task.addEventListener('dragstart', () => {
-   console.log("weppp agarrando")
    task.classList.add("dragging")
   })
   task.addEventListener('dragend', () => {
-   console.log("weppp terminando de agarrar")
    task.classList.remove("dragging")
   })
  })

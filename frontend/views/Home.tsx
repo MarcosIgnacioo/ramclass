@@ -13,7 +13,6 @@ import Title from '../components/Title'
 
 export default function Home() {
 
- console.log("we are landing home")
  updateCurrentLocation()
 
 

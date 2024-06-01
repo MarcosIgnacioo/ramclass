@@ -1,7 +1,6 @@
 import React from 'react'
 
 export default function Error(props) {
- console.log(props)
  const { error } = props
  const [fontSizeP, fontsizeH] = (!props.refreshButton) ? ["1rem", "2rem"] : ["2rem", "3rem"]
  return (

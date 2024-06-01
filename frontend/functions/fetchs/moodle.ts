@@ -6,7 +6,6 @@ const moodle = async ({ queryKey }) => {
  const data = queryKey[1]
  const { username, password } = data
  if (!username || !password) return
- console.log("haciendo fetych de moodle")
  // useQuery is in action scenario
  // El usario ha ingresado por primera vez su cuenta
  // Presiona refetch en el moodle o classroom
@@ -34,7 +33,6 @@ const moodle = async ({ queryKey }) => {
   throw new Error(`Credentials ${username}, ${password} not okay`);
  }
 
- console.log("terminando fgetch moodle")
  return apiResponse.json()
 }
 export default moodle;

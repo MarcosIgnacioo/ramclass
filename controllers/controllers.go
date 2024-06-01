@@ -41,7 +41,15 @@ func LogInUser(c *gin.Context) {
 	if tasks["tasks"] != nil {
 		scrappedInfo.(*pw.ScrappedInfo).Tasks = tasks["tasks"].(primitive.M)
 	} else {
-		scrappedInfo.(*pw.ScrappedInfo).Tasks = bson.M{}
+		scrappedInfo.(*pw.ScrappedInfo).Tasks = bson.M{
+			"Lunes":     []bson.M{{"is_done": false, "task_description": ""}},
+			"Martes":    []bson.M{{"is_done": false, "task_description": ""}},
+			"Miércoles": []bson.M{{"is_done": false, "task_description": ""}},
+			"Jueves":    []bson.M{{"is_done": false, "task_description": ""}},
+			"Viernes":   []bson.M{{"is_done": false, "task_description": ""}},
+			"Sábado":    []bson.M{{"is_done": false, "task_description": ""}},
+			"Domingo":   []bson.M{{"is_done": false, "task_description": ""}},
+		}
 	}
 
 	scrappedInfo.(*pw.ScrappedInfo).Calendar = tasks
