@@ -17,12 +17,18 @@ func main() {
 }
 
 func server() {
-	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
-	os.Setenv("HOME", "/home/marcig/")
-	// dir = "."
-	if err != nil {
-		log.Fatal(err)
+	dir := "."
+	var err error
+	mode := os.Getenv("MODE")
+
+	if mode == "PROD" {
+		os.Setenv("HOME", "/home/marcig/")
+		dir, err = filepath.Abs(filepath.Dir(os.Args[0]))
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
+
 	r := gin.Default()
 	r.LoadHTMLGlob(dir + "/views/*")
 	r.Static("/public/assets", dir+"/public/assets/")

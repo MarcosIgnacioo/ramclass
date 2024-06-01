@@ -1,7 +1,7 @@
 const esbuild = require("esbuild")
 
 esbuild
- .context({
+ .build({
   entryPoints: ["frontend/Application.tsx", "frontend/css/styles.css"],
   bundle: true,
   sourcemap: true,
@@ -19,6 +19,4 @@ esbuild
  })
  .then((r) => {
   console.log('✨ Ramses succeeded.');
-  r.watch();
-  console.log('watching ramses...');
  })

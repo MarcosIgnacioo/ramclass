@@ -24,7 +24,6 @@ func ClassroomScrapAsync(browser *playwright.Browser, username string, password 
 	expect.Locator(classroom.Locator(".hrUpcomingAssignmentGroup > a").Last()).ToBeVisible()
 	classes, _ := classroom.Locator("li:has(.hrUpcomingAssignmentGroup)").All()
 	scrappedAssigments := arraylist.NewArrayList(10)
-	screenshot(&classroom, "wtf2.png")
 	for _, class := range classes {
 		assigment := class.Locator(".hrUpcomingAssignmentGroup > a").First()
 		subject, _ := class.Locator("h2 a div").First().TextContent()
@@ -51,7 +50,6 @@ func ClassroomScrap(context *playwright.BrowserContext, username string, passwor
 	classroom.Locator("#username").Fill(username)
 	classroom.Locator("#password").Fill(password)
 	classroom.Locator("input").Nth(2).Click()
-	// TODO agregar un checador de que si hay error con la contrase;a retorne error jejejej
 
 	expect.Locator(classroom.Locator(".hrUpcomingAssignmentGroup > a").Last()).ToBeVisible()
 	classes, _ := classroom.Locator("li:has(.hrUpcomingAssignmentGroup)").All()

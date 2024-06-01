@@ -26,7 +26,7 @@ export default function LoginForm(props) {
    e.preventDefault()
   }} className='signin-form'>
    <div className='input-container'>
-    <label htmlFor="username">Ingrese su identificador</label>
+    <label htmlFor="username">Ingrese identificador</label>
     <input required name="username" />
    </div>
    <div className='input-container'>

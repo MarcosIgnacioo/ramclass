@@ -8,7 +8,7 @@ import (
 	"github.com/playwright-community/playwright-go"
 )
 
-var expect = playwright.NewPlaywrightAssertions(10000)
+var expect = playwright.NewPlaywrightAssertions(30000)
 var loginSiiaExpect = playwright.NewPlaywrightAssertions(1000)
 var await = playwright.NewPlaywrightAssertions(500)
 
