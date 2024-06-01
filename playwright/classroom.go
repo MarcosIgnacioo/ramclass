@@ -67,7 +67,6 @@ func ClassroomScrap(context *playwright.BrowserContext, username string, passwor
 	}
 
 	classroom.Goto("https://classroom.google.com/u/0/a/not-turned-in/all")
-	expect.Locator(classroom.GetByText("tarde")).ToBeVisible()
 	screenshot(&classroom, "no.png")
 
 	classroom.Close()
