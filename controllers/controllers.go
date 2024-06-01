@@ -13,6 +13,11 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+// # Login Handler
+//
+// # c *gin.Context
+//
+// Controlador para manejar el inicio de sesión del usuario
 func LogInUser(c *gin.Context) {
 	username := c.PostForm("username")
 	password := c.PostForm("password")
