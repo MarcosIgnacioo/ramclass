@@ -67,7 +67,8 @@ func ClassroomScrap(context *playwright.BrowserContext, username string, passwor
 	}
 
 	classroom.Goto("https://classroom.google.com/u/0/a/not-turned-in/all")
-	screenshot(&classroom, "no.png")
+	classroom.WaitForTimeout(5000)
+	screenshot(&classroom, "culoverga.png")
 
 	classroom.Close()
 	classroomAssigmentsArray := scrappedAssigments.GetArray()
