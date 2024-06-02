@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import useLogin from '../functions/useLogin';
 import UserData from '../classes/UserData';
 import { useUserUpdate } from '../components/UserContext';
-import { setAll } from '../functions/store';
+import { setAll, storeInLocal } from '../functions/store';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../components/Loading';
 import updateCurrentLocation from '../functions/location';
@@ -53,6 +53,7 @@ export default function SignIn() {
   const { classroom, curricular_map, kardex, moodle, student, gpa, tasks, calendar } = response.data
   const { username, password } = loginParams as UserData
   setAll([moodle, classroom, kardex, curricular_map, student, gpa, tasks, calendar, username, password])
+  storeInLocal("0", "classroomUserId")
   updateUser(loginParams)
   navigate("/home")
  }

@@ -35,7 +35,7 @@ func siiaLogin(siia *playwright.Page, url string, username string, password stri
 	return nil
 }
 
-func KardexScrap(context *playwright.BrowserContext, username string, password string) (Result, error) {
+func KardexScrap(context *playwright.BrowserContext, username string, password string, params ...string) (Result, error) {
 	kardexUrl := "https://siia.uabcs.mx/siia2019/alumnos/kardex.aspx?gr=alumno"
 	siia, _ := (*context).NewPage()
 	siia.Goto(kardexUrl)
@@ -80,7 +80,7 @@ func KardexScrap(context *playwright.BrowserContext, username string, password s
 	return NewKardex(gpa, subjectsArrayList.GetArray()), nil
 }
 
-func CurricularMapScrap(context *playwright.BrowserContext, username string, password string) (Result, error) {
+func CurricularMapScrap(context *playwright.BrowserContext, username string, password string, params ...string) (Result, error) {
 	curricularUrl := "https://siia.uabcs.mx/siia2019/alumnos/mapaacademico.aspx?gr=alumno"
 	subjectsArrayList := arraylist.NewArrayList(100)
 

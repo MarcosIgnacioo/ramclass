@@ -53,8 +53,8 @@ func ChronoScrap(scrapFn func(*playwright.Browser, string, string) (Result, erro
 	}
 }
 
-func CreateAsyncScrapping(scrapFn func(*playwright.BrowserContext, string, string) (Result, error), context *playwright.BrowserContext, username string, password string) func(chan Result, chan error) {
-	return func(cr chan Result, ce chan error) {
+func CreateAsyncScrapping(scrapFn func(*playwright.BrowserContext, string, string, ...string) (Result, error), context *playwright.BrowserContext, username string, password string) func(chan Result, chan error, ...string) {
+	return func(cr chan Result, ce chan error, params ...string) {
 		r, e := scrapFn(context, username, password)
 		cr <- r
 		ce <- e

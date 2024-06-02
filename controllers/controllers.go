@@ -79,7 +79,8 @@ func GetMoodleAssigments(c *gin.Context) {
 func GetClassroomAssigments(c *gin.Context) {
 	username := c.PostForm("username")
 	password := c.PostForm("password")
-	assigments, err := pw.Classroom(username, password)
+	classroomId := c.PostForm("classroom-id")
+	assigments, err := pw.Classroom(username, password, classroomId)
 	go db.InsertClassRoom(username, assigments.(*pw.ClassRoomInfo).ClassRoom)
 
 	if err != nil {

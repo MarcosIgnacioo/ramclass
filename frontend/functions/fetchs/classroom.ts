@@ -1,4 +1,5 @@
 import { BASE_PATH } from "../../globals/globals"
+import { getCacheOf } from "../store"
 
 const nameSpace = "classroom"
 
@@ -21,6 +22,7 @@ const classRoom = async ({ queryKey }) => {
  const urlencoded = new URLSearchParams();
  urlencoded.append("username", username);
  urlencoded.append("password", password);
+ urlencoded.append("classroom-id", getCacheOf("classroomUserId") as string);
 
  const requestOptions: RequestInit = {
   method: "POST",

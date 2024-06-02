@@ -10,7 +10,7 @@ import (
 	"github.com/playwright-community/playwright-go"
 )
 
-func MoodleScrap(context *playwright.BrowserContext, username string, password string) (Result, error) {
+func MoodleScrap(context *playwright.BrowserContext, username string, password string, params ...string) (Result, error) {
 	moodle, err := (*context).NewPage()
 	//
 	if err != nil {

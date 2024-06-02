@@ -9,6 +9,8 @@ import FloatingWindow from '../components/FloatingWindow'
 import DeleteAccount from '../components/DeleteAccount'
 
 export default function Settings() {
+ const userLocal = getCacheOf("identifier") as string
+ if (!userLocal) window.location.replace("/")
  updateCurrentLocation()
 
  let crtPref = true
@@ -18,15 +20,14 @@ export default function Settings() {
   crtPref = getCacheOf("crt") as boolean
  }
  const [isCrtOn, setIsCrtOn] = useState(crtPref)
+ const [classroomUserId, setUserClassroomUserId] = useState(getCacheOf("classroomUserId") as string)
  const [account, setAccount] = useState("")
  const [floatingPopup, setFloatingPopup] = useState<React.JSX.Element>(<div hidden>
  </div>)
  const overlay = document.querySelector(".retro-overlay")
  useDeleteAccount(account)
 
- const userLocal = getCacheOf("identifier") as string
  // quiero la actualizacion full porque la navbar no se actualiza :(
- if (!userLocal) window.location.replace("/")
 
  if (isCrtOn) overlay?.removeAttribute("hidden")
  else overlay?.setAttribute("hidden", `${!isCrtOn}`)
@@ -40,11 +41,23 @@ export default function Settings() {
      storeInLocal(e.target.checked, "crt")
      setIsCrtOn(e.target.checked)
     }} />Filtro CRT</label>
+    <label htmlFor="classroomUserId" className='classroom-id user'>Ingresa el número de usuario de classroom</label>
+    <input type="number" min="0" className='classroom-id' name="classroomUserId" value={classroomUserId} pattern="0-9" onChange={(e) => {
+     let id = e.target.value
+     id = (id.match(/\d+$/g)) ? id : "0"
+     storeInLocal(id, "classroomUserId")
+     setUserClassroomUserId(id)
+    }} />
     <Link className='faq settings-button' to={"/faq"}>FAQ</Link>
     <Link className='seeya settings-button' to={"/"} onClick={logOut}>Cerrar sesión</Link>
     <button className="danger settings-button" onClick={() => {
      setFloatingPopup(<FloatingWindow setFloatingPopup={setFloatingPopup} content={<DeleteAccount setAccount={setAccount} />} />)
     }}>Borrar cuenta</button>
+    <p className='classroom-id'>
+     ¿Qué es el número de usuario de classroom?
+     <br />
+     <span>classroom.google.com/u/<span id='classroom-id-span'>1</span>/</span>
+    </p>
    </div>
   </main>
  )

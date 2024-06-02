@@ -8,12 +8,18 @@ import (
 
 	"github.com/MarcosIgnacioo/controllers"
 	"github.com/MarcosIgnacioo/db"
+	pw "github.com/MarcosIgnacioo/playwright"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
+	// testclassroom()
 	db.Init()
 	server()
+}
+
+func testclassroom() {
+	pw.Classroom("abzu_21", "14fk3rbasof13")
 }
 
 func server() {

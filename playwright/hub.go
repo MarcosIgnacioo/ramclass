@@ -4,10 +4,10 @@ import "fmt"
 
 // Estas serian las unicas funciones que van a ser publicas en el package
 const (
-	headless = true
+	headless = false
 )
 
-func FullScrap(username string, password string) (Result, *Error) {
+func FullScrap(username string, password string, params ...string) (Result, *Error) {
 	context, browser, playwright, err := GenerateContext(headless)
 	if err != nil {
 		return nil, (*Error)(NewError(err))
@@ -78,12 +78,16 @@ func Moodle(username string, password string) (Result, *Error) {
 	return res, nil
 }
 
-func Classroom(username string, password string) (Result, *Error) {
+func Classroom(username string, password string, params ...string) (Result, *Error) {
+	user := "1"
+	if len(params) > 0 {
+		user = params[0]
+	}
 	context, browser, playwright, err := GenerateContext(headless)
 	if err != nil {
 		return nil, (*Error)(NewError(err))
 	}
-	res, err := ClassroomScrap(context, username, password)
+	res, err := ClassroomScrap(context, username, password, user)
 	closingErr := CloseScrapper(playwright, browser, context)
 	if closingErr != nil {
 		return nil, (*Error)(NewError(err))
