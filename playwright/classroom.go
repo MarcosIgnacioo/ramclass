@@ -105,9 +105,8 @@ func ClassroomScrap(context *playwright.BrowserContext, username string, passwor
 				hour = string(r.Find([]byte(dueDate)))
 				if hour != "" {
 					dateSplitted := strings.Split(hour, ",")
-					day = utils.GetDay(dateSplitted[0])
-					month = fmt.Sprint(time.Now().Month())
-					month = utils.Months[month]
+					day = dateSplitted[0]
+					month = ""
 					hour = dateSplitted[1]
 				} else {
 					r, _ = regexp.Compile(`\d+ \w*`)

@@ -2,6 +2,7 @@ import React from 'react'
 
 export default function Assigment({ class_subject, date, link, title }) {
  const showDate = ((date.day === ""))
+ const showMonth = ((date.month === ""))
  if (!title) {
   title = "No hay nada que hacer"
  }
@@ -12,7 +13,7 @@ export default function Assigment({ class_subject, date, link, title }) {
     <div className='date-format' hidden={showDate}>
      <span>Fecha de entrega: </span>
      <span className='day-assigment'>{date.day}/</span>
-     <span className='month'>{date.month}/</span>
+     <span className='month' hidden={showMonth}>{date.month}/</span>
      <span className='year'>{date.year}</span>
     </div>
     <div className='date-hour' hidden={showDate}>
