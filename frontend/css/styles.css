@@ -69,6 +69,7 @@
   color: white;
   border-radius: 10px;
 }
+
 .input-container {
   display: flex;
   flex-direction: column;
@@ -1325,7 +1326,7 @@ b {
     width: 85%;
   }
   .classroom-id.user {
-    width: 50vw;
+    width: 62vw;
   }
   .faq h1 {
     font-size: 1.5rem;
@@ -1375,5 +1376,8 @@ b {
   }
   .settings-container {
     align-items: center;
+  }
+  .danger.settings-button {
+    margin-bottom: 100px;
   }
 }
