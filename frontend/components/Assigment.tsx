@@ -12,8 +12,8 @@ export default function Assigment({ class_subject, date, link, title }) {
    <div className='date'>
     <div className='date-format' hidden={showDate}>
      <span>Fecha de entrega: </span>
-     <span className='day-assigment'>{date.day}/</span>
-     <span className='month' hidden={showMonth}>{date.month}/</span>
+     <span className='day-assigment'>{date.day}</span>
+     <span className='month' hidden={showMonth}>/{date.month}/</span>
      <span className='year'>{date.year}</span>
     </div>
     <div className='date-hour' hidden={showDate}>
