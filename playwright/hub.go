@@ -4,7 +4,7 @@ import "fmt"
 
 // Estas serian las unicas funciones que van a ser publicas en el package
 const (
-	headless = false
+	headless = true
 )
 
 func FullScrap(username string, password string, params ...string) (Result, *Error) {

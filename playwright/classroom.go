@@ -54,12 +54,19 @@ func ClassroomScrap(context *playwright.BrowserContext, username string, passwor
 	}
 	classroom.Goto("https://accounts.google.com/ServiceLogin?continue=https%3A%2F%2Fclassroom.google.com&passive=true")
 	expect.Locator(classroom.Locator("#identifierId")).ToBeVisible()
-	classroom.Locator("#identifierId").Fill(fmt.Sprintf("%v@alu.uabcs.mx", username))
+	email := fmt.Sprintf("%v@alu.uabcs.mx", username)
+	classroom.Locator("#identifierId").Fill(email)
+
 	// Por alguna razon en headless el form no ha sido actualizado por lo que si estyoy haciendolo con el navegador activado pues tengo que usar el nth pero si lo hago haciendo el modo headless con el GetByText
 	// classroom.Locator("button").Nth(2).Click()
+	// error handling que no se si deba d kitar jiiji
+
+	expect.Locator(classroom.Locator("#identifierId")).ToHaveValue(email)
 	classroom.GetByText("Next").Click()
 	classroom.Locator("#username").Fill(username)
+	expect.Locator(classroom.Locator("#username")).ToHaveValue(username)
 	classroom.Locator("#password").Fill(password)
+	expect.Locator(classroom.Locator("#password")).ToHaveValue(password)
 	classroom.Locator("input").Nth(2).Click()
 
 	classroom.WaitForURL("https://classroom.google.com/")
@@ -67,9 +74,11 @@ func ClassroomScrap(context *playwright.BrowserContext, username string, passwor
 	expect.Locator(classroom.Locator("#LATER")).ToBeVisible()
 	subjects, err := classroom.Locator("ol").All()
 	scrappedAssigments := arraylist.NewArrayList(10)
+
 	if err != nil {
 		return nil, err
 	}
+
 	for _, subject := range subjects {
 		assigments, err := subject.Locator("li").All()
 		if err != nil {
@@ -92,13 +101,14 @@ func ClassroomScrap(context *playwright.BrowserContext, username string, passwor
 			if isValidDate == "" {
 				var day, month, hour string
 				year := fmt.Sprint(time.Now().Year())
-				r, _ = regexp.Compile(`\d+:\d+`)
+				r, _ = regexp.Compile(`\p{L}+, \d+:\d+`)
 				hour = string(r.Find([]byte(dueDate)))
 				if hour != "" {
-					day = fmt.Sprint(time.Now().Day())
-					time.Now().Local().Weekday()
+					dateSplitted := strings.Split(hour, ",")
+					day = utils.GetDay(dateSplitted[0])
 					month = fmt.Sprint(time.Now().Month())
 					month = utils.Months[month]
+					hour = dateSplitted[1]
 				} else {
 					r, _ = regexp.Compile(`\d+ \w*`)
 					dateData := r.FindAll([]byte(dueDate), -1)
@@ -109,13 +119,13 @@ func ClassroomScrap(context *playwright.BrowserContext, username string, passwor
 					month = utils.Months[month]
 					hour = "N/A"
 				}
-				fmt.Println(day, month, hour)
 				dateFormat = utils.DateFormat{Day: day, Month: month, Year: year, Hour: hour}
 			}
 			scrappedAssigment := NewAssigment(subjectName, title, link, dateFormat)
 			scrappedAssigments.Push(scrappedAssigment)
 		}
 	}
+
 	// noDueDateAssigments := classroom.Locator("#NO_DUE_DATE").Last().Locator("ol").All()
 	// thisWeekAssigments := classroom.Locator("#THIS_WEEK").Last().Locator("ol").All()
 	// nextWeekAssigments := classroom.Locator("#NEXT_WEEK").Last().Locator("ol").All()
@@ -126,7 +136,6 @@ func ClassroomScrap(context *playwright.BrowserContext, username string, passwor
 	// fmt.Println(thisWeekAssigments)
 	// fmt.Println(nextWeekAssigments)
 
-	fmt.Println(scrappedAssigments.GetArray()...)
 	classroomAssigmentsArray := scrappedAssigments.GetArray()
 	return NewClassRoomInfo(classroomAssigmentsArray), nil
 }

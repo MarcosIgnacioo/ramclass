@@ -53,11 +53,6 @@ export default function Settings() {
     <button className="danger settings-button" onClick={() => {
      setFloatingPopup(<FloatingWindow setFloatingPopup={setFloatingPopup} content={<DeleteAccount setAccount={setAccount} />} />)
     }}>Borrar cuenta</button>
-    <p className='classroom-id'>
-     ¿Qué es el número de usuario de classroom?
-     <br />
-     <span>classroom.google.com/u/<span id='classroom-id-span'>1</span>/</span>
-    </p>
    </div>
   </main>
  )

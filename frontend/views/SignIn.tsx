@@ -53,7 +53,7 @@ export default function SignIn() {
   const { classroom, curricular_map, kardex, moodle, student, gpa, tasks, calendar } = response.data
   const { username, password } = loginParams as UserData
   setAll([moodle, classroom, kardex, curricular_map, student, gpa, tasks, calendar, username, password])
-  storeInLocal("0", "classroomUserId")
+  storeInLocal("1", "classroomUserId")
   updateUser(loginParams)
   navigate("/home")
  }

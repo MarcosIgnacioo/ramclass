@@ -33,6 +33,47 @@ var Months = map[string]string{
 	"December":  "diciembre",
 }
 
+var WeekDays = map[string]int{
+	"domingo":   0,
+	"lunes":     1,
+	"martes":    2,
+	"miércoles": 3,
+	"jueves":    4,
+	"viernes":   5,
+	"sábado":    6,
+	"Sunday":    0,
+	"Monday":    1,
+	"Tuesday":   2,
+	"Wednesday": 3,
+	"Thursday":  4,
+	"Friday":    5,
+	"Saturday":  6,
+}
+
+func GetDay(assigmentDay string) string {
+	wDayCurr := WeekDays[time.Now().Weekday().String()]
+	wDayAss := WeekDays[assigmentDay]
+	var daysUntilAssigment int
+	// Trabajo se entrega el jueves 4: dia: 7
+	// Esto entra el sabado 6 dia:2
+	// 0 1 2 3 4 5 6
+	// d l m x j v s
+	//             2
+	// 3 4 5 6 7
+
+	if wDayCurr > wDayAss {
+		daysUntilAssigment = 7 - (wDayCurr - wDayAss)
+	} else {
+		daysUntilAssigment = wDayAss - wDayCurr
+	}
+	hours := fmt.Sprint(24*daysUntilAssigment, "h")
+	duration, err := time.ParseDuration(hours)
+	if err != nil {
+		return fmt.Sprint("?")
+	}
+	return fmt.Sprint(time.Now().Add(duration).Day())
+}
+
 func Bytes_matrix_to_string(matrix [][]byte) string {
 	var stringified string
 

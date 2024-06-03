@@ -29,6 +29,7 @@
   margin: 0;
   align-self: flex-end;
 }
+
 .settings-container {
   display: flex;
   flex-direction: column;
@@ -918,6 +919,7 @@ b {
 /* .clipboard-container svg { */
 /*   margin-left: 10px; */
 /* } */
+
 .gpa {
   font-size: 1.2rem;
 }
@@ -942,6 +944,17 @@ b {
 
 @keyframes hideAnimation {
   to {
+    padding: 0;
+    display: none;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+  }
+}
+
+@-moz-keyframes hideAnimation {
+  to {
+    padding: 0;
     display: none;
     width: 0;
     height: 0;
@@ -951,6 +964,7 @@ b {
 
 @-webkit-keyframes hideAnimation {
   to {
+    padding: 0;
     display: none;
     width: 0;
     height: 0;
@@ -987,14 +1001,17 @@ b {
 .accept-label input {
   margin: 20px 0;
 }
+
 #accept-terms {
   margin-right: 20px !important;
 }
+
 .faq-container {
   display: flex;
   flex-direction: column;
   align-items: start;
 }
+
 .faq h1 {
   color: white;
 }
@@ -1027,6 +1044,18 @@ b {
   color: white;
   background-color: #fb7070;
   border-radius: 5px;
+}
+
+.classroom-id {
+  width: 20vw;
+  color: black;
+}
+
+.classroom-id.user {
+  color: var(--fg-light);
+  margin: 0;
+  padding: 2%;
+  font-size: 1.2rem;
 }
 
 @media (max-width: 1325px) {
@@ -1295,10 +1324,9 @@ b {
   .terms-container {
     width: 85%;
   }
-  .faq {
-    padding: 2%;
+  .classroom-id.user {
+    width: 50vw;
   }
-
   .faq h1 {
     font-size: 1.5rem;
   }
@@ -1313,6 +1341,9 @@ b {
   .settings-button {
     margin: 5%;
     font-size: 1.2rem;
+    width: 50vw;
+  }
+  .classroom-id {
     width: 50vw;
   }
   .error {
@@ -1341,5 +1372,8 @@ b {
     width: 90vw;
     height: 60vh;
     padding: 5%;
+  }
+  .settings-container {
+    align-items: center;
   }
 }

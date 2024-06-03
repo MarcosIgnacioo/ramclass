@@ -10,6 +10,12 @@ export default function Faq() {
    <Title title='FAQ' to='#' />
    <div className='faq-container'>
     <div className='question-container'>
+     <h1>¿Qué es el número de usuario de ClassRoom?</h1>
+     <h2>
+      Es el número del lugar que ocupa tu cuenta institucional en tu navegador, normalmente las personas tienen su correo gmail personal y luego su cuenta perteneciente a la universidad, entonces el lugar que ocupa es el 1; Si al momento de darle click a los enlaces de las tareas de ClassRoom no entra directamente a tu cuenta institucional, signfica que en tu navegador está
+     </h2>
+    </div>
+    <div className='question-container'>
      <h1>¿Cómo tienen acceso a la información?</h1>
      <h2>Usamos las credenciales que proporcionas para iniciar sesión a las páginas correspondientes para obtener tu informacion (siia, moodle y classroom).</h2>
     </div>
