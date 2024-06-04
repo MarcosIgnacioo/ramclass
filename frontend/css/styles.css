@@ -1049,6 +1049,14 @@ b {
   border-radius: 5px;
 }
 
+.error-minified {
+  font-weight: bolder;
+  font-size: 1.2rem;
+  padding: 4.65%;
+  margin: 10px 0;
+  border-radius: 5px;
+  color: #a52d55;
+}
 .classroom-id {
   width: 20vw;
   color: black;

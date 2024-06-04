@@ -33,7 +33,7 @@ export default function SignIn() {
   return (
    <main className='signin-container'>
     <Title title='Inciar sesión' to='/' />
-    <ErrorMinified error="Credenciales incorrectas, favor de intentarlo de nuevo" />
+    <ErrorMinified error="Credenciales incorrectas" />
     <LoginForm setLoginParams={setLoginParams} />
     <p>Recuerda, tu identificador es
      <br />
