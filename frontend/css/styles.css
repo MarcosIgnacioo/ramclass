@@ -781,6 +781,7 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 .signin-form input,
@@ -1322,9 +1323,9 @@ b {
   .signin-form input {
     margin: 2% !important;
   }
-  .terms-container {
-    width: 85%;
-  }
+  /* .terms-container { */
+  /*   width: 85%; */
+  /* } */
   .classroom-id.user {
     width: 62vw;
   }

@@ -1,5 +1,15 @@
 package pw
 
+// Ramtendo
+//
+// Francisco Alejandro Alcantar Aviles
+// Marcos Ignacio Camacho Gonzalez
+// Abraham Zumaya Manriquez
+//
+// package pw
+// Aquí es donde se encuentra la funcionalidad del web scrapping.
+// Específicamente el del siia
+
 import (
 	"errors"
 	"log"
@@ -17,8 +27,13 @@ const (
 	OPTATIVE = "sce-tipo-optativa"
 )
 
+// # Función para iniciar sesión en la página del siia
+// # siia     *playwright.Page
+// # url      string
+// # username string
+// # password string
+// El parametro de url sirve para saber si ya se ha iniciado sesión, es decir, primero intenta ir a una de las vistas del siia, por ejemplo el kardex; En el caso de que ya haya iniciado sesión antes en alguno de las otras go routines del scrapping del siia, la página estará en donde tiene que estar, si no es asi, se le redirigirá a una vista de login, en la que se iniciará la sesión.
 func siiaLogin(siia *playwright.Page, url string, username string, password string) error {
-
 	(*siia).Goto(url)
 	// Si redirige bien a la url que queremos significa que ya habia iniciado sesion por lo que simplemente hacemos un early return
 	if (*siia).URL() == url {
@@ -35,6 +50,12 @@ func siiaLogin(siia *playwright.Page, url string, username string, password stri
 	return nil
 }
 
+// # Función para realizar el scrapping del kardex
+// # context  *playwright.BrowserContext
+// # username string
+// # password string
+// # params   ...string
+// Realiza el scrapping necesario para obtener los datos del kardex
 func KardexScrap(context *playwright.BrowserContext, username string, password string, params ...string) (Result, error) {
 	kardexUrl := "https://siia.uabcs.mx/siia2019/alumnos/kardex.aspx?gr=alumno"
 	siia, _ := (*context).NewPage()
@@ -80,18 +101,18 @@ func KardexScrap(context *playwright.BrowserContext, username string, password s
 	return NewKardex(gpa, subjectsArrayList.GetArray()), nil
 }
 
+// # Función para hacer el scrapping del mapa curricular
+// # context  *playwright.BrowserContext
+// # username string
+// # password string
+// # params   ...string
+// Realiza el scrapping necesario para obtener los datos del mapa curricular
 func CurricularMapScrap(context *playwright.BrowserContext, username string, password string, params ...string) (Result, error) {
 	curricularUrl := "https://siia.uabcs.mx/siia2019/alumnos/mapaacademico.aspx?gr=alumno"
 	subjectsArrayList := arraylist.NewArrayList(100)
 
 	siia, _ := (*context).NewPage()
 	err := siiaLogin(&siia, curricularUrl, username, password)
-	// if err != nil {
-	// 	// log.Fatalf("login error %v", err)
-	// 	fmt.Println(err)
-	// 	return nil, err
-	// }
-	//
 	expect.Locator(siia.Locator(".sce-semester")).ToBeVisible()
 	semesters, err := siia.Locator(".sce-semester").All()
 	if err != nil {
@@ -152,7 +173,12 @@ func CurricularMapScrap(context *playwright.BrowserContext, username string, pas
 	return cm, nil
 }
 
-// XD
+// # Función para hacer el scrapping de las credenciales del estudiante
+// # context  *playwright.BrowserContext
+// # username string
+// # password string
+// # params   ...string
+// Realiza el scrapping necesario para obtener los datos de las credenciales del usuario
 func CredentialsScrap(context *playwright.BrowserContext, username string, password string) (Result, error) {
 	siia, _ := (*context).NewPage()
 	credentialsUrl := "https://siia.uabcs.mx/siia2019/alumnos/credenciales.aspx?gr=alumno"
@@ -179,27 +205,3 @@ func CredentialsScrap(context *playwright.BrowserContext, username string, passw
 	siia.Close()
 	return NewStudentInfo(studentId, studentName, studentEmail, studentCampus, studentCareer, studentPeriod, currentSemester, studentGroup, studentTurn, studentState), nil
 }
-
-// kardex
-
-// const subjects = document.querySelectorAll('tr')
-// for (int i = 0; i<subjects.length; i++) {
-// 	if (subjects[i].querySelectorAll('td').length == 9) {
-// 		console.log(subjects[i].querySelector('td').innerText)
-// 	}
-// }
-
-// mapa curricular
-// Pueden haber null porque las materias que aun no han sido cursadas
-// const semesters = document.querySelectorAll(".sce-semester")
-// for(let i = 0; i<semesters.length; i++) {
-//   const subjects = semesters[i].querySelectorAll(".sce-materia")
-//   for (subject of subjects) {
-//     console.log(subject.querySelector(".sce-name").innerText)
-//     console.log(subject.querySelector(".sce-teacher").innerText)
-//     console.log(subject.querySelector(".sce-period").innerText)
-//     console.log(subject.querySelector(".sce-calification").innerText)
-//   }
-// }
-// Hacer para las optativas
-// sce-optative-program

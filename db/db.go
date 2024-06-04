@@ -1,12 +1,19 @@
 package db
 
+// Ramtendo
+//
+// Francisco Alejandro Alcantar Aviles
+// Marcos Ignacio Camacho Gonzalez
+// Abraham Zumaya Manriquez
+//
+// package db
+// Aqui es donde se establece conexion con la base de datos
+
 import (
 	"context"
-	"fmt"
 	"log"
 	"os"
 
-	pw "github.com/MarcosIgnacioo/playwright"
 	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -45,47 +52,4 @@ func Init() {
 		panic(clientErr)
 	}
 	DB = client.Database(dbName)
-}
-
-func Mongo() {
-	defer func() {
-		if err := client.Disconnect(context.TODO()); err != nil {
-			panic(err)
-		}
-	}()
-	// coll := DB.Collection("students")
-
-	ramsesupdate := pw.NewStudentInfo(999, "ramsesactualizado", "ramses@gmail.com", "La paz", "2024-I", "Ing Software", 6, "A", "M", "Active")
-
-	// r, e := coll.InsertOne(context.TODO(), ramses)
-
-	// class_subject	"Ingeniería de Software II Turno Matutino"
-	// title	"Trabajo de manteniemiento está en fecha de entrega"
-	// link	"https://enlinea2024-1.uabcs.mx/mod/assign/view.php?id=85998"
-	// date
-	// day	"2"
-	// month	"junio"
-	// year	"2024"
-	// hour	"00:00"
-
-	before, _ := GetStudent(1)
-	fmt.Println(before)
-	UpdateStudent(1123123213, ramsesupdate)
-	// after, _ := GetStudent(999)
-	// fmt.Println(after)
-
-	// err := coll.FindOne(context.TODO(), bson.D{{"name", name}}).
-	// 	Decode(&result)
-	// if err == mongo.ErrNoDocuments {
-	// 	fmt.Printf("No document was found with the name %s\n", name)
-	// 	return
-	// }
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// jsonData, err := json.MarshalIndent(result, "", "    ")
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// fmt.Printf("%s\n", jsonData)
 }

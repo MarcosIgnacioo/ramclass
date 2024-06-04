@@ -1,5 +1,13 @@
 package utils
 
+// Ramtendo
+//
+// Francisco Alejandro Alcantar Aviles
+// Marcos Ignacio Camacho Gonzalez
+// Abraham Zumaya Manriquez
+//
+// package utils
+// Funciones de utilidades generales
 import (
 	"fmt"
 	"strings"
@@ -50,6 +58,7 @@ var WeekDays = map[string]int{
 	"Saturday":  6,
 }
 
+// Función para obtener el día
 func GetDay(assigmentDay string) string {
 	wDayCurr := WeekDays[time.Now().Weekday().String()]
 	wDayAss := WeekDays[assigmentDay]
@@ -83,16 +92,19 @@ func Bytes_matrix_to_string(matrix [][]byte) string {
 	return stringified
 }
 
+// Crear fecha para classroom
 func CreateDateClassroom(dateBytes [][]byte) *DateFormat {
 	dateStringified := Bytes_matrix_to_string(dateBytes)
 	return NewDateFormat(dateStringified)
 }
 
+// Crear fecha para moodle
 func CreateDate(dateBytes [][]byte) *DateFormat {
 	dateStringified := Bytes_matrix_to_string(dateBytes)
 	return NewDateFormat(dateStringified)
 }
 
+// Struct del formato de fecha
 type DateFormat struct {
 	Day   string `json:"day"`
 	Month string `json:"month"`
@@ -100,6 +112,7 @@ type DateFormat struct {
 	Hour  string `json:"hour"`
 }
 
+// Crear una nueva fecha
 func NewDateFormat(dateString string) *DateFormat {
 	date := strings.Split(dateString, " ")
 	d := date[0]
@@ -110,6 +123,7 @@ func NewDateFormat(dateString string) *DateFormat {
 	return &DateFormat{Day: d, Month: m, Year: y, Hour: h}
 }
 
+// Crear una nueva fecha para classroom
 func NewDateFormatClassroom(dateString string) *DateFormat {
 	date := strings.Split(dateString, " ")
 	d := date[0]

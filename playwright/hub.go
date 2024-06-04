@@ -1,5 +1,14 @@
 package pw
 
+// Ramtendo
+//
+// Francisco Alejandro Alcantar Aviles
+// Marcos Ignacio Camacho Gonzalez
+// Abraham Zumaya Manriquez
+//
+// package pw
+// Aquí es donde se encuentra la funcionalidad del web scrapping.
+
 import "fmt"
 
 // Estas serian las unicas funciones que van a ser publicas en el package
@@ -7,6 +16,7 @@ const (
 	headless = true
 )
 
+// Realiza el scrappeo entero de todas los sitios que se pueden scrappear
 func FullScrap(username string, password string, params ...string) (Result, *Error) {
 	context, browser, playwright, err := GenerateContext(headless)
 	if err != nil {
@@ -42,10 +52,6 @@ func FullScrap(username string, password string, params ...string) (Result, *Err
 	curricularErrChannel := make(chan error)
 	go curricularMapAsync(curricularChannel, curricularErrChannel)
 
-	// Getting the results from scrapping into channels
-
-	// fmt.Println(<-classRoomChannel)
-
 	moodleResults := <-moodleChannel
 
 	classRoomResults := <-classRoomChannel
@@ -54,7 +60,6 @@ func FullScrap(username string, password string, params ...string) (Result, *Err
 
 	curricularResults := <-curricularChannel
 
-	// aqui se termina  el scrapping
 	closingErr := CloseScrapper(playwright, browser, context)
 	if closingErr != nil {
 		return nil, (*Error)(NewError(closingErr))
@@ -65,6 +70,7 @@ func FullScrap(username string, password string, params ...string) (Result, *Err
 	return NewScrappedInfo(moodleResults.GetResult(), classRoomResults.GetResult(), kardexResults.GetResult(), curricularResults.GetResult(), credentialsResults, GPA), (*Error)(NewError(nil))
 }
 
+// Se inicializa el scrappeo del moodle
 func Moodle(username string, password string) (Result, *Error) {
 	context, browser, playwright, err := GenerateContext(headless)
 	if err != nil {
@@ -78,6 +84,7 @@ func Moodle(username string, password string) (Result, *Error) {
 	return res, nil
 }
 
+// Se inicializa el scrappeo de classroom
 func Classroom(username string, password string, params ...string) (Result, *Error) {
 	user := "1"
 	if len(params) > 0 {
@@ -96,6 +103,7 @@ func Classroom(username string, password string, params ...string) (Result, *Err
 	return res, nil
 }
 
+// Se inicializa el scrappeo del kardex
 func Grades(username string, password string) (Result, *Error) {
 	context, browser, playwright, err := GenerateContext(headless)
 	if err != nil {
@@ -113,6 +121,7 @@ func Grades(username string, password string) (Result, *Error) {
 	return res, nil
 }
 
+// Se inicializa el scrappeo del mapa curricular
 func CareerSubjects(username string, password string) (Result, *Error) {
 	context, browser, playwright, err := GenerateContext(headless)
 	if err != nil {
@@ -129,6 +138,7 @@ func CareerSubjects(username string, password string) (Result, *Error) {
 	return res, nil
 }
 
+// Se inicializa el scrappeo de las credenciales del estudiante
 func StudentCredential(username string, password string) (Result, *Error) {
 	context, browser, playwright, err := GenerateContext(headless)
 	if err != nil {

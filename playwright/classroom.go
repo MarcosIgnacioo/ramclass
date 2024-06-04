@@ -1,5 +1,14 @@
 package pw
 
+// Ramtendo
+//
+// Francisco Alejandro Alcantar Aviles
+// Marcos Ignacio Camacho Gonzalez
+// Abraham Zumaya Manriquez
+//
+// package pw
+// Aquí es donde se encuentra la funcionalidad del web scrapping del classroom.
+
 import (
 	"fmt"
 	"log"
@@ -12,41 +21,16 @@ import (
 	"github.com/playwright-community/playwright-go"
 )
 
-func ClassroomScrapAsync(browser *playwright.Browser, username string, password string, cs chan []interface{}) {
-	classroom, err := (*browser).NewPage()
-	if err != nil {
-		log.Fatalf("could not create page: %v", err)
-	}
-	classroom.Goto("https://accounts.google.com/ServiceLogin?continue=https%3A%2F%2Fclassroom.google.com&passive=true")
-	expect.Locator(classroom.Locator("#identifierId")).ToBeVisible()
-	classroom.Locator("#identifierId").Fill(fmt.Sprintf("%v@alu.uabcs.mx", username))
-	classroom.GetByText("Next").Click()
-	classroom.Locator("#username").Fill(username)
-	classroom.Locator("#password").Fill(password)
-	classroom.Locator("input").Nth(2).Click()
-	expect.Locator(classroom.Locator(".hrUpcomingAssignmentGroup > a").Last()).ToBeVisible()
-	classes, _ := classroom.Locator("li:has(.hrUpcomingAssignmentGroup)").All()
-	scrappedAssigments := arraylist.NewArrayList(10)
-	for _, class := range classes {
-		assigment := class.Locator(".hrUpcomingAssignmentGroup > a").First()
-		subject, _ := class.Locator("h2 a div").First().TextContent()
-		title, _ := assigment.GetAttribute("aria-label")
-		link, _ := assigment.GetAttribute("href")
-		link = fmt.Sprintf("https://classroom.google.com%v", link)
-		scrappedAssigment := NewAssigment(subject, title, link, utils.DateFormat{})
-		scrappedAssigments.Push(scrappedAssigment)
-	}
-
-	cs <- scrappedAssigments.GetArray()
-}
-
+// # Función para realizr el scrappeo de classroom
+// # context  *playwright.BrowserContext
+// # username string
+// # password string
+// # params   ...string
+// Se le pasa un puntero del contexto del navegador (para poder mantener todo dentro de una misma instancia de Chromium), el nombre de uusario y su contraseña, junto a un parámetro extra, el cual puede no ir, dicho parámetro se utiliza para saber el número de usuario al que corresponden los links de las tareas, por defecto es 1
 func ClassroomScrap(context *playwright.BrowserContext, username string, password string, params ...string) (Result, error) {
 	user := "1"
 	if len(params) > 0 {
-		fmt.Println("entraaa")
 		user = params[0]
-	} else {
-		fmt.Println("no entra")
 	}
 	classroom, err := (*context).NewPage()
 	if err != nil {
@@ -124,17 +108,6 @@ func ClassroomScrap(context *playwright.BrowserContext, username string, passwor
 			scrappedAssigments.Push(scrappedAssigment)
 		}
 	}
-
-	// noDueDateAssigments := classroom.Locator("#NO_DUE_DATE").Last().Locator("ol").All()
-	// thisWeekAssigments := classroom.Locator("#THIS_WEEK").Last().Locator("ol").All()
-	// nextWeekAssigments := classroom.Locator("#NEXT_WEEK").Last().Locator("ol").All()
-	// laterAssigments := classroom.Locator("#LATER").Last().Locator("ol").All()
-
-	// XD
-	// fmt.Println(noDueDateAssigments)
-	// fmt.Println(thisWeekAssigments)
-	// fmt.Println(nextWeekAssigments)
-
 	classroomAssigmentsArray := scrappedAssigments.GetArray()
 	return NewClassRoomInfo(classroomAssigmentsArray), nil
 }

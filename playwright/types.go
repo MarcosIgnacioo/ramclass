@@ -1,5 +1,14 @@
 package pw
 
+// Ramtendo
+//
+// Francisco Alejandro Alcantar Aviles
+// Marcos Ignacio Camacho Gonzalez
+// Abraham Zumaya Manriquez
+//
+// package pw
+// Aquí se encuentran todos los structs y funciones relacionadas con el scrapping
+
 import (
 	"fmt"
 

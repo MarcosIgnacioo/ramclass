@@ -1,5 +1,15 @@
 package db
 
+// Ramtendo
+//
+// Francisco Alejandro Alcantar Aviles
+// Marcos Ignacio Camacho Gonzalez
+// Abraham Zumaya Manriquez
+//
+// package db
+//
+// Resto de las funciones CREATE, DELETE, UPDATE, GET de la base de datos
+
 import (
 	"context"
 
@@ -8,10 +18,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-// Get del calendario escolar
-
-// Get de los terminos de servicio y privacidad
-
+// Get de los términos de servicio
 func GetTermsOfService() (bson.M, error) {
 	var result bson.M
 	coll := DB.Collection("terms_of_service")
@@ -20,6 +27,7 @@ func GetTermsOfService() (bson.M, error) {
 	return result, nil
 }
 
+// Get de los térmnos de privacidad
 func GetTermsOfPrivacy() (bson.M, error) {
 	var result bson.M
 	coll := DB.Collection("terms_of_privacy")
@@ -28,14 +36,7 @@ func GetTermsOfPrivacy() (bson.M, error) {
 	return result, nil
 }
 
-func GetSchoolCalendar() (bson.M, error) {
-	var result bson.M
-	coll := DB.Collection("calendar")
-	coll.FindOne(context.TODO(), bson.D{{"name", "calendar"}}).
-		Decode(&result)
-	return result, nil
-}
-
+// Insertar el kardex del alumno en la base de datos junto a su promedio general
 func InsertKardex(name string, gpa int, kardex []interface{}) (*mongo.InsertOneResult, error) {
 	_, checkStudent := GetKardex(name)
 	if checkStudent != nil {
@@ -46,6 +47,7 @@ func InsertKardex(name string, gpa int, kardex []interface{}) (*mongo.InsertOneR
 	return nil, nil
 }
 
+// Obtener el kardex del alumno
 func GetKardex(name string) (bson.M, error) {
 	var result bson.M
 	coll := DB.Collection("kardex")
@@ -54,6 +56,7 @@ func GetKardex(name string) (bson.M, error) {
 	return result, err
 }
 
+// Insertar el mapa curricular del alumno
 func InsertCurricularMap(name string, curricularMap []interface{}) (*mongo.InsertOneResult, error) {
 	_, checkStudent := GetKardex(name)
 	if checkStudent != nil {
@@ -64,6 +67,7 @@ func InsertCurricularMap(name string, curricularMap []interface{}) (*mongo.Inser
 	return nil, nil
 }
 
+// Obtener el mapa curricular del alumno
 func GetCurricularMap(name string) (bson.M, error) {
 	var result bson.M
 	coll := DB.Collection("curricular_map")

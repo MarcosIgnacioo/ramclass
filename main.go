@@ -1,5 +1,14 @@
 package main
 
+// Ramtendo
+//
+// Francisco Alejandro Alcantar Aviles
+// Marcos Ignacio Camacho Gonzalez
+// Abraham Zumaya Manriquez
+//
+// package main
+// Aqui se definen todas las rutas de la pagina en el servidor con sus respectivas funciones controladoras
+
 import (
 	"log"
 	"net/http"
@@ -8,18 +17,12 @@ import (
 
 	"github.com/MarcosIgnacioo/controllers"
 	"github.com/MarcosIgnacioo/db"
-	pw "github.com/MarcosIgnacioo/playwright"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	// testclassroom()
 	db.Init()
 	server()
-}
-
-func testclassroom() {
-	pw.Classroom("abzu_21", "14fk3rbasof13")
 }
 
 func server() {

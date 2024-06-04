@@ -16,7 +16,7 @@ export default function StudentCredential({ name, control_number, institutional_
       {SpanWithCopy(name)}
      </div>
      <div className='email field-top'>
-      <span className='field-name'>Correo institucuional: </span>
+      <span className='field-name'>Correo institucional: </span>
       {SpanWithCopy(institutional_email)}
      </div>
      <div className='career field-top'>
@@ -38,7 +38,7 @@ export default function StudentCredential({ name, control_number, institutional_
       <span className='field-value'>{campus}</span>
       <span className='field-name'> Estado: </span>
       <span className='field-value'>{state}</span>
-      <span className='field-name'> Periodo: </span>
+      <span className='field-name'> Período: </span>
       <span className='field-value'>{period}</span>
      </div>
     </div>

@@ -1,67 +1,25 @@
 package pw
 
-// CERRAR PLAYWRIGHT CADA VEZ QUE SE HAGA UN SCRAPPPPP !!!
+// Ramtendo
+//
+// Francisco Alejandro Alcantar Aviles
+// Marcos Ignacio Camacho Gonzalez
+// Abraham Zumaya Manriquez
+//
+// package pw
+// Aquí es donde se encuentra la funcionalidad del web scrapping.
+
 import (
+	"log"
+
 	"github.com/MarcosIgnacioo/arraylist"
 	"github.com/playwright-community/playwright-go"
-	"log"
 )
 
-// func ScrapMoodleAndClassroom(username string, password string) (*ScrappedInfo, *LoginError) {
+// Función para generar una instancia de Chromium en la que se puede compartir las pestañas entre scrapping.
 //
-// 	pw, err := playwright.Run()
-// 	if err != nil {
-// 		log.Fatalf("could not start playwright: %v", err)
-// 	}
-// 	browser, err := pw.Chromium.Launch(playwright.BrowserTypeLaunchOptions{Headless: playwright.Bool(false)})
-// 	if err != nil {
-// 		log.Fatalf("could not launch browser: %v", err)
-// 	}
+// headless bool
 //
-// 	context, err := browser.NewContext()
-// 	if err != nil {
-// 		log.Fatalf("could not launch browser: %v", err)
-// 	}
-//
-// 	cs := make(chan []interface{})
-//
-// 	ctx, err := browser.NewContext()
-//
-// 	if err != nil {
-// 		return nil, NewError(err)
-// 	}
-//
-// 	go SiiaLogin(&ctx, username, password)
-// 	go ClassroomScrapAsync(&browser, username, password, cs)
-// 	ms, logErr := MoodleScrap(&context, username, password)
-//
-// 	if logErr != nil {
-// 		if err = browser.Close(); err != nil {
-// 			log.Fatalf("could not close browser: %v", err)
-// 		}
-// 		if err = pw.Stop(); err != nil {
-// 			log.Fatalf("could not stop Playwright: %v", err)
-// 		}
-// 		return nil, NewLoginError(logErr.Error())
-// 	}
-//
-// 	moodleArray := arraylist.NewArrayList(10)
-// 	classroomArray := <-cs
-// 	for _, v := range ms.GetResult() {
-// 		moodleArray.Push(v)
-// 	}
-//
-// 	if err = browser.Close(); err != nil {
-// 		log.Fatalf("could not close browser: %v", err)
-// 	}
-// 	if err = pw.Stop(); err != nil {
-// 		log.Fatalf("could not stop Playwright: %v", err)
-// 	}
-//
-// 	mArr := moodleArray.GetArray()
-// 	return NewScrappedInfo(mArr, classroomArray, nil, nil, nil), nil
-// }
-
 // false -> abre el navegador con gui
 //
 // true -> no abre el navegador lo hace por websockets(oalgoasi)
@@ -87,6 +45,9 @@ func GenerateContext(headless bool) (*playwright.BrowserContext, *playwright.Bro
 	//
 }
 
+// Función para inicializar el proceso del scrappeo de moodle
+// username string
+// password string
 func ScrapMoodle(username string, password string) (*[]interface{}, *LoginError) {
 
 	pw, err := playwright.Run()
@@ -127,6 +88,9 @@ func ScrapMoodle(username string, password string) (*[]interface{}, *LoginError)
 	return &mArr, nil
 }
 
+// Función para inicializar el proceso del scrappeo de classrooom
+// username string
+// password string
 func ScrapClassroom(username string, password string) (Result, *LoginError) {
 
 	pw, err := playwright.Run()
@@ -157,6 +121,5 @@ func ScrapClassroom(username string, password string) (Result, *LoginError) {
 		}
 		return nil, NewLoginError(logErr.Error())
 	}
-
 	return ca, nil
 }

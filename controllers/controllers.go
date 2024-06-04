@@ -1,5 +1,14 @@
 package controllers
 
+// Ramtendo
+//
+// Francisco Alejandro Alcantar Aviles
+// Marcos Ignacio Camacho Gonzalez
+// Abraham Zumaya Manriquez
+//
+// package controllers
+// Se definen las funciones controladoras de los endpoints de nuestra api
+
 import (
 	"encoding/json"
 	"fmt"
@@ -17,7 +26,8 @@ import (
 //
 // # c *gin.Context
 //
-// Controlador para manejar el inicio de sesión del usuario
+// Controlador para manejar el inicio de sesión del usuario, se obtiene el nombre de usuario del formulario junto a su contraseña y se le pasa a la funcion que hace el web scrapping. Después se insertan a la base de datos los resultados obtenidos a sus respectivas colecciones.
+
 func LogInUser(c *gin.Context) {
 	username := c.PostForm("username")
 	password := c.PostForm("password")
@@ -62,6 +72,12 @@ func LogInUser(c *gin.Context) {
 	c.JSON(http.StatusOK, scrappedInfo)
 }
 
+// # Moodle Assigments Handler
+//
+// # c *gin.Context
+//
+// Sirve para obtener unicamente las tareas de moodle, se obtiene el nombre de usuario del formulario junto a su contraseña y se le pasa a la función que hace el web scrapping, y luego se inserta en la colección de la base de datos correspondiente.
+
 func GetMoodleAssigments(c *gin.Context) {
 
 	username := c.PostForm("username")
@@ -75,6 +91,12 @@ func GetMoodleAssigments(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, assigments)
 }
+
+// # Classroom Assigments Handler
+//
+// # c *gin.Context
+//
+// Sirve para obtener unicamente las tareas de classroom, se obtiene el nombre de usuario del formulario junto a su contraseña y se le pasa a la función que hace el web scrapping, y luego se inserta en la colección de la base de datos correspondiente.
 
 func GetClassroomAssigments(c *gin.Context) {
 	username := c.PostForm("username")
@@ -91,6 +113,12 @@ func GetClassroomAssigments(c *gin.Context) {
 	c.JSON(http.StatusOK, assigments)
 }
 
+// # User Credentials Handler
+//
+// # c *gin.Context
+//
+// Sirve para obtener unicamente las credenciales del estudiante, se obtiene el nombre de usuario del formulario junto a su contraseña y se le pasa a la función que hace el web scrapping, y luego se inserta en la colección de la base de datos correspondiente.
+
 func GetUserCredentials(c *gin.Context) {
 	username := c.PostForm("username")
 	password := c.PostForm("password")
@@ -105,6 +133,12 @@ func GetUserCredentials(c *gin.Context) {
 
 	c.JSON(http.StatusOK, credentials)
 }
+
+// # Kardex Handler
+//
+// # c *gin.Context
+//
+// Sirve para obtener unicamente el kardex del estudiante, se obtiene el nombre de usuario del formulario junto a su contraseña y se le pasa a la función que hace el web scrapping, y luego se inserta en la colección de la base de datos correspondiente.
 
 func GetKardex(c *gin.Context) {
 
@@ -123,17 +157,11 @@ func GetKardex(c *gin.Context) {
 
 }
 
-func SaveTasks(c *gin.Context) {
-	username := c.PostForm("identifier")
-	tasks := c.PostForm("tasks")
-	fmt.Println(username, tasks)
-	// if err != nil {
-	// 	c.JSON(http.StatusTeapot, err)
-	// 	return
-	// }
-	//
-	c.JSON(http.StatusOK, tasks)
-}
+// # Curriculara Map Handler
+//
+// # c *gin.Context
+//
+// Sirve para obtener unicamente las materias del mapa curricular del alumno, se obtiene el nombre de usuario del formulario junto a su contraseña y se le pasa a la función que hace el web scrapping, y luego se inserta en la colección de la base de datos correspondiente.
 
 func GetCurricularMap(c *gin.Context) {
 	username := c.PostForm("username")
@@ -147,6 +175,12 @@ func GetCurricularMap(c *gin.Context) {
 	c.JSON(http.StatusOK, subjects)
 }
 
+// # Post Tasks Handler
+//
+// # c *gin.Context
+//
+// Sirve para guardar las `tasks` que mande el usuario por medio del formulario en la colección correspondiente en la base de datos, identificada por el nombre del usuario
+
 func PostTasks(c *gin.Context) {
 	tasksString := c.PostForm("tasks")
 	var tasks models.Tasks
@@ -158,6 +192,12 @@ func PostTasks(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, "ok")
 }
+
+// # Get Tasks Handler
+//
+// # c *gin.Context
+//
+// Sirve para obtener las `tasks` del usuario que tenga guardadas en la base de datos, se obtienen a partir del identificador del estudiante, el cual manda por medio de los query params. En caso de no tener `tasks` enviamos un objeto de `tasks` vacío.
 
 func GetTasks(c *gin.Context) {
 	identifier, err := c.GetQuery("identifier")
@@ -175,9 +215,23 @@ func GetTasks(c *gin.Context) {
 	if res["tasks"] != nil {
 		c.JSON(http.StatusOK, res["tasks"])
 	} else {
-		c.JSON(http.StatusOK, bson.M{})
+		c.JSON(http.StatusOK, bson.M{
+			"Lunes":     []bson.M{{"is_done": false, "task_description": ""}},
+			"Martes":    []bson.M{{"is_done": false, "task_description": ""}},
+			"Miércoles": []bson.M{{"is_done": false, "task_description": ""}},
+			"Jueves":    []bson.M{{"is_done": false, "task_description": ""}},
+			"Viernes":   []bson.M{{"is_done": false, "task_description": ""}},
+			"Sábado":    []bson.M{{"is_done": false, "task_description": ""}},
+			"Domingo":   []bson.M{{"is_done": false, "task_description": ""}},
+		})
 	}
 }
+
+// # Delete Student Handler
+//
+// # c *gin.Context
+//
+// Sirve para borrar toda la información del estudiante que ha sido guardada en nuestra base de datos
 
 func DeleteStudent(c *gin.Context) {
 	id, err := c.GetQuery("identifier")
