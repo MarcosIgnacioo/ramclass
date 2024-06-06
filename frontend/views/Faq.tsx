@@ -12,14 +12,15 @@ export default function Faq() {
     <div className='question-container'>
      <h1>¿Qué es el número de usuario de ClassRoom?</h1>
      <h2>
-      Es el número del lugar que ocupa tu cuenta institucional en tu navegador, normalmente las personas tienen su correo gmail personal y luego su cuenta perteneciente a la universidad, entonces el lugar que ocupa es el 1; Si al momento de darle click a los enlaces de las tareas de ClassRoom no entra directamente a tu cuenta institucional, signfica que en tu navegador está
+      Es el número del lugar que ocupa tu cuenta institucional en tu navegador, normalmente las personas tienen su correo gmail personal y luego su cuenta perteneciente a la universidad, entonces el lugar que ocupa es el 1; Si al momento de darle click a los enlaces de las tareas de ClassRoom no entra directamente a tu cuenta institucional, signfica que en tu navegador está la cuenta puesta en un diferente lugar al 1. Para saber cuál es solamente tienes que mirar en la url
+      https://classroom.google.com/u/N/c/ cuando entres al classroom de tu cuenta institucional y donde está la N es el número del lugar que ocupa tu cuenta en tu navegador. Ya después podrás cambiar el número de cuenta que los links deben de tener en la vista de configuración.
      </h2>
     </div>
     <div className='question-container'>
      <h1>¿Cómo tienen acceso a la información?</h1>
      <h2>Usamos las credenciales que proporcionas para iniciar sesión a las páginas correspondientes para obtener tu informacion (siia, moodle y classroom).</h2>
     </div>
-    <div className='question-container'>
+    <div className='question-container' hidden={true}>
      <h1>¿Es seguro?</h1>
      <h2>No.</h2>
     </div>
@@ -31,17 +32,11 @@ export default function Faq() {
      <h1>¿Por qué se demora tanto?</h1>
      <h2>Porque se realiza por medio de web scrapping, el cual es básicamente la simulación de un usuario entrando a una página, y no se pueden controlar los tiempos de cargas de dichas páginas, sobretodo el de classroom, que es el que tarda más (~10 segundos).</h2>
     </div>
-    <div className='question-container'>
+    <div className='question-container' style={{ marginBottom: "50px" }}>
      <h1>¿Se podría hacer mas rápido a futuro?</h1>
      <h2>Sí, si google nos deja registrar la aplicación es posible reducir los tiempos de carga hasta un 70%, solamente que por la naturaleza de nuestra aplicación es poco probable que google quiera registrarla.</h2>
     </div>
-    <div className='question-container'>
-     <h1>¿Ramses?</h1>
-     <h2>???</h2>
-    </div>
    </div>
-
-
   </main>
  )
 }
