@@ -330,7 +330,7 @@ export const calendar = {
    { day: 9, events: ["Inscripciones de Nuevo Ingreso"], type: "inscriptions" },
    { day: 10, events: ["Sin evento"], type: "blank" },
    { day: 11, events: ["Sin evento"], type: "blank" },
-   { day: 12, events: ["Inscripciones Nuevo Ingreso"], type: "inscriptions" },
+   { day: 12, events: ["Inicio de Clases"], type: "begin" },
    { day: 13, events: ["Inscripciones Nuevo Ingreso"], type: "inscriptions" },
    { day: 14, events: ["Inscripciones Nuevo Ingreso"], type: "inscriptions" },
    { day: 15, events: ["Inscripciones Nuevo Ingreso"], type: "inscriptions" },
