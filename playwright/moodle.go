@@ -38,11 +38,11 @@ func MoodleScrap(context *playwright.BrowserContext, username string, password s
 	expect.Locator(moodle.Locator("#loginbtn")).ToBeVisible()
 	moodle.Locator("#username").Fill(username)
 	// agregue esto para evitar que se le trabe la cola a esto
-	expect.Locator(moodle.Locator("#loginbtn")).ToHaveValue(username)
+	// expect.Locator(moodle.Locator("#loginbtn")).ToHaveValue(username)
 
 	moodle.Locator("#password").Fill(password)
 	// agregue esto para evitar que se le trabe la cola a esto
-	expect.Locator(moodle.Locator("#password")).ToHaveValue(password)
+	// expect.Locator(moodle.Locator("#password")).ToHaveValue(password)
 
 	moodle.Locator("#loginbtn").Click()
 	moodle.WaitForURL(os.Getenv("MOODLE_HOME_URL"))

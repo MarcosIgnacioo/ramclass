@@ -45,12 +45,12 @@ func ClassroomScrap(context *playwright.BrowserContext, username string, passwor
 	// classroom.Locator("button").Nth(2).Click()
 	// error handling que no se si deba d kitar jiiji
 
-	expect.Locator(classroom.Locator("#identifierId")).ToHaveValue(email)
+	// expect.Locator(classroom.Locator("#identifierId")).ToHaveValue(email)
 	classroom.GetByText("Next").Click()
 	classroom.Locator("#username").Fill(username)
-	expect.Locator(classroom.Locator("#username")).ToHaveValue(username)
+	// expect.Locator(classroom.Locator("#username")).ToHaveValue(username)
 	classroom.Locator("#password").Fill(password)
-	expect.Locator(classroom.Locator("#password")).ToHaveValue(password)
+	// expect.Locator(classroom.Locator("#password")).ToHaveValue(password)
 	classroom.Locator("input").Nth(2).Click()
 
 	classroom.WaitForURL("https://classroom.google.com/")
