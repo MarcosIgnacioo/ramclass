@@ -1049,6 +1049,10 @@ b {
   border-radius: 5px;
 }
 
+.disabled-link {
+  pointer-events: none;
+}
+
 .error-minified {
   font-weight: bolder;
   font-size: 1.2rem;

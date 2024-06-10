@@ -8,7 +8,7 @@ import Loading from '../components/Loading';
 import updateCurrentLocation from '../functions/location';
 import LoginForm from '../components/LoginForm';
 import ErrorMinified from '../components/ErrorMinified';
-import { BASE_PATH } from '../globals/globals';
+import { BASE_PATH, deactivateNavBar, reactivateNavbar } from '../globals/globals';
 import Title from '../components/Title';
 
 export default function SignIn() {
@@ -23,6 +23,7 @@ export default function SignIn() {
  const response = useLogin(loginParams)
 
  if (response.isLoading) {
+  deactivateNavBar()
   return (
    <main>
     <Loading />
@@ -49,6 +50,7 @@ export default function SignIn() {
  }
 
  if (response.isSuccess) {
+  reactivateNavbar()
   // Guardamos en localstorage los datos scrappeados como las credenciales para iniciar sesion de nuevo la siguiente vez que se abra la pagina 
   const { classroom, curricular_map, kardex, moodle, student, gpa, tasks, calendar } = response.data
   const { username, password } = loginParams as UserData

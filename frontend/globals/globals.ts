@@ -15,3 +15,17 @@ export const SemestersMap = {
 }
 
 export const semesters = ["Todos", "Primero", "Segundo", "Tercero", "Cuarto", "Quinto", "Sexto", "Séptimo", "Octavo", "Noveno", "Optativas"]
+
+export function deactivateNavBar() {
+ const navBarLinks = document.querySelectorAll(".nav-links ")
+ navBarLinks.forEach(link => {
+  link.classList.add("disabled-link")
+ })
+}
+
+export function reactivateNavbar() {
+ const navBarLinks = document.querySelectorAll(".nav-links ")
+ navBarLinks.forEach(link => {
+  link.classList.remove("disabled-link")
+ })
+}
