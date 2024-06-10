@@ -3,7 +3,6 @@ import { BASE_PATH } from "../../globals/globals";
 const nameSpace = "student"
 
 export default async function deleteAccount(identifier:string) {
- if (!identifier) return
  const headers = new Headers();
  headers.append("Content-Type", "application/x-www-form-urlencoded");
 
@@ -17,6 +16,7 @@ export default async function deleteAccount(identifier:string) {
   redirect: "follow"
  };
 
+ console.log("QUEVERGA")
  const response = await fetch(`${BASE_PATH}${nameSpace}?identifier=${identifier}`, requestOptions)
 
  return response.json()

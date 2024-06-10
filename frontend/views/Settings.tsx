@@ -14,7 +14,7 @@ export default function Settings() {
  const user = useUser()
  const response = useLogin(user)
  const [relocate, setRelocation] = useState(false)
- if (!userLocal) window.location.replace("/")
+ if (relocate) window.location.replace("/")
  updateCurrentLocation()
 
  let crtPref = true
