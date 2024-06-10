@@ -3,13 +3,17 @@ import updateCurrentLocation from '../functions/location'
 import Title from '../components/Title'
 import { Link } from 'react-router-dom'
 import { logOut } from '../functions/logOut'
-import { getCacheOf, storeInLocal } from '../functions/store'
+import { getCacheOf, LSK, storeInLocal, updateQueryCache } from '../functions/store'
 import useDeleteAccount from '../functions/useDeleteAccount'
 import FloatingWindow from '../components/FloatingWindow'
 import DeleteAccount from '../components/DeleteAccount'
+import useLogin from '../functions/useLogin'
+import { useUser } from '../components/UserContext'
 
 export default function Settings() {
  const userLocal = getCacheOf("identifier") as string
+ const user = useUser()
+ const response = useLogin(user)
  if (!userLocal) window.location.replace("/")
  updateCurrentLocation()
 
@@ -24,6 +28,7 @@ export default function Settings() {
  const [account, setAccount] = useState("")
  const [floatingPopup, setFloatingPopup] = useState<React.JSX.Element>(<div hidden>
  </div>)
+ const classroomAssigments = getCacheOf("classroom") as Object[]
  const overlay = document.querySelector(".retro-overlay")
  useDeleteAccount(account)
 
@@ -47,6 +52,12 @@ export default function Settings() {
      id = (id.match(/\d+$/g)) ? id : "0"
      storeInLocal(id, "classroomUserId")
      setUserClassroomUserId(id)
+     classroomAssigments.map(assigment => {
+      assigment["link"] = assigment["link"].replace(/u\/\d+/, "u/" + id)
+     })
+     storeInLocal(classroomAssigments, "classroom")
+     updateQueryCache(response, LSK.Classroom)
+     console.log("todo updated")
     }} />
     <Link className='faq settings-button' to={"/faq"}>FAQ</Link>
     <Link className='seeya settings-button' to={"/"} onClick={logOut}>Cerrar sesión</Link>

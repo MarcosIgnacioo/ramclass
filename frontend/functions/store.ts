@@ -1,5 +1,7 @@
 import { UseQueryResult } from '@tanstack/react-query'
 import UserData from '../classes/UserData'
+import { useUser } from '../components/UserContext'
+import useLogin from './useLogin'
 
 export enum LSK {
  Moodle,
@@ -65,6 +67,16 @@ export const setAll = (all: string[]) => {
 
 export const checkContextUser = (user: UserData) => {
  return user.username !== "" && user.password !== ""
+}
+
+export const updateQueryCache = (response:UseQueryResult<any, Error> ,cacheName: number) => {
+ const nameSpace = localNames[cacheName]
+ const cache = getCacheOf(nameSpace)
+ if (response.data !== undefined) {
+  if (response.data[nameSpace] !== null && response.data[nameSpace].length != 0) {
+   response.data[nameSpace] = cache
+  }
+ }
 }
 
 // Checa la cache en el localstorage, si la propiedad data del react-query no tiene nada pues 
