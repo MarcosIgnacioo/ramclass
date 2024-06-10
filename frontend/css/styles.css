@@ -1051,6 +1051,7 @@ b {
 
 .disabled-link {
   pointer-events: none;
+  color: gray;
 }
 
 .error-minified {
