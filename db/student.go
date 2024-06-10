@@ -128,5 +128,34 @@ func UpdateTask(username string, md *models.Task) *mongo.SingleResult {
 func DeleteFromCollection(collection string, fieldName string, identifier string) error {
 	coll := DB.Collection(collection)
 	_, err := coll.DeleteOne(context.TODO(), bson.D{{fieldName, identifier}})
+	fmt.Println(collection, fieldName, identifier, err)
+	return err
+}
+
+func DeleteKardex(identifier string) error {
+	coll := DB.Collection("kardex")
+	_, err := coll.DeleteOne(context.TODO(), bson.D{{"name", identifier}})
+	fmt.Println(err)
+	return err
+}
+
+func DeleteMoodle(identifier string) error {
+	coll := DB.Collection("moodle")
+	_, err := coll.DeleteOne(context.TODO(), bson.D{{"name", identifier}})
+	fmt.Println(err)
+	return err
+}
+
+func DeleteClassroom(identifier string) error {
+	coll := DB.Collection("classroom")
+	_, err := coll.DeleteOne(context.TODO(), bson.D{{"name", identifier}})
+	fmt.Println(err)
+	return err
+}
+
+func DeleteCurricularMap(identifier string) error {
+	coll := DB.Collection("curricular_map")
+	_, err := coll.DeleteOne(context.TODO(), bson.D{{"name", identifier}})
+	fmt.Println(err)
 	return err
 }

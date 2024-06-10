@@ -235,28 +235,18 @@ func GetTasks(c *gin.Context) {
 
 func DeleteStudent(c *gin.Context) {
 	id, err := c.GetQuery("identifier")
-	deleteError := db.DeleteStudent(id)
-	if deleteError != nil {
-		c.JSON(http.StatusConflict, deleteError)
+
+	if err != true {
+		c.JSON(http.StatusConflict, "There is no identifier")
 		return
 	}
+
 	collections := []string{"classroom", "moodle", "kardex", "curricular_map"}
 	for _, collection := range collections {
-		deleteError = db.DeleteFromCollection(collection, "name", id)
-		if deleteError != nil {
-			c.JSON(http.StatusConflict, deleteError)
-			return
-		}
+		db.DeleteFromCollection(collection, "name", id)
 	}
-	// Cambiar la manera en la que guardamos las tasks para que en vez de que se guarde con identifier se guarde con name para no tener q hacer esto
-	deleteError = db.DeleteFromCollection("tasks", "identifier", id)
-	if deleteError != nil {
-		c.JSON(http.StatusConflict, deleteError)
-		return
-	}
-	if err != true {
-		c.JSON(http.StatusConflict, err)
-		return
-	}
+	db.DeleteFromCollection("tasks", "identifier", id)
+	db.DeleteFromCollection("students", "institutional_email", fmt.Sprintf("%s@alu.uabcs.mx", id))
+
 	c.JSON(http.StatusOK, bson.M{"first": id})
 }

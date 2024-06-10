@@ -10,7 +10,6 @@ import useLogin from '../functions/useLogin'
 import { useUser } from '../components/UserContext'
 
 export default function Settings() {
- const userLocal = getCacheOf("identifier") as string
  const user = useUser()
  const response = useLogin(user)
  const [relocate, setRelocation] = useState(false)
