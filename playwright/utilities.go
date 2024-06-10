@@ -17,7 +17,7 @@ import (
 )
 
 // Variables que sirven para realizar assertions en el momento del scrapping
-var expect = playwright.NewPlaywrightAssertions(2000)
+var expect = playwright.NewPlaywrightAssertions(3000)
 var loginSiiaExpect = playwright.NewPlaywrightAssertions(1000)
 var await = playwright.NewPlaywrightAssertions(500)
 
