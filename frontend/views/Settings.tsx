@@ -4,7 +4,6 @@ import Title from '../components/Title'
 import { Link } from 'react-router-dom'
 import { logOut } from '../functions/logOut'
 import { getCacheOf, LSK, storeInLocal, updateQueryCache } from '../functions/store'
-import useDeleteAccount from '../functions/useDeleteAccount'
 import FloatingWindow from '../components/FloatingWindow'
 import DeleteAccount from '../components/DeleteAccount'
 import useLogin from '../functions/useLogin'
@@ -14,6 +13,7 @@ export default function Settings() {
  const userLocal = getCacheOf("identifier") as string
  const user = useUser()
  const response = useLogin(user)
+ const [relocate, setRelocation] = useState(false)
  if (!userLocal) window.location.replace("/")
  updateCurrentLocation()
 
@@ -25,12 +25,10 @@ export default function Settings() {
  }
  const [isCrtOn, setIsCrtOn] = useState(crtPref)
  const [classroomUserId, setUserClassroomUserId] = useState(getCacheOf("classroomUserId") as string)
- const [account, setAccount] = useState("")
  const [floatingPopup, setFloatingPopup] = useState<React.JSX.Element>(<div hidden>
  </div>)
  const classroomAssigments = getCacheOf("classroom") as Object[]
  const overlay = document.querySelector(".retro-overlay")
- useDeleteAccount(account)
 
  // quiero la actualizacion full porque la navbar no se actualiza :(
 
@@ -62,7 +60,7 @@ export default function Settings() {
     <Link className='faq settings-button' to={"/faq"}>FAQ</Link>
     <Link className='seeya settings-button' to={"/"} onClick={logOut}>Cerrar sesión</Link>
     <button className="danger settings-button" onClick={() => {
-     setFloatingPopup(<FloatingWindow setFloatingPopup={setFloatingPopup} content={<DeleteAccount setAccount={setAccount} />} />)
+     setFloatingPopup(<FloatingWindow setFloatingPopup={setFloatingPopup} content={<DeleteAccount setRelocation={setRelocation}/>} />)
     }}>Borrar cuenta</button>
    </div>
   </main>

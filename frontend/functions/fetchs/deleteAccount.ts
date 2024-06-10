@@ -2,14 +2,13 @@ import { BASE_PATH } from "../../globals/globals";
 
 const nameSpace = "student"
 
-export default async function deleteAccount({ queryKey }) {
- const identifier = queryKey[1]
+export default async function deleteAccount(identifier:string) {
  if (!identifier) return
  const headers = new Headers();
  headers.append("Content-Type", "application/x-www-form-urlencoded");
 
  const urlencoded = new URLSearchParams();
- urlencoded.append("identifier", "marcosignc_21");
+ urlencoded.append("identifier", identifier);
 
  const requestOptions: RequestInit = {
   method: "DELETE",
